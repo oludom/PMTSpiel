@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model quotesql="1" tablecharset="" mysql_version="505" mssql_version="2005" derby_version="106" ingres_version="9">
+  <Entity name="Kletterwand" Unlogged="false" PKClustered="0">
+    <Column name="Name">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="StartTag">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="EndTag">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Lat">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>4</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Lon">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>4</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="QRCode" Unlogged="false" PKClustered="0">
+    <Column name="Name">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="QRCodeName">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.QRCode.Name</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="BenutzerUsername">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="FrageFrage">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Frage.Frage</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Hinweis">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Lat">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>4</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Lon">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>4</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Frage" Unlogged="false" PKClustered="0">
+    <Column name="Frage">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Antwort1">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Antwort2">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Antwortrichtig">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="TippAufAntwort">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Zeit" Unlogged="false" PKClustered="0">
+    <Column name="ID">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="BenutzerUsername2">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Datum">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>17</Type>
+      <Length>0</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="GemesseneZeit">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>19</Type>
+      <Length>6</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="KletterwandName">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Kletterwand.Name</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="BenutzerUsername">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Benutzer" Unlogged="false" PKClustered="0">
+    <Column name="Username">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="BenutzerUsername2">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="BenutzerUsername">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Password">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Profilbild">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Discriminator">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Benutzer_listeDerErrungenschaften" Unlogged="false" PKClustered="0">
+    <Column name="BenutzerUsername">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="BenutzerIndex">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="ListeDerErrungenschaften">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Benutzer_QRCode" Unlogged="false" PKClustered="0">
+    <Column name="BenutzerUsername">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="QRCodeName">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.QRCode.Name</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Benutzer_Kletterwand" Unlogged="false" PKClustered="0">
+    <Column name="BenutzerUsername">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="KletterwandName">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Kletterwand.Name</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <ForeignKey name="FKBenutzer_l455447">
+    <ReferenceTable>Benutzer_listeDerErrungenschaften</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>BenutzerUsername</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="hat">
+    <ReferenceTable>QRCode</ReferenceTable>
+    <ReferencedTable>Frage</ReferencedTable>
+    <Columns>
+      <Column>FrageFrage</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Frage</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="misst Zeit">
+    <ReferenceTable>Zeit</ReferenceTable>
+    <ReferencedTable>Kletterwand</ReferencedTable>
+    <Columns>
+      <Column>KletterwandName</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Name</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="misst Zeit2">
+    <ReferenceTable>Zeit</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>BenutzerUsername</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="richtet ein">
+    <ReferenceTable>Benutzer_QRCode</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>BenutzerUsername</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="richtet ein2">
+    <ReferenceTable>Benutzer_QRCode</ReferenceTable>
+    <ReferencedTable>QRCode</ReferencedTable>
+    <Columns>
+      <Column>QRCodeName</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Name</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="richtet ein3">
+    <ReferenceTable>Benutzer_Kletterwand</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>BenutzerUsername</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="richtet ein4">
+    <ReferenceTable>Benutzer_Kletterwand</ReferenceTable>
+    <ReferencedTable>Kletterwand</ReferencedTable>
+    <Columns>
+      <Column>KletterwandName</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Name</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="scannt">
+    <ReferenceTable>QRCode</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>BenutzerUsername</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="sieht">
+    <ReferenceTable>Zeit</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>BenutzerUsername2</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKQRCode579046">
+    <ReferenceTable>QRCode</ReferenceTable>
+    <ReferencedTable>QRCode</ReferencedTable>
+    <Columns>
+      <Column>QRCodeName</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Name</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKBenutzer71184">
+    <ReferenceTable>Benutzer</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>BenutzerUsername</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKBenutzer222378">
+    <ReferenceTable>Benutzer</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>BenutzerUsername2</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+</Model>

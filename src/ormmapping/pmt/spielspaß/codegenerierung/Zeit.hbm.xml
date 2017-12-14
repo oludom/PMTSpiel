@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Micha(Hochschule Heilbronn)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="pmt.spielspaß.codegenerierung.Zeit" table="Zeit" lazy="false">
+		<id name="ID" column="ID" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<many-to-one name="Spieler" cascade="lock" column="BenutzerUsername2" class="pmt.spielspaß.codegenerierung.BugaBesucher" not-null="false" lazy="proxy" access="field">
+		</many-to-one>
+		<property name="datum" column="Datum" type="date" not-null="false" lazy="false"/>
+		<property name="gemesseneZeit" column="GemesseneZeit" type="time" length="6" not-null="false" lazy="false"/>
+		<many-to-one name="ORM_Kletterwand" cascade="lock" column="KletterwandName" class="pmt.spielspaß.codegenerierung.Kletterwand" not-null="true" lazy="false">
+		</many-to-one>
+		<many-to-one name="ORM_BugaBesucher" cascade="lock" column="BenutzerUsername" class="pmt.spielspaß.codegenerierung.BugaBesucher" not-null="true" lazy="false">
+		</many-to-one>
+	</class>
+</hibernate-mapping>

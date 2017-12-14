@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Micha(Hochschule Heilbronn)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="pmt.spielspaß.codegenerierung.Benutzer" table="Benutzer" lazy="false" discriminator-value="Benutzer">
+		<id name="username" column="Username" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<discriminator column="Discriminator" type="string"/>
+		<property name="password" column="Password" type="string" length="255" not-null="false" lazy="false"/>
+		<subclass name="pmt.spielspaß.codegenerierung.Admin" discriminator-value="admin" lazy="false">
+			<set name="ORM_GespeicherteKletterwände" table="Benutzer_Kletterwand" lazy="true" cascade="save-update,lock">
+				<key column="BenutzerUsername" not-null="true"/>
+				<many-to-many column="KletterwandName" class="pmt.spielspaß.codegenerierung.Kletterwand">
+				</many-to-many>
+			</set>
+			<set name="ORM_GespeicherteQRCodes" table="Benutzer_QRCode" lazy="true" cascade="save-update,lock">
+				<key column="BenutzerUsername" not-null="true"/>
+				<many-to-many column="QRCodeName" class="pmt.spielspaß.codegenerierung.QRCode">
+				</many-to-many>
+			</set>
+		</subclass>
+		<subclass name="pmt.spielspaß.codegenerierung.BugaBesucher" discriminator-value="user" lazy="false">
+			<many-to-one name="offeneAnfragen" column="BenutzerUsername2" class="pmt.spielspaß.codegenerierung.BugaBesucher" cascade="save-update,lock" unique="true" not-null="false" lazy="proxy" access="field">
+			</many-to-one>
+			<many-to-one name="freunde" column="BenutzerUsername" class="pmt.spielspaß.codegenerierung.BugaBesucher" cascade="save-update,lock" unique="true" not-null="false" lazy="proxy" access="field">
+			</many-to-one>
+			<property name="profilbild" column="Profilbild" type="string" length="255" not-null="false" lazy="false"/>
+			<array name="listeDerErrungenschaften" table="Benutzer_listeDerErrungenschaften" cascade="all">
+				<key column="BenutzerUsername"/>
+				<index column="BenutzerIndex" type="integer"/>
+				<element column="ListeDerErrungenschaften" type="string" length="255"/>
+			</array>
+			<set name="ORM_Zeits" lazy="true" cascade="save-update,lock" inverse="true">
+				<key column="BenutzerUsername" not-null="true"/>
+				<one-to-many class="pmt.spielspaß.codegenerierung.Zeit"/>
+			</set>
+			<set name="ORM_Code" lazy="true" cascade="save-update,lock" inverse="true">
+				<key column="BenutzerUsername" not-null="false"/>
+				<one-to-many class="pmt.spielspaß.codegenerierung.QRCode"/>
+			</set>
+			<set name="ORM_Leistung" lazy="true" cascade="save-update,lock" inverse="true">
+				<key column="BenutzerUsername2" not-null="false"/>
+				<one-to-many class="pmt.spielspaß.codegenerierung.Zeit"/>
+			</set>
+		</subclass>
+	</class>
+</hibernate-mapping>
