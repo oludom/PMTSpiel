@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Jan(Hochschule Heilbronn)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="pmt.spielspaß.codegenerierung.Frage" table="Frage" lazy="false">
+		<id name="frage" column="Frage" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<property name="antwort1" column="Antwort1" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="antwort2" column="Antwort2" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="antwortrichtig" column="Antwortrichtig" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="tippAufAntwort" column="TippAufAntwort" type="string" length="255" not-null="false" lazy="false"/>
+		<set name="ORM_Besitzer" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="FrageFrage" not-null="true"/>
+			<one-to-many class="pmt.spielspaß.codegenerierung.QRCode"/>
+		</set>
+	</class>
+</hibernate-mapping>

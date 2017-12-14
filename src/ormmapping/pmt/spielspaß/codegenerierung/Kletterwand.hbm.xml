@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Jan(Hochschule Heilbronn)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="pmt.spielspaß.codegenerierung.Kletterwand" table="Kletterwand" lazy="false">
+		<id name="name" column="Name" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<property name="startTag" column="StartTag" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="endTag" column="EndTag" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="lat" column="Lat" type="float" length="10" not-null="true" lazy="false"/>
+		<property name="lon" column="Lon" type="float" length="10" not-null="true" lazy="false"/>
+		<set name="ORM_Zeits" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="KletterwandName" not-null="true"/>
+			<one-to-many class="pmt.spielspaß.codegenerierung.Zeit"/>
+		</set>
+		<set name="ORM_Superuser" table="Benutzer_Kletterwand" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="KletterwandName" not-null="true"/>
+			<many-to-many column="BenutzerUsername" class="pmt.spielspaß.codegenerierung.Admin">
+			</many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>
