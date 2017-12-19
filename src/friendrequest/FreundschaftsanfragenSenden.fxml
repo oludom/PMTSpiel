@@ -13,7 +13,7 @@
          <children>
             <TextField fx:id="suchfeldAnfragen" layoutY="62.0" prefHeight="30.0" prefWidth="250.0" text="Suchen..." />
             <Button fx:id="suchenAnfagenKnopf" layoutX="278.0" layoutY="62.0" minWidth="27.0" mnemonicParsing="false" onAction="#sucheNachNamen" prefHeight="30.0" prefWidth="62.0" text="suchen" />
-            <Label layoutX="3.0" layoutY="2.0" prefHeight="46.0" prefWidth="339.0" text="Freundschaftsanfragen senden" />
+            <Label fx:id="headline" layoutX="3.0" layoutY="2.0" prefHeight="46.0" prefWidth="339.0" text="Freundschaftsanfragen senden" />
             <ScrollPane layoutY="117.0" prefHeight="366.0" prefWidth="346.0">
               <content>
                 <AnchorPane fx:id="spielerAuflistung" minHeight="0.0" minWidth="0.0" prefHeight="602.0" prefWidth="342.0">

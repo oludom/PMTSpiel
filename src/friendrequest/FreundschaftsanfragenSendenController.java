@@ -15,6 +15,7 @@ import pmt.spielspaß.codegenerierung.*;
 
 public class FreundschaftsanfragenSendenController implements Initializable {
 
+  @FXML Label headline;
   @FXML
   TextField suchfeldAnfragen;
   @FXML
@@ -66,6 +67,8 @@ public class FreundschaftsanfragenSendenController implements Initializable {
           arrayUsers.add(nutzers[i]);
         } else {
           jetzigerUser = nutzers[i];
+          String text = headline.getText();
+          headline.setText(jetzigerUser.username+": "+text);
         }
       }
     } catch (PersistentException e) {
@@ -163,6 +166,12 @@ public class FreundschaftsanfragenSendenController implements Initializable {
 
     source.setText("Anfrage gesendet");
     source.setDisable(true);
+
+    try {
+      BugaBesucherDAO.save(wantedUser);
+    } catch (PersistentException e) {
+      e.printStackTrace();
+    }
 
   }
 
