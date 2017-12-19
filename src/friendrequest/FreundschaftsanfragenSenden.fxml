@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="friendrequest.FreundschaftsanfragenSendenController">
+   <children>
+      <AnchorPane prefHeight="480.0" prefWidth="346.0">
+         <children>
+            <TextField fx:id="suchfeldAnfragen" layoutY="62.0" prefHeight="30.0" prefWidth="250.0" text="Suchen..." />
+            <Button fx:id="suchenAnfagenKnopf" layoutX="278.0" layoutY="62.0" minWidth="27.0" mnemonicParsing="false" onAction="#sucheNachNamen" prefHeight="30.0" prefWidth="62.0" text="suchen" />
+            <Label layoutX="3.0" layoutY="2.0" prefHeight="46.0" prefWidth="339.0" text="Freundschaftsanfragen senden" />
+            <ScrollPane layoutY="117.0" prefHeight="366.0" prefWidth="346.0">
+              <content>
+                <AnchorPane fx:id="spielerAuflistung" minHeight="0.0" minWidth="0.0" prefHeight="602.0" prefWidth="342.0">
+                     <children>
+                        <AnchorPane fx:id="spielerPane1" layoutX="1.0" layoutY="7.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf1" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane2" layoutX="1.0" layoutY="61.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf11" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane5" layoutX="1.0" layoutY="223.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf111" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane4" layoutX="1.0" layoutY="169.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf1111" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane3" layoutX="1.0" layoutY="115.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf11111" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane6" layoutX="1.0" layoutY="277.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf111111" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane7" layoutX="1.0" layoutY="331.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf1111111" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane8" layoutX="1.0" layoutY="385.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf11111111" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane9" layoutX="1.0" layoutY="439.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf111111111" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="spielerPane10" layoutX="1.0" layoutY="493.0" prefHeight="53.0" prefWidth="339.0">
+                           <children>
+                              <Button fx:id="anfrageKnopf1111111111" layoutX="212.0" layoutY="7.0" mnemonicParsing="false" onAction="#freundschaftsanfragenSenden" prefHeight="38.0" prefWidth="119.0" text="Anfrage senden" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                              <Label layoutX="8.0" layoutY="7.0" prefHeight="40.0" prefWidth="193.0" text="Spielername" />
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="ladeMehrNamen" layoutX="123.0" layoutY="547.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="95.0" text="Mehr Laden" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
