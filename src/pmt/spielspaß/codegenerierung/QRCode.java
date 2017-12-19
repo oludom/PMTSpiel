@@ -43,11 +43,7 @@ public class QRCode {
 	}
 	
 	private void this_setOwner(Object owner, int key) {
-		if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_QRCODE_SPIELER) {
-			this.Spieler = (pmt.spielspaß.codegenerierung.BugaBesucher) owner;
-		}
-		
-		else if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_QRCODE_AUFGABE) {
+		if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_QRCODE_AUFGABE) {
 			this.Aufgabe = (pmt.spielspaß.codegenerierung.Frage) owner;
 		}
 		
@@ -70,8 +66,6 @@ public class QRCode {
 	private String name;
 	
 	private pmt.spielspaß.codegenerierung.QRCode nextQRCode;
-	
-	private pmt.spielspaß.codegenerierung.BugaBesucher Spieler;
 	
 	private pmt.spielspaß.codegenerierung.Frage Aufgabe;
 	
@@ -117,30 +111,6 @@ public class QRCode {
 	
 	public float getLon() {
 		return lon;
-	}
-	
-	public void setSpieler(pmt.spielspaß.codegenerierung.BugaBesucher value) {
-		if (Spieler != null) {
-			Spieler.code.remove(this);
-		}
-		if (value != null) {
-			value.code.add(this);
-		}
-	}
-	
-	public pmt.spielspaß.codegenerierung.BugaBesucher getSpieler() {
-		return Spieler;
-	}
-	
-	/**
-	 * This method is for internal use only.
-	 */
-	public void setORM_Spieler(pmt.spielspaß.codegenerierung.BugaBesucher value) {
-		this.Spieler = value;
-	}
-	
-	private pmt.spielspaß.codegenerierung.BugaBesucher getORM_Spieler() {
-		return Spieler;
 	}
 	
 	private void setORM_Superuser(java.util.Set value) {

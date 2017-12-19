@@ -13,7 +13,6 @@ License Type: Academic
 		<property name="antwort1" column="Antwort1" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="antwort2" column="Antwort2" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="antwortrichtig" column="Antwortrichtig" type="string" length="255" not-null="false" lazy="false"/>
-		<property name="tippAufAntwort" column="TippAufAntwort" type="string" length="255" not-null="false" lazy="false"/>
 		<set name="ORM_Besitzer" lazy="true" cascade="save-update,lock" inverse="true">
 			<key column="FrageFrage" not-null="true"/>
 			<one-to-many class="pmt.spielspaß.codegenerierung.QRCode"/>

@@ -22,8 +22,6 @@ public class QRCodeDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression name;
 	public final StringExpression nextQRCodeId;
 	public final AssociationExpression nextQRCode;
-	public final StringExpression SpielerId;
-	public final AssociationExpression Spieler;
 	public final StringExpression AufgabeId;
 	public final AssociationExpression Aufgabe;
 	public final StringExpression Hinweis;
@@ -36,8 +34,6 @@ public class QRCodeDetachedCriteria extends AbstractORMDetachedCriteria {
 		name = new StringExpression("name", this.getDetachedCriteria());
 		nextQRCodeId = new StringExpression("nextQRCode.name", this.getDetachedCriteria());
 		nextQRCode = new AssociationExpression("nextQRCode", this.getDetachedCriteria());
-		SpielerId = new StringExpression("Spieler.username", this.getDetachedCriteria());
-		Spieler = new AssociationExpression("Spieler", this.getDetachedCriteria());
 		AufgabeId = new StringExpression("Aufgabe.frage", this.getDetachedCriteria());
 		Aufgabe = new AssociationExpression("Aufgabe", this.getDetachedCriteria());
 		Hinweis = new StringExpression("Hinweis", this.getDetachedCriteria());
@@ -51,8 +47,6 @@ public class QRCodeDetachedCriteria extends AbstractORMDetachedCriteria {
 		name = new StringExpression("name", this.getDetachedCriteria());
 		nextQRCodeId = new StringExpression("nextQRCode.name", this.getDetachedCriteria());
 		nextQRCode = new AssociationExpression("nextQRCode", this.getDetachedCriteria());
-		SpielerId = new StringExpression("Spieler.username", this.getDetachedCriteria());
-		Spieler = new AssociationExpression("Spieler", this.getDetachedCriteria());
 		AufgabeId = new StringExpression("Aufgabe.frage", this.getDetachedCriteria());
 		Aufgabe = new AssociationExpression("Aufgabe", this.getDetachedCriteria());
 		Hinweis = new StringExpression("Hinweis", this.getDetachedCriteria());
@@ -63,10 +57,6 @@ public class QRCodeDetachedCriteria extends AbstractORMDetachedCriteria {
 	
 	public pmt.spielspaß.codegenerierung.QRCodeDetachedCriteria createNextQRCodeCriteria() {
 		return new pmt.spielspaß.codegenerierung.QRCodeDetachedCriteria(createCriteria("nextQRCode"));
-	}
-	
-	public pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria createSpielerCriteria() {
-		return new pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria(createCriteria("Spieler"));
 	}
 	
 	public pmt.spielspaß.codegenerierung.FrageDetachedCriteria createAufgabeCriteria() {

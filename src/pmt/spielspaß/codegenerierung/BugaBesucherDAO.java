@@ -19,10 +19,10 @@ import org.hibernate.LockMode;
 import java.util.List;
 
 public class BugaBesucherDAO {
-	public static BugaBesucher loadBugaBesucherByORMID(String username) throws PersistentException {
+	public static BugaBesucher loadBugaBesucherByORMID(String listeDerErrungenschaften) throws PersistentException {
 		try {
 			PersistentSession session = pmt.spielspaß.codegenerierung.PMTBUGAPersistentManager.instance().getSession();
-			return loadBugaBesucherByORMID(session, username);
+			return loadBugaBesucherByORMID(session, listeDerErrungenschaften);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -30,10 +30,10 @@ public class BugaBesucherDAO {
 		}
 	}
 	
-	public static BugaBesucher getBugaBesucherByORMID(String username) throws PersistentException {
+	public static BugaBesucher getBugaBesucherByORMID(String listeDerErrungenschaften) throws PersistentException {
 		try {
 			PersistentSession session = pmt.spielspaß.codegenerierung.PMTBUGAPersistentManager.instance().getSession();
-			return getBugaBesucherByORMID(session, username);
+			return getBugaBesucherByORMID(session, listeDerErrungenschaften);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -41,10 +41,10 @@ public class BugaBesucherDAO {
 		}
 	}
 	
-	public static BugaBesucher loadBugaBesucherByORMID(String username, org.hibernate.LockMode lockMode) throws PersistentException {
+	public static BugaBesucher loadBugaBesucherByORMID(String listeDerErrungenschaften, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
 			PersistentSession session = pmt.spielspaß.codegenerierung.PMTBUGAPersistentManager.instance().getSession();
-			return loadBugaBesucherByORMID(session, username, lockMode);
+			return loadBugaBesucherByORMID(session, listeDerErrungenschaften, lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -52,10 +52,10 @@ public class BugaBesucherDAO {
 		}
 	}
 	
-	public static BugaBesucher getBugaBesucherByORMID(String username, org.hibernate.LockMode lockMode) throws PersistentException {
+	public static BugaBesucher getBugaBesucherByORMID(String listeDerErrungenschaften, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
 			PersistentSession session = pmt.spielspaß.codegenerierung.PMTBUGAPersistentManager.instance().getSession();
-			return getBugaBesucherByORMID(session, username, lockMode);
+			return getBugaBesucherByORMID(session, listeDerErrungenschaften, lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -63,9 +63,9 @@ public class BugaBesucherDAO {
 		}
 	}
 	
-	public static BugaBesucher loadBugaBesucherByORMID(PersistentSession session, String username) throws PersistentException {
+	public static BugaBesucher loadBugaBesucherByORMID(PersistentSession session, String listeDerErrungenschaften) throws PersistentException {
 		try {
-			return (BugaBesucher) session.load(pmt.spielspaß.codegenerierung.BugaBesucher.class, username);
+			return (BugaBesucher) session.load(pmt.spielspaß.codegenerierung.BugaBesucher.class, listeDerErrungenschaften);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -73,9 +73,9 @@ public class BugaBesucherDAO {
 		}
 	}
 	
-	public static BugaBesucher getBugaBesucherByORMID(PersistentSession session, String username) throws PersistentException {
+	public static BugaBesucher getBugaBesucherByORMID(PersistentSession session, String listeDerErrungenschaften) throws PersistentException {
 		try {
-			return (BugaBesucher) session.get(pmt.spielspaß.codegenerierung.BugaBesucher.class, username);
+			return (BugaBesucher) session.get(pmt.spielspaß.codegenerierung.BugaBesucher.class, listeDerErrungenschaften);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -83,9 +83,9 @@ public class BugaBesucherDAO {
 		}
 	}
 	
-	public static BugaBesucher loadBugaBesucherByORMID(PersistentSession session, String username, org.hibernate.LockMode lockMode) throws PersistentException {
+	public static BugaBesucher loadBugaBesucherByORMID(PersistentSession session, String listeDerErrungenschaften, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (BugaBesucher) session.load(pmt.spielspaß.codegenerierung.BugaBesucher.class, username, lockMode);
+			return (BugaBesucher) session.load(pmt.spielspaß.codegenerierung.BugaBesucher.class, listeDerErrungenschaften, lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -93,9 +93,9 @@ public class BugaBesucherDAO {
 		}
 	}
 	
-	public static BugaBesucher getBugaBesucherByORMID(PersistentSession session, String username, org.hibernate.LockMode lockMode) throws PersistentException {
+	public static BugaBesucher getBugaBesucherByORMID(PersistentSession session, String listeDerErrungenschaften, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (BugaBesucher) session.get(pmt.spielspaß.codegenerierung.BugaBesucher.class, username, lockMode);
+			return (BugaBesucher) session.get(pmt.spielspaß.codegenerierung.BugaBesucher.class, listeDerErrungenschaften, lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -323,13 +323,25 @@ public class BugaBesucherDAO {
 	
 	public static boolean deleteAndDissociate(pmt.spielspaß.codegenerierung.BugaBesucher bugaBesucher)throws PersistentException {
 		try {
+			if (bugaBesucher.getSpielerMitFreunden() != null) {
+				bugaBesucher.getSpielerMitFreunden().freunde.remove(bugaBesucher);
+			}
+			
+			if (bugaBesucher.getSpielerMitAnfragen() != null) {
+				bugaBesucher.getSpielerMitAnfragen().offeneAnfragen.remove(bugaBesucher);
+			}
+			
 			pmt.spielspaß.codegenerierung.Zeit[] lZeitss = bugaBesucher.zeits.toArray();
 			for(int i = 0; i < lZeitss.length; i++) {
 				lZeitss[i].setBugaBesucher(null);
 			}
-			pmt.spielspaß.codegenerierung.QRCode[] lCodes = bugaBesucher.code.toArray();
-			for(int i = 0; i < lCodes.length; i++) {
-				lCodes[i].setSpieler(null);
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lOffeneAnfragens = bugaBesucher.offeneAnfragen.toArray();
+			for(int i = 0; i < lOffeneAnfragens.length; i++) {
+				lOffeneAnfragens[i].setSpielerMitAnfragen(null);
+			}
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lFreundes = bugaBesucher.freunde.toArray();
+			for(int i = 0; i < lFreundes.length; i++) {
+				lFreundes[i].setSpielerMitFreunden(null);
 			}
 			return delete(bugaBesucher);
 		}
@@ -341,13 +353,25 @@ public class BugaBesucherDAO {
 	
 	public static boolean deleteAndDissociate(pmt.spielspaß.codegenerierung.BugaBesucher bugaBesucher, org.orm.PersistentSession session)throws PersistentException {
 		try {
+			if (bugaBesucher.getSpielerMitFreunden() != null) {
+				bugaBesucher.getSpielerMitFreunden().freunde.remove(bugaBesucher);
+			}
+			
+			if (bugaBesucher.getSpielerMitAnfragen() != null) {
+				bugaBesucher.getSpielerMitAnfragen().offeneAnfragen.remove(bugaBesucher);
+			}
+			
 			pmt.spielspaß.codegenerierung.Zeit[] lZeitss = bugaBesucher.zeits.toArray();
 			for(int i = 0; i < lZeitss.length; i++) {
 				lZeitss[i].setBugaBesucher(null);
 			}
-			pmt.spielspaß.codegenerierung.QRCode[] lCodes = bugaBesucher.code.toArray();
-			for(int i = 0; i < lCodes.length; i++) {
-				lCodes[i].setSpieler(null);
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lOffeneAnfragens = bugaBesucher.offeneAnfragen.toArray();
+			for(int i = 0; i < lOffeneAnfragens.length; i++) {
+				lOffeneAnfragens[i].setSpielerMitAnfragen(null);
+			}
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lFreundes = bugaBesucher.freunde.toArray();
+			for(int i = 0; i < lFreundes.length; i++) {
+				lFreundes[i].setSpielerMitFreunden(null);
 			}
 			try {
 				session.delete(bugaBesucher);

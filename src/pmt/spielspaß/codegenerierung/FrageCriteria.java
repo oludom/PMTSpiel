@@ -23,7 +23,6 @@ public class FrageCriteria extends AbstractORMCriteria {
 	public final StringExpression antwort1;
 	public final StringExpression antwort2;
 	public final StringExpression antwortrichtig;
-	public final StringExpression tippAufAntwort;
 	public final CollectionExpression Besitzer;
 	
 	public FrageCriteria(Criteria criteria) {
@@ -32,7 +31,6 @@ public class FrageCriteria extends AbstractORMCriteria {
 		antwort1 = new StringExpression("antwort1", this);
 		antwort2 = new StringExpression("antwort2", this);
 		antwortrichtig = new StringExpression("antwortrichtig", this);
-		tippAufAntwort = new StringExpression("tippAufAntwort", this);
 		Besitzer = new CollectionExpression("ORM_Besitzer", this);
 	}
 	

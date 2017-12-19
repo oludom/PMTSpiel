@@ -57,8 +57,6 @@ public class Frage {
 	
 	private String antwortrichtig;
 	
-	private String tippAufAntwort;
-	
 	private java.util.Set ORM_besitzer = new java.util.HashSet();
 	
 	public void setFrage(String value) {
@@ -95,14 +93,6 @@ public class Frage {
 	
 	public String getAntwortrichtig() {
 		return antwortrichtig;
-	}
-	
-	public void setTippAufAntwort(String value) {
-		this.tippAufAntwort = value;
-	}
-	
-	public String getTippAufAntwort() {
-		return tippAufAntwort;
 	}
 	
 	private void setORM_Besitzer(java.util.Set value) {

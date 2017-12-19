@@ -18,11 +18,13 @@ public interface ORMConstants extends org.orm.util.ORMBaseConstants {
 	
 	final int KEY_ADMIN_GESPEICHERTEQRCODES = -810810605;
 	
-	final int KEY_BUGABESUCHER_CODE = -543453560;
-	
 	final int KEY_BUGABESUCHER_FREUNDE = -1208013032;
 	
 	final int KEY_BUGABESUCHER_OFFENEANFRAGEN = 328362864;
+	
+	final int KEY_BUGABESUCHER_SPIELERMITANFRAGEN = -1012982565;
+	
+	final int KEY_BUGABESUCHER_SPIELERMITFREUNDEN = -1659292242;
 	
 	final int KEY_BUGABESUCHER_ZEITS = 383309954;
 	
@@ -33,8 +35,6 @@ public interface ORMConstants extends org.orm.util.ORMBaseConstants {
 	final int KEY_KLETTERWAND_ZEITS = -1284513393;
 	
 	final int KEY_QRCODE_AUFGABE = 603324574;
-	
-	final int KEY_QRCODE_SPIELER = -741902449;
 	
 	final int KEY_QRCODE_NEXTQRCODE = 1585259922;
 	

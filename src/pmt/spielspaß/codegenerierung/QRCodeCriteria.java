@@ -22,8 +22,6 @@ public class QRCodeCriteria extends AbstractORMCriteria {
 	public final StringExpression name;
 	public final StringExpression nextQRCodeId;
 	public final AssociationExpression nextQRCode;
-	public final StringExpression SpielerId;
-	public final AssociationExpression Spieler;
 	public final StringExpression AufgabeId;
 	public final AssociationExpression Aufgabe;
 	public final StringExpression Hinweis;
@@ -36,8 +34,6 @@ public class QRCodeCriteria extends AbstractORMCriteria {
 		name = new StringExpression("name", this);
 		nextQRCodeId = new StringExpression("nextQRCode.name", this);
 		nextQRCode = new AssociationExpression("nextQRCode", this);
-		SpielerId = new StringExpression("Spieler.username", this);
-		Spieler = new AssociationExpression("Spieler", this);
 		AufgabeId = new StringExpression("Aufgabe.frage", this);
 		Aufgabe = new AssociationExpression("Aufgabe", this);
 		Hinweis = new StringExpression("Hinweis", this);
@@ -56,10 +52,6 @@ public class QRCodeCriteria extends AbstractORMCriteria {
 	
 	public QRCodeCriteria createNextQRCodeCriteria() {
 		return new QRCodeCriteria(createCriteria("nextQRCode"));
-	}
-	
-	public BugaBesucherCriteria createSpielerCriteria() {
-		return new BugaBesucherCriteria(createCriteria("Spieler"));
 	}
 	
 	public FrageCriteria createAufgabeCriteria() {

@@ -79,6 +79,7 @@ public class RetrieveAndUpdatePMTBUGAData {
 		pmt.spielspaß.codegenerierung.BugaBesucherCriteria pMTSpielSpaßCodeGenerierungBugaBesucherCriteria = new pmt.spielspaß.codegenerierung.BugaBesucherCriteria();
 		// Please uncomment the follow line and fill in parameter(s)
 		//pMTSpielSpaßCodeGenerierungBugaBesucherCriteria.username.eq();
+		//pMTSpielSpaßCodeGenerierungBugaBesucherCriteria.listeDerErrungenschaften.eq();
 		System.out.println(pMTSpielSpaßCodeGenerierungBugaBesucherCriteria.uniqueBugaBesucher());
 		
 	}

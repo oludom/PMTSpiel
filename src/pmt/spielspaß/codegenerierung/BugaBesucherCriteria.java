@@ -21,25 +21,31 @@ import org.orm.criteria.*;
 public class BugaBesucherCriteria extends AbstractORMCriteria {
 	public final StringExpression username;
 	public final StringExpression password;
-	public final StringExpression offeneAnfragenId;
-	public final AssociationExpression offeneAnfragen;
-	public final StringExpression freundeId;
-	public final AssociationExpression freunde;
+	public final StringExpression spielerMitFreundenId;
+	public final AssociationExpression spielerMitFreunden;
+	public final StringExpression spielerMitAnfragenId;
+	public final AssociationExpression spielerMitAnfragen;
 	public final StringExpression profilbild;
+	public final IntegerExpression punktzahl;
+	public final StringExpression listeDerErrungenschaften;
 	public final CollectionExpression zeits;
-	public final CollectionExpression Code;
+	public final CollectionExpression offeneAnfragen;
+	public final CollectionExpression freunde;
 	
 	public BugaBesucherCriteria(Criteria criteria) {
 		super(criteria);
 		username = new StringExpression("username", this);
 		password = new StringExpression("password", this);
-		offeneAnfragenId = new StringExpression("offeneAnfragen.username", this);
-		offeneAnfragen = new AssociationExpression("offeneAnfragen", this);
-		freundeId = new StringExpression("freunde.username", this);
-		freunde = new AssociationExpression("freunde", this);
+		spielerMitFreundenId = new StringExpression("spielerMitFreunden.username", this);
+		spielerMitFreunden = new AssociationExpression("spielerMitFreunden", this);
+		spielerMitAnfragenId = new StringExpression("spielerMitAnfragen.username", this);
+		spielerMitAnfragen = new AssociationExpression("spielerMitAnfragen", this);
 		profilbild = new StringExpression("profilbild", this);
+		punktzahl = new IntegerExpression("punktzahl", this);
+		listeDerErrungenschaften = new StringExpression("listeDerErrungenschaften", this);
 		zeits = new CollectionExpression("ORM_Zeits", this);
-		Code = new CollectionExpression("ORM_Code", this);
+		offeneAnfragen = new CollectionExpression("ORM_OffeneAnfragen", this);
+		freunde = new CollectionExpression("ORM_Freunde", this);
 	}
 	
 	public BugaBesucherCriteria(PersistentSession session) {
@@ -50,20 +56,24 @@ public class BugaBesucherCriteria extends AbstractORMCriteria {
 		this(pmt.spielspaß.codegenerierung.PMTBUGAPersistentManager.instance().getSession());
 	}
 	
-	public BugaBesucherCriteria createOffeneAnfragenCriteria() {
-		return new BugaBesucherCriteria(createCriteria("offeneAnfragen"));
+	public BugaBesucherCriteria createSpielerMitFreundenCriteria() {
+		return new BugaBesucherCriteria(createCriteria("spielerMitFreunden"));
 	}
 	
-	public BugaBesucherCriteria createFreundeCriteria() {
-		return new BugaBesucherCriteria(createCriteria("freunde"));
+	public BugaBesucherCriteria createSpielerMitAnfragenCriteria() {
+		return new BugaBesucherCriteria(createCriteria("spielerMitAnfragen"));
 	}
 	
 	public pmt.spielspaß.codegenerierung.ZeitCriteria createZeitsCriteria() {
 		return new pmt.spielspaß.codegenerierung.ZeitCriteria(createCriteria("ORM_Zeits"));
 	}
 	
-	public pmt.spielspaß.codegenerierung.QRCodeCriteria createCodeCriteria() {
-		return new pmt.spielspaß.codegenerierung.QRCodeCriteria(createCriteria("ORM_Code"));
+	public pmt.spielspaß.codegenerierung.BugaBesucherCriteria createOffeneAnfragenCriteria() {
+		return new pmt.spielspaß.codegenerierung.BugaBesucherCriteria(createCriteria("ORM_OffeneAnfragen"));
+	}
+	
+	public pmt.spielspaß.codegenerierung.BugaBesucherCriteria createFreundeCriteria() {
+		return new pmt.spielspaß.codegenerierung.BugaBesucherCriteria(createCriteria("ORM_Freunde"));
 	}
 	
 	public BugaBesucher uniqueBugaBesucher() {

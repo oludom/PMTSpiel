@@ -12,8 +12,6 @@ License Type: Academic
 		</id>
 		<many-to-one name="nextQRCode" column="QRCodeName" class="pmt.spielspaß.codegenerierung.QRCode" cascade="save-update,lock" unique="true" not-null="false" lazy="proxy" access="field">
 		</many-to-one>
-		<many-to-one name="Spieler" cascade="lock" column="BenutzerUsername" class="pmt.spielspaß.codegenerierung.BugaBesucher" not-null="false" lazy="proxy" access="field">
-		</many-to-one>
 		<many-to-one name="Aufgabe" cascade="lock" column="FrageFrage" class="pmt.spielspaß.codegenerierung.Frage" not-null="true" lazy="proxy" access="field">
 		</many-to-one>
 		<property name="Hinweis" column="Hinweis" type="string" length="255" not-null="false" lazy="false"/>

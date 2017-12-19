@@ -7,7 +7,7 @@ License Type: Academic
 <hibernate-mapping>
 	<class name="pmt.spielspaß.codegenerierung.Benutzer" table="Benutzer" lazy="false" discriminator-value="Benutzer">
 		<id name="username" column="Username" type="string">
-			<generator class="assigned">
+			<generator class="native">
 			</generator>
 		</id>
 		<discriminator column="Discriminator" type="string"/>
@@ -25,23 +25,23 @@ License Type: Academic
 			</set>
 		</subclass>
 		<subclass name="pmt.spielspaß.codegenerierung.BugaBesucher" discriminator-value="user" lazy="false">
-			<many-to-one name="offeneAnfragen" column="KletterwandAdmin" class="pmt.spielspaß.codegenerierung.BugaBesucher" cascade="save-update,lock" unique="true" not-null="false" lazy="proxy" access="field">
+			<many-to-one name="spielerMitFreunden" cascade="lock" column="UserOffeneAnfragen" class="pmt.spielspaß.codegenerierung.BugaBesucher" not-null="false" lazy="proxy" access="field">
 			</many-to-one>
-			<many-to-one name="freunde" column="QRCodeAdmin" class="pmt.spielspaß.codegenerierung.BugaBesucher" cascade="save-update,lock" unique="true" not-null="false" lazy="proxy" access="field">
+			<many-to-one name="spielerMitAnfragen" cascade="lock" column="UserFreunde" class="pmt.spielspaß.codegenerierung.BugaBesucher" not-null="false" lazy="proxy" access="field">
 			</many-to-one>
 			<property name="profilbild" column="Profilbild" type="string" length="255" not-null="false" lazy="false"/>
-			<array name="listeDerErrungenschaften" table="Benutzer_listeDerErrungenschaften" cascade="all">
-				<key column="BenutzerUsername"/>
-				<index column="BenutzerIndex" type="integer"/>
-				<element column="ListeDerErrungenschaften" type="string" length="255"/>
-			</array>
+			<property name="punktzahl" column="Punktzahl" type="integer" length="10" not-null="false" lazy="false"/>
 			<set name="ORM_Zeits" lazy="true" cascade="save-update,lock" inverse="true">
-				<key column="BenutzerUsername" not-null="true"/>
+				<key column="BenutzerUsername" not-null="false"/>
 				<one-to-many class="pmt.spielspaß.codegenerierung.Zeit"/>
 			</set>
-			<set name="ORM_Code" lazy="true" cascade="save-update,lock" inverse="true">
-				<key column="BenutzerUsername" not-null="false"/>
-				<one-to-many class="pmt.spielspaß.codegenerierung.QRCode"/>
+			<set name="ORM_OffeneAnfragen" lazy="true" cascade="save-update,lock" inverse="true">
+				<key column="UserFreunde" not-null="false"/>
+				<one-to-many class="pmt.spielspaß.codegenerierung.BugaBesucher"/>
+			</set>
+			<set name="ORM_Freunde" lazy="true" cascade="save-update,lock" inverse="true">
+				<key column="UserOffeneAnfragen" not-null="false"/>
+				<one-to-many class="pmt.spielspaß.codegenerierung.BugaBesucher"/>
 			</set>
 		</subclass>
 	</class>

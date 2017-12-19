@@ -323,10 +323,6 @@ public class QRCodeDAO {
 	
 	public static boolean deleteAndDissociate(pmt.spielspaß.codegenerierung.QRCode qRCode)throws PersistentException {
 		try {
-			if (qRCode.getSpieler() != null) {
-				qRCode.getSpieler().code.remove(qRCode);
-			}
-			
 			if (qRCode.getAufgabe() != null) {
 				qRCode.getAufgabe().besitzer.remove(qRCode);
 			}
@@ -345,10 +341,6 @@ public class QRCodeDAO {
 	
 	public static boolean deleteAndDissociate(pmt.spielspaß.codegenerierung.QRCode qRCode, org.orm.PersistentSession session)throws PersistentException {
 		try {
-			if (qRCode.getSpieler() != null) {
-				qRCode.getSpieler().code.remove(qRCode);
-			}
-			
 			if (qRCode.getAufgabe() != null) {
 				qRCode.getAufgabe().besitzer.remove(qRCode);
 			}

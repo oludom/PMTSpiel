@@ -23,7 +23,6 @@ public class FrageDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression antwort1;
 	public final StringExpression antwort2;
 	public final StringExpression antwortrichtig;
-	public final StringExpression tippAufAntwort;
 	public final CollectionExpression Besitzer;
 	
 	public FrageDetachedCriteria() {
@@ -32,7 +31,6 @@ public class FrageDetachedCriteria extends AbstractORMDetachedCriteria {
 		antwort1 = new StringExpression("antwort1", this.getDetachedCriteria());
 		antwort2 = new StringExpression("antwort2", this.getDetachedCriteria());
 		antwortrichtig = new StringExpression("antwortrichtig", this.getDetachedCriteria());
-		tippAufAntwort = new StringExpression("tippAufAntwort", this.getDetachedCriteria());
 		Besitzer = new CollectionExpression("ORM_Besitzer", this.getDetachedCriteria());
 	}
 	
@@ -42,7 +40,6 @@ public class FrageDetachedCriteria extends AbstractORMDetachedCriteria {
 		antwort1 = new StringExpression("antwort1", this.getDetachedCriteria());
 		antwort2 = new StringExpression("antwort2", this.getDetachedCriteria());
 		antwortrichtig = new StringExpression("antwortrichtig", this.getDetachedCriteria());
-		tippAufAntwort = new StringExpression("tippAufAntwort", this.getDetachedCriteria());
 		Besitzer = new CollectionExpression("ORM_Besitzer", this.getDetachedCriteria());
 	}
 	

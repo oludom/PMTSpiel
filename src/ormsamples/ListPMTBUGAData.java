@@ -144,6 +144,7 @@ public class ListPMTBUGAData {
 		pmt.spielspaß.codegenerierung.BugaBesucherCriteria pMTSpielSpaßCodeGenerierungBugaBesucherCriteria = new pmt.spielspaß.codegenerierung.BugaBesucherCriteria();
 		// Please uncomment the follow line and fill in parameter(s) 
 		//pMTSpielSpaßCodeGenerierungBugaBesucherCriteria.username.eq();
+		//pMTSpielSpaßCodeGenerierungBugaBesucherCriteria.listeDerErrungenschaften.eq();
 		pMTSpielSpaßCodeGenerierungBugaBesucherCriteria.setMaxResults(ROW_COUNT);
 		pmt.spielspaß.codegenerierung.BugaBesucher[] pMTSpielSpaßCodeGenerierungBugaBesuchers = pMTSpielSpaßCodeGenerierungBugaBesucherCriteria.listBugaBesucher();
 		length =pMTSpielSpaßCodeGenerierungBugaBesuchers== null ? 0 : Math.min(pMTSpielSpaßCodeGenerierungBugaBesuchers.length, ROW_COUNT); 

@@ -21,20 +21,23 @@ public class BugaBesucher extends pmt.spielspaß.codegenerierung.Benutzer {
 		if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_ZEITS) {
 			return ORM_zeits;
 		}
-		else if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_CODE) {
-			return ORM_code;
+		else if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_OFFENEANFRAGEN) {
+			return ORM_offeneAnfragen;
+		}
+		else if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_FREUNDE) {
+			return ORM_freunde;
 		}
 		
 		return null;
 	}
 	
 	private void this_setOwner(Object owner, int key) {
-		if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_FREUNDE) {
-			this.freunde = (pmt.spielspaß.codegenerierung.BugaBesucher) owner;
+		if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_SPIELERMITANFRAGEN) {
+			this.spielerMitAnfragen = (pmt.spielspaß.codegenerierung.BugaBesucher) owner;
 		}
 		
-		else if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_OFFENEANFRAGEN) {
-			this.offeneAnfragen = (pmt.spielspaß.codegenerierung.BugaBesucher) owner;
+		else if (key == pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_SPIELERMITFREUNDEN) {
+			this.spielerMitFreunden = (pmt.spielspaß.codegenerierung.BugaBesucher) owner;
 		}
 	}
 	
@@ -49,17 +52,21 @@ public class BugaBesucher extends pmt.spielspaß.codegenerierung.Benutzer {
 		
 	};
 	
-	private pmt.spielspaß.codegenerierung.BugaBesucher offeneAnfragen;
+	private pmt.spielspaß.codegenerierung.BugaBesucher spielerMitFreunden;
 	
-	private pmt.spielspaß.codegenerierung.BugaBesucher freunde;
+	private pmt.spielspaß.codegenerierung.BugaBesucher spielerMitAnfragen;
 	
 	private String profilbild;
 	
-	private String[] listeDerErrungenschaften;
+	private int punktzahl;
+	
+	private String listeDerErrungenschaften;
 	
 	private java.util.Set ORM_zeits = new java.util.HashSet();
 	
-	private java.util.Set ORM_code = new java.util.HashSet();
+	private java.util.Set ORM_offeneAnfragen = new java.util.HashSet();
+	
+	private java.util.Set ORM_freunde = new java.util.HashSet();
 	
 	public void setProfilbild(String value) {
 		this.profilbild = value;
@@ -69,12 +76,72 @@ public class BugaBesucher extends pmt.spielspaß.codegenerierung.Benutzer {
 		return profilbild;
 	}
 	
-	public void setListeDerErrungenschaften(String[] value) {
+	public void setListeDerErrungenschaften(String value) {
 		this.listeDerErrungenschaften = value;
 	}
 	
-	public String[] getListeDerErrungenschaften() {
+	public String getListeDerErrungenschaften() {
 		return listeDerErrungenschaften;
+	}
+	
+	public String getORMID() {
+		return getListeDerErrungenschaften();
+	}
+	
+	public void setPunktzahl(int value) {
+		this.punktzahl = value;
+	}
+	
+	public int getPunktzahl() {
+		return punktzahl;
+	}
+	
+	public void setSpielerMitAnfragen(pmt.spielspaß.codegenerierung.BugaBesucher value) {
+		if (spielerMitAnfragen != null) {
+			spielerMitAnfragen.offeneAnfragen.remove(this);
+		}
+		if (value != null) {
+			value.offeneAnfragen.add(this);
+		}
+	}
+	
+	public pmt.spielspaß.codegenerierung.BugaBesucher getSpielerMitAnfragen() {
+		return spielerMitAnfragen;
+	}
+	
+	/**
+	 * This method is for internal use only.
+	 */
+	public void setORM_SpielerMitAnfragen(pmt.spielspaß.codegenerierung.BugaBesucher value) {
+		this.spielerMitAnfragen = value;
+	}
+	
+	private pmt.spielspaß.codegenerierung.BugaBesucher getORM_SpielerMitAnfragen() {
+		return spielerMitAnfragen;
+	}
+	
+	public void setSpielerMitFreunden(pmt.spielspaß.codegenerierung.BugaBesucher value) {
+		if (spielerMitFreunden != null) {
+			spielerMitFreunden.freunde.remove(this);
+		}
+		if (value != null) {
+			value.freunde.add(this);
+		}
+	}
+	
+	public pmt.spielspaß.codegenerierung.BugaBesucher getSpielerMitFreunden() {
+		return spielerMitFreunden;
+	}
+	
+	/**
+	 * This method is for internal use only.
+	 */
+	public void setORM_SpielerMitFreunden(pmt.spielspaß.codegenerierung.BugaBesucher value) {
+		this.spielerMitFreunden = value;
+	}
+	
+	private pmt.spielspaß.codegenerierung.BugaBesucher getORM_SpielerMitFreunden() {
+		return spielerMitFreunden;
 	}
 	
 	public pmt.spielspaß.codegenerierung.Kletterwand[] getKletterwands() {
@@ -119,31 +186,25 @@ public class BugaBesucher extends pmt.spielspaß.codegenerierung.Benutzer {
 	
 	public final pmt.spielspaß.codegenerierung.ZeitSetCollection zeits = new pmt.spielspaß.codegenerierung.ZeitSetCollection(this, _ormAdapter, pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_ZEITS, pmt.spielspaß.codegenerierung.ORMConstants.KEY_ZEIT_BUGABESUCHER, pmt.spielspaß.codegenerierung.ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	private void setORM_Code(java.util.Set value) {
-		this.ORM_code = value;
+	private void setORM_OffeneAnfragen(java.util.Set value) {
+		this.ORM_offeneAnfragen = value;
 	}
 	
-	private java.util.Set getORM_Code() {
-		return ORM_code;
+	private java.util.Set getORM_OffeneAnfragen() {
+		return ORM_offeneAnfragen;
 	}
 	
-	public final pmt.spielspaß.codegenerierung.QRCodeSetCollection code = new pmt.spielspaß.codegenerierung.QRCodeSetCollection(this, _ormAdapter, pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_CODE, pmt.spielspaß.codegenerierung.ORMConstants.KEY_QRCODE_SPIELER, pmt.spielspaß.codegenerierung.ORMConstants.KEY_MUL_ONE_TO_MANY);
+	public final pmt.spielspaß.codegenerierung.BugaBesucherSetCollection offeneAnfragen = new pmt.spielspaß.codegenerierung.BugaBesucherSetCollection(this, _ormAdapter, pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_OFFENEANFRAGEN, pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_SPIELERMITANFRAGEN, pmt.spielspaß.codegenerierung.ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	public void setFreunde(pmt.spielspaß.codegenerierung.BugaBesucher value) {
-		this.freunde = value;
+	private void setORM_Freunde(java.util.Set value) {
+		this.ORM_freunde = value;
 	}
 	
-	public pmt.spielspaß.codegenerierung.BugaBesucher getFreunde() {
-		return freunde;
+	private java.util.Set getORM_Freunde() {
+		return ORM_freunde;
 	}
 	
-	public void setOffeneAnfragen(pmt.spielspaß.codegenerierung.BugaBesucher value) {
-		this.offeneAnfragen = value;
-	}
-	
-	public pmt.spielspaß.codegenerierung.BugaBesucher getOffeneAnfragen() {
-		return offeneAnfragen;
-	}
+	public final pmt.spielspaß.codegenerierung.BugaBesucherSetCollection freunde = new pmt.spielspaß.codegenerierung.BugaBesucherSetCollection(this, _ormAdapter, pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_FREUNDE, pmt.spielspaß.codegenerierung.ORMConstants.KEY_BUGABESUCHER_SPIELERMITFREUNDEN, pmt.spielspaß.codegenerierung.ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public String toString() {
 		return super.toString();
