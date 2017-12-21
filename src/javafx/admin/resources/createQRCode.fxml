@@ -118,7 +118,7 @@
             </AnchorPane>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="QRReset" mnemonicParsing="false" onAction="#getCode" prefWidth="300.0" text="QR-Code speichern">
+                  <Button fx:id="QRReset" mnemonicParsing="false" onAction="#getCode" prefWidth="300.0" text="QR-Code drucken">
                      <font>
                         <Font size="20.0" />
                      </font>
