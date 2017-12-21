@@ -6,7 +6,7 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.fxml.*;
 
-public class RunJavaFXApplications extends Application {
+public class RunSendFriendrequest extends Application {
 
   public void start(Stage primaryStage) {
     try {

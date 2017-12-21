@@ -15,7 +15,8 @@ import pmt.spielspaß.codegenerierung.*;
 
 public class FreundschaftsanfragenSendenController implements Initializable {
 
-  @FXML Label headline;
+  @FXML
+  Label headline;
   @FXML
   TextField suchfeldAnfragen;
   @FXML
@@ -49,7 +50,6 @@ public class FreundschaftsanfragenSendenController implements Initializable {
   ArrayList<Benutzer> arrayUsers = new ArrayList<>();
   Benutzer jetzigerUser;
 
-
   public FreundschaftsanfragenSendenController() {
 
   }
@@ -68,7 +68,7 @@ public class FreundschaftsanfragenSendenController implements Initializable {
         } else {
           jetzigerUser = nutzers[i];
           String text = headline.getText();
-          headline.setText(jetzigerUser.username+": "+text);
+          headline.setText(jetzigerUser.username + ": " + text);
         }
       }
     } catch (PersistentException e) {
@@ -121,8 +121,35 @@ public class FreundschaftsanfragenSendenController implements Initializable {
       }
     } else if (list.size() == 10) { //genau 10 User ausgegeben
 
-    } else { //Mehr als 10 User ausgeben
+      ladeMehrNamen.setVisible(false);
 
+      for (int i = 0; i < spielerPanes.size(); i++) {
+        AnchorPane pane = spielerPanes.get(i);
+        List<Node> kids = pane.getChildren();
+        Label spielerName = new Label();
+
+        for (int j = 0; j < kids.size(); j++) {
+          if (kids.get(j).getClass().equals(Label.class)) {
+            spielerName = (Label) kids.get(j);
+          }
+        }
+
+        spielerName.setText(list.get(i));
+      }
+    } else { //Mehr als 10 User ausgeben
+      for (int i = 0; i < spielerPanes.size(); i++) {
+        AnchorPane pane = spielerPanes.get(i);
+        List<Node> kids = pane.getChildren();
+        Label spielerName = new Label();
+
+        for (int j = 0; j < kids.size(); j++) {
+          if (kids.get(j).getClass().equals(Label.class)) {
+            spielerName = (Label) kids.get(j);
+          }
+        }
+
+        spielerName.setText(list.get(i));
+      }
     }
   }
 
@@ -130,7 +157,8 @@ public class FreundschaftsanfragenSendenController implements Initializable {
 
     System.out.println("Loading 'sucheNachNamen'");
 
-    if (suchfeldAnfragen.getText().equals("Suchen...") || suchfeldAnfragen.getText().equals(null)) {
+    if (suchfeldAnfragen.getText().equals("Namen eingeben...") || suchfeldAnfragen.getText()
+        .equals(null)) {
 
     } else {
       String searchedObject = suchfeldAnfragen.getText();
@@ -162,10 +190,20 @@ public class FreundschaftsanfragenSendenController implements Initializable {
       }
     }
     wantedUser.offeneAnfragen.add((BugaBesucher) jetzigerUser);
+
+    // Müsste eig das obere sein, aber vpp hat die Tabellennamen vertauscht
+    //wantedUser.freunde.add((BugaBesucher) jetzigerUser);
+
     System.out.println("Sent friend request to " + spielerName.getText());
 
     source.setText("Anfrage gesendet");
     source.setDisable(true);
+
+    System.out.print("[");
+    for (int i = 0; i < wantedUser.offeneAnfragen.size(); i++) {
+      System.out.print(wantedUser.offeneAnfragen.toArray()[i]+", ");
+    }
+    System.out.println("]");
 
     try {
       BugaBesucherDAO.save(wantedUser);
@@ -185,6 +223,4 @@ public class FreundschaftsanfragenSendenController implements Initializable {
     }
     return foundStrings;
   }
-
-
 }
