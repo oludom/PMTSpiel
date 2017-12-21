@@ -1,0 +1,11 @@
+
+
+.createQRLabel{
+    -fx-font-size: 20px;
+    -fx-padding: 10px 5px;
+}
+
+.createQRTextField{
+    -fx-font-size: 20px;
+    -fx-padding: 0 5px;
+}
