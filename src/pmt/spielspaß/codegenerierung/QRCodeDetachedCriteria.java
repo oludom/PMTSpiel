@@ -63,8 +63,8 @@ public class QRCodeDetachedCriteria extends AbstractORMDetachedCriteria {
 		return new pmt.spielspaß.codegenerierung.FrageDetachedCriteria(createCriteria("Aufgabe"));
 	}
 	
-	public pmt.spielspaß.codegenerierung.AdminDetachedCriteria createSuperuserCriteria() {
-		return new pmt.spielspaß.codegenerierung.AdminDetachedCriteria(createCriteria("ORM_Superuser"));
+	public pmt.spielspaß.codegenerierung.BenutzerDetachedCriteria createSuperuserCriteria() {
+		return new pmt.spielspaß.codegenerierung.BenutzerDetachedCriteria(createCriteria("ORM_Superuser"));
 	}
 	
 	public QRCode uniqueQRCode(PersistentSession session) {

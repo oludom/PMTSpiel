@@ -121,7 +121,7 @@ public class QRCode {
 		return ORM_superuser;
 	}
 	
-	public final pmt.spielspaß.codegenerierung.AdminSetCollection superuser = new pmt.spielspaß.codegenerierung.AdminSetCollection(this, _ormAdapter, pmt.spielspaß.codegenerierung.ORMConstants.KEY_QRCODE_SUPERUSER, pmt.spielspaß.codegenerierung.ORMConstants.KEY_ADMIN_GESPEICHERTEQRCODES, pmt.spielspaß.codegenerierung.ORMConstants.KEY_MUL_MANY_TO_MANY);
+	public final pmt.spielspaß.codegenerierung.BenutzerSetCollection superuser = new pmt.spielspaß.codegenerierung.BenutzerSetCollection(this, _ormAdapter, pmt.spielspaß.codegenerierung.ORMConstants.KEY_QRCODE_SUPERUSER, pmt.spielspaß.codegenerierung.ORMConstants.KEY_BENUTZER_GESPEICHERTEQRCODES, pmt.spielspaß.codegenerierung.ORMConstants.KEY_MUL_MANY_TO_MANY);
 	
 	public void setAufgabe(pmt.spielspaß.codegenerierung.Frage value) {
 		if (Aufgabe != null) {

@@ -1,4 +1,4 @@
-package friendrequest;
+package javafx.friendrequest;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -189,7 +189,7 @@ public class FreundschaftsanfragenSendenController implements Initializable {
         break;
       }
     }
-    wantedUser.offeneAnfragen.add((BugaBesucher) jetzigerUser);
+//    wantedUser.offeneAnfragen.add((BugaBesucher) jetzigerUser);
 
     // Müsste eig das obere sein, aber vpp hat die Tabellennamen vertauscht
     //wantedUser.freunde.add((BugaBesucher) jetzigerUser);
@@ -199,11 +199,11 @@ public class FreundschaftsanfragenSendenController implements Initializable {
     source.setText("Anfrage gesendet");
     source.setDisable(true);
 
-    System.out.print("[");
-    for (int i = 0; i < wantedUser.offeneAnfragen.size(); i++) {
-      System.out.print(wantedUser.offeneAnfragen.toArray()[i]+", ");
-    }
-    System.out.println("]");
+//    System.out.print("[");
+//    for (int i = 0; i < wantedUser.offeneAnfragen.size(); i++) {
+//      System.out.print(wantedUser.offeneAnfragen.toArray()[i]+", ");
+//    }
+//    System.out.println("]");
 
     try {
       BugaBesucherDAO.save(wantedUser);

@@ -321,6 +321,63 @@ public class BenutzerDAO {
 		}
 	}
 	
+	public static boolean deleteAndDissociate(pmt.spielspaß.codegenerierung.Benutzer benutzer)throws PersistentException {
+		if (benutzer instanceof pmt.spielspaß.codegenerierung.Admin) {
+			return AdminDAO.deleteAndDissociate((Admin) benutzer);
+		}
+		
+		if (benutzer instanceof BugaBesucher) {
+			return BugaBesucherDAO.deleteAndDissociate((BugaBesucher) benutzer);
+		}
+		
+		try {
+			pmt.spielspaß.codegenerierung.Kletterwand[] lGespeicherteKletterwändes = benutzer.gespeicherteKletterwände.toArray();
+			for(int i = 0; i < lGespeicherteKletterwändes.length; i++) {
+				lGespeicherteKletterwändes[i].superuser.remove(benutzer);
+			}
+			pmt.spielspaß.codegenerierung.QRCode[] lGespeicherteQRCodess = benutzer.gespeicherteQRCodes.toArray();
+			for(int i = 0; i < lGespeicherteQRCodess.length; i++) {
+				lGespeicherteQRCodess[i].superuser.remove(benutzer);
+			}
+			return delete(benutzer);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw new PersistentException(e);
+		}
+	}
+	
+	public static boolean deleteAndDissociate(pmt.spielspaß.codegenerierung.Benutzer benutzer, org.orm.PersistentSession session)throws PersistentException {
+		if (benutzer instanceof Admin) {
+			return AdminDAO.deleteAndDissociate((Admin) benutzer, session);
+		}
+		
+		if (benutzer instanceof BugaBesucher) {
+			return BugaBesucherDAO.deleteAndDissociate((BugaBesucher) benutzer, session);
+		}
+		
+		try {
+			pmt.spielspaß.codegenerierung.Kletterwand[] lGespeicherteKletterwändes = benutzer.gespeicherteKletterwände.toArray();
+			for(int i = 0; i < lGespeicherteKletterwändes.length; i++) {
+				lGespeicherteKletterwändes[i].superuser.remove(benutzer);
+			}
+			pmt.spielspaß.codegenerierung.QRCode[] lGespeicherteQRCodess = benutzer.gespeicherteQRCodes.toArray();
+			for(int i = 0; i < lGespeicherteQRCodess.length; i++) {
+				lGespeicherteQRCodess[i].superuser.remove(benutzer);
+			}
+			try {
+				session.delete(benutzer);
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw new PersistentException(e);
+		}
+	}
+	
 	public static boolean refresh(pmt.spielspaß.codegenerierung.Benutzer benutzer) throws PersistentException {
 		try {
 			pmt.spielspaß.codegenerierung.PMTBUGAPersistentManager.instance().getSession().refresh(benutzer);

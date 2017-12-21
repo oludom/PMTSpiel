@@ -12,36 +12,46 @@ License Type: Academic
 		</id>
 		<discriminator column="Discriminator" type="string"/>
 		<property name="password" column="Password" type="string" length="255" not-null="false" lazy="false"/>
+		<set name="ORM_GespeicherteKletterwände" table="Benutzer_Kletterwand" lazy="true" cascade="save-update,lock">
+			<key column="BenutzerUsername" not-null="true"/>
+			<many-to-many column="KletterwandName" class="pmt.spielspaß.codegenerierung.Kletterwand">
+			</many-to-many>
+		</set>
+		<set name="ORM_GespeicherteQRCodes" table="Benutzer_QRCode" lazy="true" cascade="save-update,lock">
+			<key column="BenutzerUsername" not-null="true"/>
+			<many-to-many column="QRCodeName" class="pmt.spielspaß.codegenerierung.QRCode">
+			</many-to-many>
+		</set>
 		<subclass name="pmt.spielspaß.codegenerierung.Admin" discriminator-value="admin" lazy="false">
-			<set name="ORM_GespeicherteKletterwände" table="Benutzer_Kletterwand" lazy="true" cascade="save-update,lock">
-				<key column="BenutzerUsername" not-null="true"/>
-				<many-to-many column="KletterwandName" class="pmt.spielspaß.codegenerierung.Kletterwand">
-				</many-to-many>
-			</set>
-			<set name="ORM_GespeicherteQRCodes" table="Benutzer_QRCode" lazy="true" cascade="save-update,lock">
-				<key column="BenutzerUsername" not-null="true"/>
-				<many-to-many column="QRCodeName" class="pmt.spielspaß.codegenerierung.QRCode">
-				</many-to-many>
-			</set>
 		</subclass>
 		<subclass name="pmt.spielspaß.codegenerierung.BugaBesucher" discriminator-value="user" lazy="false">
-			<many-to-one name="spielerMitFreunden" cascade="lock" column="UserOffeneAnfragen" class="pmt.spielspaß.codegenerierung.BugaBesucher" not-null="false" lazy="proxy" access="field">
-			</many-to-one>
-			<many-to-one name="spielerMitAnfragen" cascade="lock" column="UserFreunde" class="pmt.spielspaß.codegenerierung.BugaBesucher" not-null="false" lazy="proxy" access="field">
-			</many-to-one>
+			<set name="ORM_Angefragter" table="Benutzer_offeneAnfragen" lazy="true" cascade="save-update,lock" inverse="true">
+				<key column="AnfragenVon" not-null="true"/>
+				<many-to-many column="Username" class="pmt.spielspaß.codegenerierung.BugaBesucher">
+				</many-to-many>
+			</set>
 			<property name="profilbild" column="Profilbild" type="string" length="255" not-null="false" lazy="false"/>
-			<property name="punktzahl" column="Punktzahl" type="integer" length="10" not-null="false" lazy="false"/>
+			<property name="punktzahl" type="integer" length="10" not-null="false" lazy="false">
+				<column name="Punktzahl" default="0"/>
+			</property>
+			<set name="ORM_BugaBesucher" table="Benutzer_freunde" lazy="true" cascade="save-update,lock" inverse="true">
+				<key column="Freunde" not-null="true"/>
+				<many-to-many column="Username" class="pmt.spielspaß.codegenerierung.BugaBesucher">
+				</many-to-many>
+			</set>
 			<set name="ORM_Zeits" lazy="true" cascade="save-update,lock" inverse="true">
 				<key column="BenutzerUsername" not-null="false"/>
 				<one-to-many class="pmt.spielspaß.codegenerierung.Zeit"/>
 			</set>
-			<set name="ORM_OffeneAnfragen" lazy="true" cascade="save-update,lock" inverse="true">
-				<key column="UserFreunde" not-null="false"/>
-				<one-to-many class="pmt.spielspaß.codegenerierung.BugaBesucher"/>
+			<set name="ORM_Anfragen" table="Benutzer_offeneAnfragen" lazy="true" cascade="save-update,lock">
+				<key column="Username" not-null="true"/>
+				<many-to-many column="AnfragenVon" class="pmt.spielspaß.codegenerierung.BugaBesucher">
+				</many-to-many>
 			</set>
-			<set name="ORM_Freunde" lazy="true" cascade="save-update,lock" inverse="true">
-				<key column="UserOffeneAnfragen" not-null="false"/>
-				<one-to-many class="pmt.spielspaß.codegenerierung.BugaBesucher"/>
+			<set name="ORM_Freunde" table="Benutzer_freunde" lazy="true" cascade="save-update,lock">
+				<key column="Username" not-null="true"/>
+				<many-to-many column="Freunde" class="pmt.spielspaß.codegenerierung.BugaBesucher">
+				</many-to-many>
 			</set>
 		</subclass>
 	</class>

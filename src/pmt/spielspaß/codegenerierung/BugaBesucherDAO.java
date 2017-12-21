@@ -323,25 +323,33 @@ public class BugaBesucherDAO {
 	
 	public static boolean deleteAndDissociate(pmt.spielspaß.codegenerierung.BugaBesucher bugaBesucher)throws PersistentException {
 		try {
-			if (bugaBesucher.getSpielerMitFreunden() != null) {
-				bugaBesucher.getSpielerMitFreunden().freunde.remove(bugaBesucher);
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lAngefragters = bugaBesucher.angefragter.toArray();
+			for(int i = 0; i < lAngefragters.length; i++) {
+				lAngefragters[i].anfragen.remove(bugaBesucher);
 			}
-			
-			if (bugaBesucher.getSpielerMitAnfragen() != null) {
-				bugaBesucher.getSpielerMitAnfragen().offeneAnfragen.remove(bugaBesucher);
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lBugaBesuchers = bugaBesucher.bugaBesucher.toArray();
+			for(int i = 0; i < lBugaBesuchers.length; i++) {
+				lBugaBesuchers[i].freunde.remove(bugaBesucher);
 			}
-			
 			pmt.spielspaß.codegenerierung.Zeit[] lZeitss = bugaBesucher.zeits.toArray();
 			for(int i = 0; i < lZeitss.length; i++) {
 				lZeitss[i].setBugaBesucher(null);
 			}
-			pmt.spielspaß.codegenerierung.BugaBesucher[] lOffeneAnfragens = bugaBesucher.offeneAnfragen.toArray();
-			for(int i = 0; i < lOffeneAnfragens.length; i++) {
-				lOffeneAnfragens[i].setSpielerMitAnfragen(null);
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lAnfragens = bugaBesucher.anfragen.toArray();
+			for(int i = 0; i < lAnfragens.length; i++) {
+				lAnfragens[i].angefragter.remove(bugaBesucher);
 			}
 			pmt.spielspaß.codegenerierung.BugaBesucher[] lFreundes = bugaBesucher.freunde.toArray();
 			for(int i = 0; i < lFreundes.length; i++) {
-				lFreundes[i].setSpielerMitFreunden(null);
+				lFreundes[i].bugaBesucher.remove(bugaBesucher);
+			}
+			pmt.spielspaß.codegenerierung.Kletterwand[] lGespeicherteKletterwändes = bugaBesucher.gespeicherteKletterwände.toArray();
+			for(int i = 0; i < lGespeicherteKletterwändes.length; i++) {
+				lGespeicherteKletterwändes[i].superuser.remove(bugaBesucher);
+			}
+			pmt.spielspaß.codegenerierung.QRCode[] lGespeicherteQRCodess = bugaBesucher.gespeicherteQRCodes.toArray();
+			for(int i = 0; i < lGespeicherteQRCodess.length; i++) {
+				lGespeicherteQRCodess[i].superuser.remove(bugaBesucher);
 			}
 			return delete(bugaBesucher);
 		}
@@ -353,25 +361,33 @@ public class BugaBesucherDAO {
 	
 	public static boolean deleteAndDissociate(pmt.spielspaß.codegenerierung.BugaBesucher bugaBesucher, org.orm.PersistentSession session)throws PersistentException {
 		try {
-			if (bugaBesucher.getSpielerMitFreunden() != null) {
-				bugaBesucher.getSpielerMitFreunden().freunde.remove(bugaBesucher);
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lAngefragters = bugaBesucher.angefragter.toArray();
+			for(int i = 0; i < lAngefragters.length; i++) {
+				lAngefragters[i].anfragen.remove(bugaBesucher);
 			}
-			
-			if (bugaBesucher.getSpielerMitAnfragen() != null) {
-				bugaBesucher.getSpielerMitAnfragen().offeneAnfragen.remove(bugaBesucher);
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lBugaBesuchers = bugaBesucher.bugaBesucher.toArray();
+			for(int i = 0; i < lBugaBesuchers.length; i++) {
+				lBugaBesuchers[i].freunde.remove(bugaBesucher);
 			}
-			
 			pmt.spielspaß.codegenerierung.Zeit[] lZeitss = bugaBesucher.zeits.toArray();
 			for(int i = 0; i < lZeitss.length; i++) {
 				lZeitss[i].setBugaBesucher(null);
 			}
-			pmt.spielspaß.codegenerierung.BugaBesucher[] lOffeneAnfragens = bugaBesucher.offeneAnfragen.toArray();
-			for(int i = 0; i < lOffeneAnfragens.length; i++) {
-				lOffeneAnfragens[i].setSpielerMitAnfragen(null);
+			pmt.spielspaß.codegenerierung.BugaBesucher[] lAnfragens = bugaBesucher.anfragen.toArray();
+			for(int i = 0; i < lAnfragens.length; i++) {
+				lAnfragens[i].angefragter.remove(bugaBesucher);
 			}
 			pmt.spielspaß.codegenerierung.BugaBesucher[] lFreundes = bugaBesucher.freunde.toArray();
 			for(int i = 0; i < lFreundes.length; i++) {
-				lFreundes[i].setSpielerMitFreunden(null);
+				lFreundes[i].bugaBesucher.remove(bugaBesucher);
+			}
+			pmt.spielspaß.codegenerierung.Kletterwand[] lGespeicherteKletterwändes = bugaBesucher.gespeicherteKletterwände.toArray();
+			for(int i = 0; i < lGespeicherteKletterwändes.length; i++) {
+				lGespeicherteKletterwändes[i].superuser.remove(bugaBesucher);
+			}
+			pmt.spielspaß.codegenerierung.QRCode[] lGespeicherteQRCodess = bugaBesucher.gespeicherteQRCodes.toArray();
+			for(int i = 0; i < lGespeicherteQRCodess.length; i++) {
+				lGespeicherteQRCodess[i].superuser.remove(bugaBesucher);
 			}
 			try {
 				session.delete(bugaBesucher);

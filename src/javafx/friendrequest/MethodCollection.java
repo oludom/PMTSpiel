@@ -1,4 +1,4 @@
-package friendrequest;
+package javafx.friendrequest;
 
 import java.util.ArrayList;
 

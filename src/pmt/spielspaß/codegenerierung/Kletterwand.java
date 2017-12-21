@@ -160,7 +160,7 @@ public class Kletterwand {
 		return ORM_superuser;
 	}
 	
-	public final pmt.spielspaß.codegenerierung.AdminSetCollection superuser = new pmt.spielspaß.codegenerierung.AdminSetCollection(this, _ormAdapter, pmt.spielspaß.codegenerierung.ORMConstants.KEY_KLETTERWAND_SUPERUSER, pmt.spielspaß.codegenerierung.ORMConstants.KEY_ADMIN_GESPEICHERTEKLETTERWÄNDE, pmt.spielspaß.codegenerierung.ORMConstants.KEY_MUL_MANY_TO_MANY);
+	public final pmt.spielspaß.codegenerierung.BenutzerSetCollection superuser = new pmt.spielspaß.codegenerierung.BenutzerSetCollection(this, _ormAdapter, pmt.spielspaß.codegenerierung.ORMConstants.KEY_KLETTERWAND_SUPERUSER, pmt.spielspaß.codegenerierung.ORMConstants.KEY_BENUTZER_GESPEICHERTEKLETTERWÄNDE, pmt.spielspaß.codegenerierung.ORMConstants.KEY_MUL_MANY_TO_MANY);
 	
 	public String toString() {
 		return String.valueOf(getName());

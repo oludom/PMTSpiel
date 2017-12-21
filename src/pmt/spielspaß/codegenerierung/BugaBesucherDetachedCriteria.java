@@ -21,30 +21,30 @@ import org.orm.criteria.*;
 public class BugaBesucherDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression username;
 	public final StringExpression password;
-	public final StringExpression spielerMitFreundenId;
-	public final AssociationExpression spielerMitFreunden;
-	public final StringExpression spielerMitAnfragenId;
-	public final AssociationExpression spielerMitAnfragen;
+	public final CollectionExpression gespeicherteKletterwände;
+	public final CollectionExpression gespeicherteQRCodes;
+	public final CollectionExpression Angefragter;
 	public final StringExpression profilbild;
 	public final IntegerExpression punktzahl;
 	public final StringExpression listeDerErrungenschaften;
+	public final CollectionExpression bugaBesucher;
 	public final CollectionExpression zeits;
-	public final CollectionExpression offeneAnfragen;
+	public final CollectionExpression Anfragen;
 	public final CollectionExpression freunde;
 	
 	public BugaBesucherDetachedCriteria() {
 		super(pmt.spielspaß.codegenerierung.BugaBesucher.class, pmt.spielspaß.codegenerierung.BugaBesucherCriteria.class);
 		username = new StringExpression("username", this.getDetachedCriteria());
 		password = new StringExpression("password", this.getDetachedCriteria());
-		spielerMitFreundenId = new StringExpression("spielerMitFreunden.username", this.getDetachedCriteria());
-		spielerMitFreunden = new AssociationExpression("spielerMitFreunden", this.getDetachedCriteria());
-		spielerMitAnfragenId = new StringExpression("spielerMitAnfragen.username", this.getDetachedCriteria());
-		spielerMitAnfragen = new AssociationExpression("spielerMitAnfragen", this.getDetachedCriteria());
+		gespeicherteKletterwände = new CollectionExpression("ORM_GespeicherteKletterwände", this.getDetachedCriteria());
+		gespeicherteQRCodes = new CollectionExpression("ORM_GespeicherteQRCodes", this.getDetachedCriteria());
+		Angefragter = new CollectionExpression("ORM_Angefragter", this.getDetachedCriteria());
 		profilbild = new StringExpression("profilbild", this.getDetachedCriteria());
 		punktzahl = new IntegerExpression("punktzahl", this.getDetachedCriteria());
 		listeDerErrungenschaften = new StringExpression("listeDerErrungenschaften", this.getDetachedCriteria());
+		bugaBesucher = new CollectionExpression("ORM_BugaBesucher", this.getDetachedCriteria());
 		zeits = new CollectionExpression("ORM_Zeits", this.getDetachedCriteria());
-		offeneAnfragen = new CollectionExpression("ORM_OffeneAnfragen", this.getDetachedCriteria());
+		Anfragen = new CollectionExpression("ORM_Anfragen", this.getDetachedCriteria());
 		freunde = new CollectionExpression("ORM_Freunde", this.getDetachedCriteria());
 	}
 	
@@ -52,36 +52,44 @@ public class BugaBesucherDetachedCriteria extends AbstractORMDetachedCriteria {
 		super(aDetachedCriteria, pmt.spielspaß.codegenerierung.BugaBesucherCriteria.class);
 		username = new StringExpression("username", this.getDetachedCriteria());
 		password = new StringExpression("password", this.getDetachedCriteria());
-		spielerMitFreundenId = new StringExpression("spielerMitFreunden.username", this.getDetachedCriteria());
-		spielerMitFreunden = new AssociationExpression("spielerMitFreunden", this.getDetachedCriteria());
-		spielerMitAnfragenId = new StringExpression("spielerMitAnfragen.username", this.getDetachedCriteria());
-		spielerMitAnfragen = new AssociationExpression("spielerMitAnfragen", this.getDetachedCriteria());
+		gespeicherteKletterwände = new CollectionExpression("ORM_GespeicherteKletterwände", this.getDetachedCriteria());
+		gespeicherteQRCodes = new CollectionExpression("ORM_GespeicherteQRCodes", this.getDetachedCriteria());
+		Angefragter = new CollectionExpression("ORM_Angefragter", this.getDetachedCriteria());
 		profilbild = new StringExpression("profilbild", this.getDetachedCriteria());
 		punktzahl = new IntegerExpression("punktzahl", this.getDetachedCriteria());
 		listeDerErrungenschaften = new StringExpression("listeDerErrungenschaften", this.getDetachedCriteria());
+		bugaBesucher = new CollectionExpression("ORM_BugaBesucher", this.getDetachedCriteria());
 		zeits = new CollectionExpression("ORM_Zeits", this.getDetachedCriteria());
-		offeneAnfragen = new CollectionExpression("ORM_OffeneAnfragen", this.getDetachedCriteria());
+		Anfragen = new CollectionExpression("ORM_Anfragen", this.getDetachedCriteria());
 		freunde = new CollectionExpression("ORM_Freunde", this.getDetachedCriteria());
 	}
 	
-	public pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria createSpielerMitFreundenCriteria() {
-		return new pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria(createCriteria("spielerMitFreunden"));
+	public pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria createAngefragterCriteria() {
+		return new pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria(createCriteria("ORM_Angefragter"));
 	}
 	
-	public pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria createSpielerMitAnfragenCriteria() {
-		return new pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria(createCriteria("spielerMitAnfragen"));
+	public pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria createBugaBesucherCriteria() {
+		return new pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria(createCriteria("ORM_BugaBesucher"));
 	}
 	
 	public pmt.spielspaß.codegenerierung.ZeitDetachedCriteria createZeitsCriteria() {
 		return new pmt.spielspaß.codegenerierung.ZeitDetachedCriteria(createCriteria("ORM_Zeits"));
 	}
 	
-	public pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria createOffeneAnfragenCriteria() {
-		return new pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria(createCriteria("ORM_OffeneAnfragen"));
+	public pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria createAnfragenCriteria() {
+		return new pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria(createCriteria("ORM_Anfragen"));
 	}
 	
 	public pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria createFreundeCriteria() {
 		return new pmt.spielspaß.codegenerierung.BugaBesucherDetachedCriteria(createCriteria("ORM_Freunde"));
+	}
+	
+	public pmt.spielspaß.codegenerierung.KletterwandDetachedCriteria createGespeicherteKletterwändeCriteria() {
+		return new pmt.spielspaß.codegenerierung.KletterwandDetachedCriteria(createCriteria("ORM_GespeicherteKletterwände"));
+	}
+	
+	public pmt.spielspaß.codegenerierung.QRCodeDetachedCriteria createGespeicherteQRCodesCriteria() {
+		return new pmt.spielspaß.codegenerierung.QRCodeDetachedCriteria(createCriteria("ORM_GespeicherteQRCodes"));
 	}
 	
 	public BugaBesucher uniqueBugaBesucher(PersistentSession session) {

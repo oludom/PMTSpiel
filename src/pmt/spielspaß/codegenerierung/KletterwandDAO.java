@@ -327,7 +327,7 @@ public class KletterwandDAO {
 			for(int i = 0; i < lZeitss.length; i++) {
 				lZeitss[i].setKletterwand(null);
 			}
-			pmt.spielspaß.codegenerierung.Admin[] lSuperusers = kletterwand.superuser.toArray();
+			pmt.spielspaß.codegenerierung.Benutzer[] lSuperusers = kletterwand.superuser.toArray();
 			for(int i = 0; i < lSuperusers.length; i++) {
 				lSuperusers[i].gespeicherteKletterwände.remove(kletterwand);
 			}
@@ -345,7 +345,7 @@ public class KletterwandDAO {
 			for(int i = 0; i < lZeitss.length; i++) {
 				lZeitss[i].setKletterwand(null);
 			}
-			pmt.spielspaß.codegenerierung.Admin[] lSuperusers = kletterwand.superuser.toArray();
+			pmt.spielspaß.codegenerierung.Benutzer[] lSuperusers = kletterwand.superuser.toArray();
 			for(int i = 0; i < lSuperusers.length; i++) {
 				lSuperusers[i].gespeicherteKletterwände.remove(kletterwand);
 			}

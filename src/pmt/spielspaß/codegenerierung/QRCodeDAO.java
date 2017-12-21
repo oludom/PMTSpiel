@@ -327,7 +327,7 @@ public class QRCodeDAO {
 				qRCode.getAufgabe().besitzer.remove(qRCode);
 			}
 			
-			pmt.spielspaß.codegenerierung.Admin[] lSuperusers = qRCode.superuser.toArray();
+			pmt.spielspaß.codegenerierung.Benutzer[] lSuperusers = qRCode.superuser.toArray();
 			for(int i = 0; i < lSuperusers.length; i++) {
 				lSuperusers[i].gespeicherteQRCodes.remove(qRCode);
 			}
@@ -345,7 +345,7 @@ public class QRCodeDAO {
 				qRCode.getAufgabe().besitzer.remove(qRCode);
 			}
 			
-			pmt.spielspaß.codegenerierung.Admin[] lSuperusers = qRCode.superuser.toArray();
+			pmt.spielspaß.codegenerierung.Benutzer[] lSuperusers = qRCode.superuser.toArray();
 			for(int i = 0; i < lSuperusers.length; i++) {
 				lSuperusers[i].gespeicherteQRCodes.remove(qRCode);
 			}

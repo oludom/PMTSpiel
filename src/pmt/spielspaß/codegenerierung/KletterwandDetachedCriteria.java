@@ -53,8 +53,8 @@ public class KletterwandDetachedCriteria extends AbstractORMDetachedCriteria {
 		return new pmt.spielspaß.codegenerierung.ZeitDetachedCriteria(createCriteria("ORM_Zeits"));
 	}
 	
-	public pmt.spielspaß.codegenerierung.AdminDetachedCriteria createSuperuserCriteria() {
-		return new pmt.spielspaß.codegenerierung.AdminDetachedCriteria(createCriteria("ORM_Superuser"));
+	public pmt.spielspaß.codegenerierung.BenutzerDetachedCriteria createSuperuserCriteria() {
+		return new pmt.spielspaß.codegenerierung.BenutzerDetachedCriteria(createCriteria("ORM_Superuser"));
 	}
 	
 	public Kletterwand uniqueKletterwand(PersistentSession session) {

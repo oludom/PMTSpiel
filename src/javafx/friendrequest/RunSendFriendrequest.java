@@ -1,4 +1,4 @@
-package friendrequest;
+package javafx.friendrequest;
 
 import javafx.application.Application;
 import javafx.scene.layout.*;

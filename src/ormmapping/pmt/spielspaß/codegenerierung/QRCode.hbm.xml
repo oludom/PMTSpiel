@@ -19,7 +19,7 @@ License Type: Academic
 		<property name="lon" column="Lon" type="float" length="10" not-null="true" lazy="false"/>
 		<set name="ORM_Superuser" table="Benutzer_QRCode" lazy="true" cascade="save-update,lock" inverse="true">
 			<key column="QRCodeName" not-null="true"/>
-			<many-to-many column="BenutzerUsername" class="pmt.spielspaß.codegenerierung.Admin">
+			<many-to-many column="BenutzerUsername" class="pmt.spielspaß.codegenerierung.Benutzer">
 			</many-to-many>
 		</set>
 	</class>

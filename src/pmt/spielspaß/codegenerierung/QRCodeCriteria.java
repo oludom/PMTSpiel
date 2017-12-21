@@ -58,8 +58,8 @@ public class QRCodeCriteria extends AbstractORMCriteria {
 		return new FrageCriteria(createCriteria("Aufgabe"));
 	}
 	
-	public pmt.spielspaß.codegenerierung.AdminCriteria createSuperuserCriteria() {
-		return new pmt.spielspaß.codegenerierung.AdminCriteria(createCriteria("ORM_Superuser"));
+	public pmt.spielspaß.codegenerierung.BenutzerCriteria createSuperuserCriteria() {
+		return new pmt.spielspaß.codegenerierung.BenutzerCriteria(createCriteria("ORM_Superuser"));
 	}
 	
 	public QRCode uniqueQRCode() {

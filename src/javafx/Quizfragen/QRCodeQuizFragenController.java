@@ -1,4 +1,4 @@
-package javafx;
+package javafx.Quizfragen;
 
 import static pmt.spielspaß.codegenerierung.BenutzerDAO.*;
 

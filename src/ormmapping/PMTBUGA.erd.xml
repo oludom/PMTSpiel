@@ -245,30 +245,6 @@
       <Index>false</Index>
       <UserTypes/>
     </Column>
-    <Column name="UserOffeneAnfragen">
-      <PrimaryKey>false</PrimaryKey>
-      <ForeignKey>true</ForeignKey>
-      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
-      <Type>27</Type>
-      <Length>255</Length>
-      <Nullable>true</Nullable>
-      <IDGenerator>native</IDGenerator>
-      <Unique>false</Unique>
-      <Index>false</Index>
-      <UserTypes/>
-    </Column>
-    <Column name="UserFreunde">
-      <PrimaryKey>false</PrimaryKey>
-      <ForeignKey>true</ForeignKey>
-      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
-      <Type>27</Type>
-      <Length>255</Length>
-      <Nullable>true</Nullable>
-      <IDGenerator>native</IDGenerator>
-      <Unique>false</Unique>
-      <Index>false</Index>
-      <UserTypes/>
-    </Column>
     <Column name="Password">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
@@ -333,6 +309,7 @@
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
       <Index>false</Index>
+      <DefaultValue>0</DefaultValue>
       <UserTypes/>
     </Column>
   </Entity>
@@ -412,6 +389,58 @@
       <UserTypes/>
     </Column>
     <Column name="BenutzerUsername">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Benutzer_offeneAnfragen" Unlogged="false" PKClustered="0">
+    <Column name="Username">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="AnfragenVon">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+  </Entity>
+  <Entity name="Benutzer_freunde" Unlogged="false" PKClustered="0">
+    <Column name="Username">
+      <PrimaryKey>true</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>assigned</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
+    <Column name="Freunde">
       <PrimaryKey>true</PrimaryKey>
       <ForeignKey>true</ForeignKey>
       <ReferencedColumn>PMT.SpielSpaß.CodeGenerierung.Benutzer.Username</ReferencedColumn>
@@ -514,21 +543,41 @@
       <Column>Username</Column>
     </RefColumns>
   </ForeignKey>
-  <ForeignKey name="hat2">
-    <ReferenceTable>Benutzer</ReferenceTable>
+  <ForeignKey name="hat10">
+    <ReferenceTable>Benutzer_offeneAnfragen</ReferenceTable>
     <ReferencedTable>Benutzer</ReferencedTable>
     <Columns>
-      <Column>UserFreunde</Column>
+      <Column>Username</Column>
     </Columns>
     <RefColumns>
       <Column>Username</Column>
     </RefColumns>
   </ForeignKey>
-  <ForeignKey name="hat3">
-    <ReferenceTable>Benutzer</ReferenceTable>
+  <ForeignKey name="hat11">
+    <ReferenceTable>Benutzer_offeneAnfragen</ReferenceTable>
     <ReferencedTable>Benutzer</ReferencedTable>
     <Columns>
-      <Column>UserOffeneAnfragen</Column>
+      <Column>AnfragenVon</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="hat4">
+    <ReferenceTable>Benutzer_freunde</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>Username</Column>
+    </Columns>
+    <RefColumns>
+      <Column>Username</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="hat5">
+    <ReferenceTable>Benutzer_freunde</ReferenceTable>
+    <ReferencedTable>Benutzer</ReferencedTable>
+    <Columns>
+      <Column>Freunde</Column>
     </Columns>
     <RefColumns>
       <Column>Username</Column>
