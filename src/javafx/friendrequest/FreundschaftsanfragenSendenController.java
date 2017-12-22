@@ -189,21 +189,14 @@ public class FreundschaftsanfragenSendenController implements Initializable {
         break;
       }
     }
-//    wantedUser.offeneAnfragen.add((BugaBesucher) jetzigerUser);
-
-    // Müsste eig das obere sein, aber vpp hat die Tabellennamen vertauscht
-    //wantedUser.freunde.add((BugaBesucher) jetzigerUser);
+    if (!(wantedUser.anfragen.contains((BugaBesucher) jetzigerUser))){
+      wantedUser.anfragen.add((BugaBesucher) jetzigerUser);
+    }
 
     System.out.println("Sent friend request to " + spielerName.getText());
 
     source.setText("Anfrage gesendet");
     source.setDisable(true);
-
-//    System.out.print("[");
-//    for (int i = 0; i < wantedUser.offeneAnfragen.size(); i++) {
-//      System.out.print(wantedUser.offeneAnfragen.toArray()[i]+", ");
-//    }
-//    System.out.println("]");
 
     try {
       BugaBesucherDAO.save(wantedUser);
