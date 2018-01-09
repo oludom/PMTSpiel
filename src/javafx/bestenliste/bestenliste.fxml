@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.bestenliste.bestenlisteController">
+   <children>
+      <Label text="Highscores für Kletterwände">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label text="Kletterwand" />
+      <ComboBox fx:id="cboxKletterwand" onAction="#cboxKletterwand_IndexChanged" prefHeight="31.0" prefWidth="265.0" />
+      <Separator prefWidth="200.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Separator>
+      <Label text="Highscoreliste" />
+      <TableView fx:id="tblHighscores" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+            <TableColumn fx:id="clmPlatz" prefWidth="75.0" text="Platz" />
+          <TableColumn fx:id="clmZeit" prefWidth="140.0" text="Zeit" />
+          <TableColumn fx:id="clmSpieler" prefWidth="197.0" text="Spieler" />
+            <TableColumn fx:id="clmDatum" prefWidth="185.0" text="Datum" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txtSuche" onAction="#txtSuche_InputChanged" promptText="Suchbegriff eingeben" />
+      <Button fx:id="btnResetList" alignment="CENTER" mnemonicParsing="false" onAction="#btnResetList_Click" prefHeight="31.0" prefWidth="175.0" text="Suche zurücksetzen" />
+   </children>
+</VBox>
