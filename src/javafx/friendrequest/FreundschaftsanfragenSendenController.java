@@ -46,7 +46,6 @@ public class FreundschaftsanfragenSendenController implements Initializable {
   AnchorPane spielerPane10;
 
   ArrayList<String> geladeneNamen = new ArrayList<>();
-  ArrayList<BugaBesucher> schonGestellteAnfragen = new ArrayList<>();
   ArrayList<AnchorPane> spielerPanes = new ArrayList<>();
   ArrayList<Benutzer> geladeneNutzer = new ArrayList<>();
   Benutzer jetzigerUser;
@@ -110,7 +109,8 @@ public class FreundschaftsanfragenSendenController implements Initializable {
         }
       } else if (list.size() == 10) {
         ladeMehrNamen.setVisible(false);
-      } else { }
+      } else {
+      }
 
       AnchorPane pane = spielerPanes.get(i);
       List<Node> kids = pane.getChildren();
@@ -125,12 +125,11 @@ public class FreundschaftsanfragenSendenController implements Initializable {
         }
       }
 
-
-
-      if (list.size() < 10){
-        if (i < list.size()){
+      if (list.size() < 10) {
+        if (i < list.size()) {
           spielerName.setText((list.get(i)));
-          if (((BugaBesucher)jetzigerUser).angefragter.contains((BugaBesucher) geladeneNutzer.get(i))){
+          if (((BugaBesucher) jetzigerUser).angefragter
+              .contains((BugaBesucher) geladeneNutzer.get(i))) {
             anfrageButton.setText("Anfrage gesendet");
             anfrageButton.setDisable(true);
           }
@@ -139,13 +138,14 @@ public class FreundschaftsanfragenSendenController implements Initializable {
         }
       } else {
         spielerName.setText(list.get(i));
-        if (((BugaBesucher)jetzigerUser).angefragter.contains((BugaBesucher) geladeneNutzer.get(i))){
+        if (((BugaBesucher) jetzigerUser).angefragter
+            .contains((BugaBesucher) geladeneNutzer.get(i))) {
           anfrageButton.setText("Anfrage gesendet!");
           anfrageButton.setDisable(true);
         }
       }
 
-      if (!(spielerName.getText().equals("Spielername"))){
+      if (!(spielerName.getText().equals("Spielername"))) {
         AnchorPane wantedPane = (AnchorPane) spielerName.getParent();
         wantedPane.setVisible(true);
       }
@@ -158,7 +158,8 @@ public class FreundschaftsanfragenSendenController implements Initializable {
 
     System.out.println("Loading 'sucheNachNamen'");
 
-    if (suchfeldAnfragen.getText().equals("Namen eingeben...") || suchfeldAnfragen.getText().equals(null)) {
+    if (suchfeldAnfragen.getText().equals("Namen eingeben...") || suchfeldAnfragen.getText()
+        .equals(null)) {
       ladeNamen(geladeneNamen);
     } else {
       String searchedObject = suchfeldAnfragen.getText();
