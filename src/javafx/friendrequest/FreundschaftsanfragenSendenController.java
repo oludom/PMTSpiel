@@ -46,8 +46,9 @@ public class FreundschaftsanfragenSendenController implements Initializable {
   AnchorPane spielerPane10;
 
   ArrayList<String> geladeneNamen = new ArrayList<>();
+  ArrayList<BugaBesucher> schonGestellteAnfragen = new ArrayList<>();
   ArrayList<AnchorPane> spielerPanes = new ArrayList<>();
-  ArrayList<Benutzer> arrayUsers = new ArrayList<>();
+  ArrayList<Benutzer> geladeneNutzer = new ArrayList<>();
   Benutzer jetzigerUser;
 
   public FreundschaftsanfragenSendenController() {
@@ -64,7 +65,7 @@ public class FreundschaftsanfragenSendenController implements Initializable {
       Benutzer[] nutzers = BenutzerDAO.listBenutzerByQuery("Discriminator = 'user'", null);
       for (int i = 0; i < nutzers.length; i++) {
         if (!(nutzers[i].username.equals("jleppich"))) {
-          arrayUsers.add(nutzers[i]);
+          geladeneNutzer.add(nutzers[i]);
         } else {
           jetzigerUser = nutzers[i];
           String text = headline.getText();
@@ -77,8 +78,8 @@ public class FreundschaftsanfragenSendenController implements Initializable {
 
     // Beispielnutzer wird ausgewählt, wird normalerweise von der App gesetzt
 
-    for (int i = 0; i < arrayUsers.size(); i++) {
-      String name = arrayUsers.get(i).username;
+    for (int i = 0; i < geladeneNutzer.size(); i++) {
+      String name = geladeneNutzer.get(i).username;
       geladeneNamen.add(name);
     }
 
@@ -94,62 +95,62 @@ public class FreundschaftsanfragenSendenController implements Initializable {
     spielerPanes.add(spielerPane9);
     spielerPanes.add(spielerPane10);
 
-    zeigeNamen(geladeneNamen);
+    ladeNamen(geladeneNamen);
 
   }
 
-  public void zeigeNamen(ArrayList<String> list) {
-    System.out.println("Loading 'zeigeNamen'");
-    if (list.size() < 10) { //Weniger als 10 User ausgegeben
-      for (int i = 0; i < spielerPanes.size(); i++) {
+  public void ladeNamen(ArrayList<String> list) {
+    System.out.println("Loading 'ladeNamen'");
+
+    for (int i = 0; i < spielerPanes.size(); i++) {
+      if (list.size() < 10) {
         if (i >= list.size()) {
           spielerPanes.get(i).setVisible(false);
           ladeMehrNamen.setVisible(false);
+        }
+      } else if (list.size() == 10) {
+        ladeMehrNamen.setVisible(false);
+      } else { }
+
+      AnchorPane pane = spielerPanes.get(i);
+      List<Node> kids = pane.getChildren();
+      Label spielerName = new Label();
+      Button anfrageButton = new Button();
+
+      for (int j = 0; j < kids.size(); j++) {
+        if (kids.get(j).getClass().equals(Label.class)) {
+          spielerName = (Label) kids.get(j);
         } else {
-          AnchorPane pane = spielerPanes.get(i);
-          List<Node> kids = pane.getChildren();
-          Label spielerName = new Label();
-
-          for (int j = 0; j < kids.size(); j++) {
-            if (kids.get(j).getClass().equals(Label.class)) {
-              spielerName = (Label) kids.get(j);
-            }
-          }
-
-          spielerName.setText(list.get(i));
+          anfrageButton = (Button) kids.get(j);
         }
       }
-    } else if (list.size() == 10) { //genau 10 User ausgegeben
 
-      ladeMehrNamen.setVisible(false);
 
-      for (int i = 0; i < spielerPanes.size(); i++) {
-        AnchorPane pane = spielerPanes.get(i);
-        List<Node> kids = pane.getChildren();
-        Label spielerName = new Label();
 
-        for (int j = 0; j < kids.size(); j++) {
-          if (kids.get(j).getClass().equals(Label.class)) {
-            spielerName = (Label) kids.get(j);
+      if (list.size() < 10){
+        if (i < list.size()){
+          spielerName.setText((list.get(i)));
+          if (((BugaBesucher)jetzigerUser).angefragter.contains((BugaBesucher) geladeneNutzer.get(i))){
+            anfrageButton.setText("Anfrage gesendet");
+            anfrageButton.setDisable(true);
           }
+        } else {
+          spielerName.setText("Spielername");
         }
-
+      } else {
         spielerName.setText(list.get(i));
-      }
-    } else { //Mehr als 10 User ausgeben
-      for (int i = 0; i < spielerPanes.size(); i++) {
-        AnchorPane pane = spielerPanes.get(i);
-        List<Node> kids = pane.getChildren();
-        Label spielerName = new Label();
-
-        for (int j = 0; j < kids.size(); j++) {
-          if (kids.get(j).getClass().equals(Label.class)) {
-            spielerName = (Label) kids.get(j);
-          }
+        if (((BugaBesucher)jetzigerUser).angefragter.contains((BugaBesucher) geladeneNutzer.get(i))){
+          anfrageButton.setText("Anfrage gesendet!");
+          anfrageButton.setDisable(true);
         }
-
-        spielerName.setText(list.get(i));
       }
+
+      if (!(spielerName.getText().equals("Spielername"))){
+        AnchorPane wantedPane = (AnchorPane) spielerName.getParent();
+        wantedPane.setVisible(true);
+      }
+
+
     }
   }
 
@@ -157,13 +158,12 @@ public class FreundschaftsanfragenSendenController implements Initializable {
 
     System.out.println("Loading 'sucheNachNamen'");
 
-    if (suchfeldAnfragen.getText().equals("Namen eingeben...") || suchfeldAnfragen.getText()
-        .equals(null)) {
-
+    if (suchfeldAnfragen.getText().equals("Namen eingeben...") || suchfeldAnfragen.getText().equals(null)) {
+      ladeNamen(geladeneNamen);
     } else {
       String searchedObject = suchfeldAnfragen.getText();
       ArrayList<String> gesuchteNamen = search(geladeneNamen, searchedObject);
-      zeigeNamen(gesuchteNamen);
+      ladeNamen(gesuchteNamen);
     }
 
   }
@@ -183,13 +183,13 @@ public class FreundschaftsanfragenSendenController implements Initializable {
       }
     }
     BugaBesucher wantedUser = new BugaBesucher();
-    for (int i = 0; i < arrayUsers.size(); i++) {
-      if (arrayUsers.get(i).username.equals(spielerName.getText())) {
-        wantedUser = (BugaBesucher) arrayUsers.get(i);
+    for (int i = 0; i < geladeneNutzer.size(); i++) {
+      if (geladeneNutzer.get(i).username.equals(spielerName.getText())) {
+        wantedUser = (BugaBesucher) geladeneNutzer.get(i);
         break;
       }
     }
-    if (!(wantedUser.anfragen.contains((BugaBesucher) jetzigerUser))){
+    if (!(wantedUser.anfragen.contains((BugaBesucher) jetzigerUser))) {
       wantedUser.anfragen.add((BugaBesucher) jetzigerUser);
     }
 
