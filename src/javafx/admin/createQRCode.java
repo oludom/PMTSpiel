@@ -26,7 +26,7 @@ public class createQRCode extends Application {
       e.printStackTrace();
     }
     primaryStage.setTitle("Administration");
-    primaryStage.setScene(new Scene(root, 600, 600));
+    primaryStage.setScene(new Scene(root, 600, 520));
     primaryStage.show();
 
   }
