@@ -208,7 +208,6 @@ public class CreateQRCodeController implements Initializable {
     QRLong.setText("");
     QRHint.setText("");
 
-
   }
 
   private void updateQR(String value) {
