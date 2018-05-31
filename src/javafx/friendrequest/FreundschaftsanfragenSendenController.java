@@ -45,7 +45,7 @@ public class FreundschaftsanfragenSendenController implements Initializable {
   @FXML
   AnchorPane spielerPane10;
 
-  ArrayList<String> geladeneNamen = new ArrayList<>();
+  ArrayList<String> geladeneNutzerNamen = new ArrayList<>();
   ArrayList<AnchorPane> spielerPanes = new ArrayList<>();
   ArrayList<Benutzer> geladeneNutzer = new ArrayList<>();
   Benutzer jetzigerUser;
@@ -63,23 +63,29 @@ public class FreundschaftsanfragenSendenController implements Initializable {
     try {
       Benutzer[] nutzers = BenutzerDAO.listBenutzerByQuery("Discriminator = 'user'", null);
       for (int i = 0; i < nutzers.length; i++) {
-        if (!(nutzers[i].username.equals("jleppich"))) {
-          geladeneNutzer.add(nutzers[i]);
-        } else {
+        if (nutzers[i].username.equals("jleppich")) {
           jetzigerUser = nutzers[i];
           String text = headline.getText();
           headline.setText(jetzigerUser.username + ": " + text);
+        }
+      }
+
+      for (int i = 0; i < nutzers.length; i++) {
+
+        if (!(((BugaBesucher) jetzigerUser).freunde.contains((BugaBesucher) nutzers[i])
+            || nutzers[i].username.equals("jleppich"))) {
+          geladeneNutzer.add(nutzers[i]);
         }
       }
     } catch (PersistentException e) {
       e.printStackTrace();
     }
 
-    // Beispielnutzer wird ausgewählt, wird normalerweise von der App gesetzt
+    // Beispielnutzer wird ausgewählt, wird normalerweise von der App beim Einloggen gesetzt
 
     for (int i = 0; i < geladeneNutzer.size(); i++) {
       String name = geladeneNutzer.get(i).username;
-      geladeneNamen.add(name);
+      geladeneNutzerNamen.add(name);
     }
 
     // Adde SpielerPanes zu Arraylist
@@ -94,7 +100,7 @@ public class FreundschaftsanfragenSendenController implements Initializable {
     spielerPanes.add(spielerPane9);
     spielerPanes.add(spielerPane10);
 
-    ladeNamen(geladeneNamen);
+    ladeNamen(geladeneNutzerNamen);
 
   }
 
@@ -160,10 +166,10 @@ public class FreundschaftsanfragenSendenController implements Initializable {
 
     if (suchfeldAnfragen.getText().equals("Namen eingeben...") || suchfeldAnfragen.getText()
         .equals(null)) {
-      ladeNamen(geladeneNamen);
+      ladeNamen(geladeneNutzerNamen);
     } else {
       String searchedObject = suchfeldAnfragen.getText();
-      ArrayList<String> gesuchteNamen = search(geladeneNamen, searchedObject);
+      ArrayList<String> gesuchteNamen = search(geladeneNutzerNamen, searchedObject);
       ladeNamen(gesuchteNamen);
     }
 
@@ -216,5 +222,25 @@ public class FreundschaftsanfragenSendenController implements Initializable {
       }
     }
     return foundStrings;
+  }
+
+  public void updateUsersFromDB() {
+    Benutzer[] nutzers = new Benutzer[0];
+    try {
+      nutzers = BenutzerDAO.listBenutzerByQuery("Discriminator = 'user'", null);
+    } catch (PersistentException e) {
+      e.printStackTrace();
+    }
+    for (int i = 0; i < nutzers.length; i++) {
+      if (!(nutzers[i].username.equals("jleppich") || ((BugaBesucher) jetzigerUser).freunde
+          .contains((BugaBesucher) nutzers[i]))) {
+        geladeneNutzer.add(nutzers[i]);
+      }
+    }
+    for (int i = 0; i < geladeneNutzer.size(); i++) {
+      String name = geladeneNutzer.get(i).username;
+      geladeneNutzerNamen.add(name);
+    }
+    ladeNamen(geladeneNutzerNamen);
   }
 }
