@@ -83,16 +83,16 @@ public class CreateQRCodeController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
-    assert QRName != null : "fx:id=\"QRName\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRLat != null : "fx:id=\"QRLat\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRLong != null : "fx:id=\"QRLong\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRImage != null : "fx:id=\"QRImage\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRHint != null : "fx:id=\"QRHint\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRQuestion != null : "fx:id=\"QRquestion\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRNext != null : "fx:id=\"QRNext\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRReset != null : "fx:id=\"QRReset\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRSave != null : "fx:id=\"QRSave\" was not injected: check your FXML file 'createQRCode.fxml'.";
-    assert QRE != null : "fx:id=\"QRError\" was not injected: check your FXML file 'createQRCode.fxml'.";
+    assert QRName != null : "fx:id=\"QRName\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRLat != null : "fx:id=\"QRLat\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRLong != null : "fx:id=\"QRLong\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRImage != null : "fx:id=\"QRImage\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRHint != null : "fx:id=\"QRHint\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRQuestion != null : "fx:id=\"QRquestion\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRNext != null : "fx:id=\"QRNext\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRReset != null : "fx:id=\"QRReset\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRSave != null : "fx:id=\"QRSave\" was not injected: check your FXML file 'Run.fxml'.";
+    assert QRE != null : "fx:id=\"QRError\" was not injected: check your FXML file 'Run.fxml'.";
 
 
     /*

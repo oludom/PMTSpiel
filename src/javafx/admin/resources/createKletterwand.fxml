@@ -60,6 +60,7 @@
                                 <TextField id="createQRTextField" fx:id="KletterwandName" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <TextField id="createQRTextField" fx:id="KletterwandLat" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 <TextField id="createQRTextField" fx:id="KletterwandLong" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Label fx:id="KletterwandE" prefHeight="30.0" prefWidth="219.0" textFill="RED" GridPane.columnIndex="1" />
                             </children>
                             <opaqueInsets>
                                 <Insets />
@@ -82,12 +83,12 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="KletterwandImageStart" fitHeight="200.0" fitWidth="200.0" layoutX="137.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="KletterwandImageStart" fitHeight="140.0" fitWidth="140.0" layoutX="130.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="KletterwandImageEnd" fitHeight="200.0" fitWidth="200.0" layoutX="431.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="KletterwandImageEnd" fitHeight="140.0" fitWidth="140.0" layoutX="431.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
                      </image>

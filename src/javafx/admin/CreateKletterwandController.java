@@ -1,6 +1,8 @@
 package javafx.admin;
 
-/**@author Jan */
+/**
+ * @author Jan
+ */
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -13,14 +15,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import org.orm.PersistentException;
 import pmt.spielspaß.codegenerierung.Kletterwand;
 import pmt.spielspaß.codegenerierung.KletterwandDAO;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -29,26 +36,36 @@ import java.util.ResourceBundle;
 
 public class CreateKletterwandController implements Initializable {
 
-    @FXML public Button KletterwandReset;
-    @FXML public Button KletterwandSave;
-    @FXML public ImageView KletterwandImageEnd;
-    @FXML public ImageView KletterwandImageStart;
-    @FXML public TextField KletterwandName;
-    @FXML public TextField KletterwandLat;
-    @FXML public TextField KletterwandLong;
+    @FXML
+    public Button KletterwandReset;
+    @FXML
+    public Button KletterwandSave;
+    @FXML
+    public ImageView KletterwandImageEnd;
+    @FXML
+    public ImageView KletterwandImageStart;
+    @FXML
+    public TextField KletterwandName;
+    @FXML
+    public TextField KletterwandLat;
+    @FXML
+    public TextField KletterwandLong;
+    @FXML
+    public Label KletterwandE;
 
     private BufferedImage bufferedImageStart = null;
     private BufferedImage bufferedImageEnd = null;
 
-    public CreateKletterwandController(){}
+    public CreateKletterwandController() {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        assert KletterwandName != null : "fx:id=\"KletterwandName\" was not injected: check your FXML file 'createQRCode.fxml'.";
-        assert KletterwandLat != null : "fx:id=\"KletterwandLat\" was not injected: check your FXML file 'createQRCode.fxml'.";
-        assert KletterwandLong != null : "fx:id=\"KletterwandLong\" was not injected: check your FXML file 'createQRCode.fxml'.";
-        assert KletterwandImageStart != null : "fx:id=\"KletterwandImageStart\" was not injected: check your FXML file 'createQRCode.fxml'.";
-        assert KletterwandImageEnd != null : "fx:id=\"KletterwandImageEnd\" was not injected: check your FXML file 'createQRCode.fxml'.";
+        assert KletterwandName != null : "fx:id=\"KletterwandName\" was not injected: check your FXML file 'Run.fxml'.";
+        assert KletterwandLat != null : "fx:id=\"KletterwandLat\" was not injected: check your FXML file 'Run.fxml'.";
+        assert KletterwandLong != null : "fx:id=\"KletterwandLong\" was not injected: check your FXML file 'Run.fxml'.";
+        assert KletterwandImageStart != null : "fx:id=\"KletterwandImageStart\" was not injected: check your FXML file 'Run.fxml'.";
+        assert KletterwandImageEnd != null : "fx:id=\"KletterwandImageEnd\" was not injected: check your FXML file 'Run.fxml'.";
 
         KletterwandName.textProperty().addListener((observable, oldValue, newValue) -> {
             updateKletterwand(newValue);
@@ -106,7 +123,7 @@ public class CreateKletterwandController implements Initializable {
         if (!KletterwandName.getText().equals("") &&
                 !KletterwandLat.getText().equals("") &&
                 !KletterwandLong.getText().equals("")
-        ) {
+                ) {
 
             Task<Void> task = new Task<Void>() {
                 @Override
@@ -123,8 +140,8 @@ public class CreateKletterwandController implements Initializable {
 
                     KletterwandDAO.save(kletterwand);
                     Platform.runLater(() -> {
-//                        QRE.setText("Erfolgreich gespeichert.");
-//                        QRE.setTextFill(javafx.scene.paint.Color.GREEN);
+                        KletterwandE.setText("Erfolgreich gespeichert.");
+                        KletterwandE.setTextFill(javafx.scene.paint.Color.GREEN);
                         reset();
                     });
 
@@ -137,19 +154,38 @@ public class CreateKletterwandController implements Initializable {
             th.setDaemon(true);
 
             th.start();
-        }else {
-//            QRE.setTextFill(javafx.scene.paint.Color.RED);
-//            QRE.setText("Bitte alle Felder ausfüllen.");
+        } else {
+            KletterwandE.setTextFill(javafx.scene.paint.Color.RED);
+            KletterwandE.setText("Bitte alle Felder ausfüllen.");
         }
     }
 
-    private void reset(){
+    private void reset() {
         KletterwandName.setText("");
         KletterwandLat.setText("");
         KletterwandLong.setText("");
     }
 
     public void printKletterwand(ActionEvent actionEvent) {
+        getCode(bufferedImageStart, KletterwandName.getText() + "_start");
+        getCode(bufferedImageEnd, KletterwandName.getText() + "_end");
+    }
 
+    public void getCode(BufferedImage image, String name) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setInitialFileName(name);
+        File file = fileChooser.showSaveDialog(KletterwandReset.getScene().getWindow());
+
+        try {
+            if (image != null && file != null) {
+                ImageIO.write(image, "png", file);
+            } else {
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

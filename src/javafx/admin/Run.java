@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class createQRCode extends Application {
+public class Run extends Application {
 
   public static void main(String[] args) {
     launch(args);
@@ -21,7 +21,7 @@ public class createQRCode extends Application {
 
     Parent root = null;
     try {
-      root = FXMLLoader.load(getClass().getResource("resources/createQRCode.fxml"));
+      root = FXMLLoader.load(getClass().getResource("resources/createKletterwand.fxml"));
     } catch (IOException e) {
       e.printStackTrace();
     }
