@@ -21,7 +21,7 @@ public class Run extends Application {
 
     Parent root = null;
     try {
-      root = FXMLLoader.load(getClass().getResource("resources/createKletterwand.fxml"));
+      root = FXMLLoader.load(getClass().getResource("resources/editKletterwand.fxml"));
     } catch (IOException e) {
       e.printStackTrace();
     }
