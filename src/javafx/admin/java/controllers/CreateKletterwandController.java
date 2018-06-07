@@ -1,4 +1,4 @@
-package javafx.admin;
+package javafx.admin.java.controllers;
 
 /**
  * @author Jan

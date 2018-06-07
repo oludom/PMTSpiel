@@ -1,4 +1,4 @@
-package javafx.admin;
+package javafx.admin.java.controllers;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
