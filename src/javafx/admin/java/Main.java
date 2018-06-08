@@ -27,9 +27,9 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/Root.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("resources/Root.fxml"));
 
-    final Parent root = loader.load();
+    Parent root = loader.load();
     controller = loader.getController();
 
     primaryStage.setTitle("Administration");
@@ -47,7 +47,7 @@ public class Main extends Application {
 
   private void addModule(String name) {
     try {
-      URL url = getClass().getResource("/resources/" + name + ".fxml");
+      URL url = getClass().getResource("resources/" + name + ".fxml");
       if (url == null) {
         System.out.println("addModule: Fxml File for Module: \"" + name + "\" not found!");
       } else {

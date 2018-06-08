@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 
@@ -60,15 +61,15 @@ public class RootController implements Initializable {
         moduleMap.put(name, content);
         if (firstModule == null) {
             firstModule = content;
-            main_window.getSelectionModel().selectFirst();
+            //main_window.getSelectionModel().selectFirst();
         }
     }
 
 
     public void changeTab(Event event) {
-        Node src = (Node) event.getSource();
+        Tab src = (Tab) event.getSource();
         AnchorPane view = new AnchorPane();
-        switch (src.getAccessibleText()) {
+        switch (src.getText()) {
             case "QRCode erstellen":
                 createQRCode.getChildren().add(moduleMap.get("createQRCode"));
                 break;
