@@ -4,10 +4,10 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.net.URL;
 import java.util.*;
@@ -15,25 +15,23 @@ import java.util.*;
 public class RootController implements Initializable {
 
     @FXML
-    public Label Ueberschrift;
+    public Label ueberschrift;
     @FXML
-    public TabPane main_window;
-    @FXML
-    public AnchorPane createQRCode;
-    @FXML
-    public AnchorPane createKletterwand;
-    @FXML
-    public AnchorPane editKletterwand;
+    public AnchorPane main_pane;
 
 
     private List<String> moduleList;
     private Map<String, Node> moduleMap;
-    private Node firstModule = null;
+    private List<AnchorPane> allAnchorPanes;
+    private List<Tab> allTabs;
+    private int TAB_COUNT = 4;
 
 
     public RootController() {
         moduleList = new ArrayList<>();
         moduleMap = new HashMap<>();
+        allAnchorPanes = new ArrayList<>();
+        allTabs = new ArrayList<>();
     }
 
     /**
@@ -46,39 +44,66 @@ public class RootController implements Initializable {
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-//    listView.getSelectionModel().selectedItemProperty().addListener(
-//            (ObservableValue<? extends String> observable,
-//             String oldValue, String newValue) -> {
-//              modulePane.getChildren().clear();
-//              modulePane.getChildren().add(moduleMap.get(newValue));
-//            }
-//    );
 
     }
 
     public void addModule(String name, Node content) {
         moduleList.add(name);
         moduleMap.put(name, content);
-        if (firstModule == null) {
-            firstModule = content;
-            //main_window.getSelectionModel().selectFirst();
-        }
     }
 
 
-    public void changeTab(Event event) {
-        Tab src = (Tab) event.getSource();
-        AnchorPane view = new AnchorPane();
-        switch (src.getText()) {
-            case "QRCode erstellen":
-                createQRCode.getChildren().add(moduleMap.get("createQRCode"));
+    public void changeContent(Event event) {
+        MenuItem item = (MenuItem) event.getSource();
+
+        String action;
+        String category = "";
+        String ueberschriftKategorie = "";
+        String ueberschriftAktion = "";
+
+        Menu menu = item.getParentMenu();
+
+        //Für feststellen aus welchem Menü man kommt und den Filename weiterzugeben
+        switch (menu.getText()) {
+            case "QRCode":
+                category = "QRCode";
+                ueberschriftKategorie = "einen QRCode";
                 break;
-            case "Kletterwand erstellen":
-                createKletterwand.getChildren().add(moduleMap.get("createKletterwand"));
+            case "Kletterwand":
+                category = "Kletterwand";
+                ueberschriftKategorie = "eine Kletterwand";
                 break;
-            case "Kletterwand bearbeiten":
-                editKletterwand.getChildren().add(moduleMap.get("editKletterwand"));
+            case "Fragen":
+                category = "Question";
+                ueberschriftKategorie = "eine Frage";
+                break;
+            case "Nutzer":
+                category = "User";
+                ueberschriftKategorie = "die Nutzer";
                 break;
         }
+
+        if (item.getText().contains("Erstellen")) {
+            action = "create";
+            ueberschriftAktion = "Erstelle ";
+        } else if (item.getText().contains("Bearbeiten")) {
+            action = "edit";
+            ueberschriftAktion = "Bearbeite ";
+        } else {
+            action = "manage";
+            ueberschriftAktion = "Verwalte ";
+        }
+
+        if (moduleMap.get(action + category) != null) {
+            main_pane.getChildren().clear();
+            main_pane.getChildren().add(moduleMap.get(action + category));
+            ueberschrift.setText(ueberschriftAktion + ueberschriftKategorie);
+            ueberschrift.setTextFill(new Color(0,0,0,1));
+        } else {
+            item.setDisable(true);
+            ueberschrift.setText("Diese Funktion ist leider noch nicht implementiert.");
+            ueberschrift.setTextFill(new Color(1, 0, 0, 1));
+        }
+
     }
 }

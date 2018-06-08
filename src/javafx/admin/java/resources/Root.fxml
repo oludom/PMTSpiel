@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="600.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.admin.java.controllers.RootController">
+<VBox maxHeight="600.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.admin.java.controllers.RootController">
     <children>
-        <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: lightblue;">
+        <Pane prefHeight="150.0" prefWidth="1280" style="-fx-background-color: lightblue;">
             <children>
-                <Label fx:id="Ueberschrift" layoutX="14.0" layoutY="27.0" text="Admin UI">
+                <Label fx:id="ueberschrift" layoutX="14.0" layoutY="27.0" text="Admin UI">
                     <font>
                         <Font name="Comic Sans MS Bold" size="33.0" />
                     </font>
                 </Label>
+            <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="1280.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="QRCode">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Erstellen" />
+                        <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Bearbeiten" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Kletterwand">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Erstellen" />
+                        <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Bearbeiten" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Frage">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Erstellen" />
+                        <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Bearbeiten" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Nutzer">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Verwalten" />
+                    </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
             </children>
         </Pane>
-        <VBox prefHeight="454.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+        <VBox prefHeight="570.0" prefWidth="1280.0" VBox.vgrow="ALWAYS">
          <children>
-            <TabPane fx:id="main_window" prefHeight="437.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab onSelectionChanged="#changeTab" text="QRCode erstellen">
-                  <content>
-                      <AnchorPane fx:id="createQRCode" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             <AnchorPane fx:id="main_pane" prefHeight="500.0" prefWidth="1280.0">
 
-                      </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab onSelectionChanged="#changeTab" text="Kletterwand erstellen">
-                  <content>
-                      <AnchorPane fx:id="createKletterwand" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-
-                      </AnchorPane>
-                  </content>
-                </Tab>
-                  <Tab onSelectionChanged="#changeTab" text="Kletterwand bearbeiten">
-                    <content>
-                        <AnchorPane fx:id="editKletterwand" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab onSelectionChanged="#changeTab" text="Nutzer verwalten">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-              </tabs>
-            </TabPane>
-         </children></VBox>
+             </AnchorPane>
+         </children>
+        </VBox>
     </children>
 </VBox>

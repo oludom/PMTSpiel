@@ -29,7 +29,7 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("resources/Root.fxml"));
 
-    Parent root = loader.load();
+    final Parent root = loader.load();
     controller = loader.getController();
 
     primaryStage.setTitle("Administration");
