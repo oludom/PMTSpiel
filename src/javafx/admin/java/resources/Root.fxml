@@ -11,7 +11,7 @@
 
 <VBox maxHeight="600.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.admin.java.controllers.RootController">
     <children>
-        <Pane prefHeight="150.0" prefWidth="1280" style="-fx-background-color: lightblue;">
+        <Pane prefHeight="120.0" prefWidth="1280" style="-fx-background-color: lightblue;">
             <children>
                 <Label fx:id="ueberschrift" layoutX="14.0" layoutY="27.0" text="Admin UI">
                     <font>
@@ -47,7 +47,7 @@
             </MenuBar>
             </children>
         </Pane>
-        <VBox prefHeight="570.0" prefWidth="1280.0" VBox.vgrow="ALWAYS">
+        <VBox prefHeight="600.0" prefWidth="1280.0" VBox.vgrow="ALWAYS">
          <children>
              <AnchorPane fx:id="main_pane" prefHeight="500.0" prefWidth="1280.0">
 
