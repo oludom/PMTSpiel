@@ -40,6 +40,7 @@ public class Main extends Application {
     primaryStage.show();
 
     addModule("createQRCode");
+    addModule("editQRCode");
     addModule("createKletterwand");
     addModule("editKletterwand");
 
