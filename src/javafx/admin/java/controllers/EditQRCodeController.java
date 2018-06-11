@@ -66,6 +66,10 @@ public class EditQRCodeController implements Initializable {
                 fillInputFields(findByQRCodeName(qrCodes, (String) alleQRCodes.getSelectionModel().getSelectedItem()));
             }
         });
+
+        QRName.textProperty().addListener((observable, oldValue, newValue) -> {
+            paintQR(newValue);
+        });
     }
 
     private QRCode findByQRCodeName(List<QRCode> qrCodes, String selectedItem) {

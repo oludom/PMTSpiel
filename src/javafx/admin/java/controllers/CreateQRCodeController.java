@@ -38,7 +38,7 @@ import pmt.spielspaß.codegenerierung.QRCodeDAO;
 import javax.imageio.ImageIO;
 
 /**
- * @author Micha Heiß
+ * @author Jan Leppich
  */
 public class CreateQRCodeController implements Initializable {
 
@@ -96,35 +96,10 @@ public class CreateQRCodeController implements Initializable {
 
 
     /*
-     * get and insert all questions available
-     */
-    try {
-      Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
-      for (Frage frage : fragen) {
-        QRQuestion.getItems().add(frage.getFrage());
-      }
-      QRQuestion.getSelectionModel().select(0);
-    } catch (PersistentException e) {
-      e.printStackTrace();
-    }
-
-    /*
-     * get and insert all other qr-codes available
+     * get and insert all questions and qrcodes available
      */
 
-    try {
-      QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
-      for (QRCode code : codes) {
-        QRNext.getItems().add("QR-Code: " + code.getName());
-      }
-      QRNext.getSelectionModel().select(0);
-    } catch (PersistentException e) {
-      e.printStackTrace();
-    }
-
-    /*
-     * set text of Hint TextField
-     */
+    refreshQuestionsAndQRCodes();
 
     QRHint.setText("Hier steht ein Hinweis auf die Position des nächsten QR-Codes.");
 
@@ -132,6 +107,28 @@ public class CreateQRCodeController implements Initializable {
       updateQR(newValue);
     });
 
+  }
+
+  private void refreshQuestionsAndQRCodes(){
+    try{
+
+      QRQuestion.getItems().clear();
+      QRNext.getItems().clear();
+
+      Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
+      for (Frage frage : fragen) {
+        QRQuestion.getItems().add(frage.getFrage());
+      }
+      QRQuestion.getSelectionModel().select(0);
+
+      QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
+      for (QRCode code : codes) {
+        QRNext.getItems().add("QR-Code: " + code.getName());
+      }
+      QRNext.getSelectionModel().select(0);
+    } catch (PersistentException e){
+      e.printStackTrace();
+    }
   }
 
   public void save() {
@@ -183,6 +180,8 @@ public class CreateQRCodeController implements Initializable {
             QRE.setText("Erfolgreich gespeichert.");
             QRE.setTextFill(javafx.scene.paint.Color.GREEN);
             reset();
+            //refreshQuestionsAndQRCodes();
+            QRNext.getItems().add("QR-Code: " + code.getName());
           });
 
           return null;
@@ -194,6 +193,8 @@ public class CreateQRCodeController implements Initializable {
       th.setDaemon(true);
 
       th.start();
+
+
     }else {
       QRE.setTextFill(javafx.scene.paint.Color.RED);
       QRE.setText("Bitte alle Felder ausfüllen.");

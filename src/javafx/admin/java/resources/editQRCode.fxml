@@ -131,7 +131,7 @@
                                 <Insets top="40.0" />
                             </padding>
                         </HBox>
-                        <ImageView fx:id="QRImage" fitHeight="340.0" fitWidth="285.0" layoutX="922.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="81.0927734375" AnchorPane.topAnchor="129.0">
+                        <ImageView fx:id="QRImage" fitHeight="441.0" fitWidth="392.0" layoutX="811.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: white" AnchorPane.rightAnchor="109.83505249023438" AnchorPane.topAnchor="79.0">
                             <image>
                                 <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
                             </image>
