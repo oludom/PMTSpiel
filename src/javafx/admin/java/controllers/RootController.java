@@ -73,7 +73,7 @@ public class RootController implements Initializable {
                 category = "Kletterwand";
                 ueberschriftKategorie = "eine Kletterwand";
                 break;
-            case "Fragen":
+            case "Frage":
                 category = "Question";
                 ueberschriftKategorie = "eine Frage";
                 break;

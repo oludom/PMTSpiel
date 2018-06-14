@@ -44,6 +44,7 @@ public class Main extends Application {
     addModule("editQRCode");
     addModule("createKletterwand");
     addModule("editKletterwand");
+    addModule("createQuestion");
 
   }
 
