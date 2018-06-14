@@ -37,6 +37,7 @@ public class Main extends Application {
     primaryStage.setMinWidth(width);
     primaryStage.setMinHeight(height);
     primaryStage.setScene(scene);
+    primaryStage.setResizable(false);
     primaryStage.show();
 
     addModule("createQRCode");
