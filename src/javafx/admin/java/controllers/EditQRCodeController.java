@@ -4,6 +4,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import javafx.admin.java.modules.MaintenanceMethods;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -153,6 +154,7 @@ public class EditQRCodeController implements Initializable {
 
     }
 
+    private void refreshChoiceboxes(){}
 
     public void getCode(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -164,7 +166,8 @@ public class EditQRCodeController implements Initializable {
             if (bufferedImage != null && file != null) {
                 ImageIO.write(bufferedImage, "png", file);
             } else {
-
+                QRE.setText("Es ist ein Fehler aufgetreten.");
+                QRE.setTextFill(javafx.scene.paint.Color.RED);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -218,7 +221,9 @@ public class EditQRCodeController implements Initializable {
                         e.printStackTrace();
                     }
 
-                    QRCodeDAO.refresh(code);
+                    MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+                    maintenanceMethods.updateQRCode(currentQR, code);
+                    refreshChoiceboxes();
                     Platform.runLater(() -> {
                         editQRStatus.setText("Erfolgreich gespeichert.");
                         editQRStatus.setTextFill(javafx.scene.paint.Color.GREEN);
@@ -242,7 +247,9 @@ public class EditQRCodeController implements Initializable {
     }
 
     public void delete(ActionEvent event) {
-
+        MaintenanceMethods maintenance = new MaintenanceMethods();
+        maintenance.deleteQRCode(currentQR);
+        reset();
     }
 
     private void reset() {
@@ -252,6 +259,7 @@ public class EditQRCodeController implements Initializable {
         QRHint.setText("");
         QRNext.getSelectionModel().selectFirst();
         QRQuestion.getSelectionModel().selectFirst();
+        alleQRCodes.getSelectionModel().selectFirst();
     }
 
     private void paintQR(String value) {
