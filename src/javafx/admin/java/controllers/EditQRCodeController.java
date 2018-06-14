@@ -4,8 +4,10 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,23 +31,43 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class EditQRCodeController implements Initializable {
-    @FXML public TextField QRName;
-    @FXML public TextField QRLat;
-    @FXML public TextField QRLong;
-    @FXML public Label QRE;
-    @FXML public TextArea QRHint;
-    @FXML public ChoiceBox QRQuestion;
-    @FXML public ChoiceBox QRNext;
-    @FXML public Button QRReset;
-    @FXML public Button QRSave;
-    @FXML public ImageView QRImage;
-    @FXML public ChoiceBox alleQRCodes;
-    @FXML private BufferedImage bufferedImage;
+    @FXML
+    public TextField QRName;
+    @FXML
+    public TextField QRLat;
+    @FXML
+    public TextField QRLong;
+    @FXML
+    public Label QRE;
+    @FXML
+    public TextArea QRHint;
+    @FXML
+    public ChoiceBox QRQuestion;
+    @FXML
+    public ChoiceBox QRNext;
+    @FXML
+    public Button QRReset;
+    @FXML
+    public Button QRSave;
+    @FXML
+    public ImageView QRImage;
+    @FXML
+    public ChoiceBox alleQRCodes;
+    @FXML public Label editQRStatus;
+    @FXML
+    private BufferedImage bufferedImage;
+
+    private QRCode currentQR;
+
+    public EditQRCodeController() {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,7 +96,7 @@ public class EditQRCodeController implements Initializable {
 
     private QRCode findByQRCodeName(List<QRCode> qrCodes, String selectedItem) {
         for (QRCode qrCode : qrCodes) {
-            if (qrCode.getName().equals(selectedItem)){
+            if (qrCode.getName().equals(selectedItem)) {
                 return qrCode;
             }
         }
@@ -82,10 +104,13 @@ public class EditQRCodeController implements Initializable {
     }
 
     private void fillInputFields(QRCode selectedQRCode) {
+
+        currentQR = selectedQRCode;
+
         QRName.setText(selectedQRCode.getName());
         QRHint.setText(selectedQRCode.getHinweis());
-        QRLat.setText(""+selectedQRCode.getLat());
-        QRLong.setText(""+selectedQRCode.getLon());
+        QRLat.setText("" + selectedQRCode.getLat());
+        QRLong.setText("" + selectedQRCode.getLon());
         /*
          * get and insert all questions available
          */
@@ -94,8 +119,8 @@ public class EditQRCodeController implements Initializable {
             Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
             for (Frage frage : fragen) {
                 QRQuestion.getItems().add(frage.getFrage());
-                if(frage.equals(selectedQRCode.getAufgabe())){
-                    index = QRQuestion.getItems().size()-1;
+                if (frage.equals(selectedQRCode.getAufgabe())) {
+                    index = QRQuestion.getItems().size() - 1;
                 }
             }
             QRQuestion.getSelectionModel().select(index);
@@ -112,8 +137,8 @@ public class EditQRCodeController implements Initializable {
             QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
             for (QRCode code : codes) {
                 QRNext.getItems().add("QR-Code: " + code.getName());
-                if(code.equals(selectedQRCode.getNextQRCode())){
-                    index = QRNext.getItems().size()-1;
+                if (code.equals(selectedQRCode.getNextQRCode())) {
+                    index = QRNext.getItems().size() - 1;
                 }
             }
             QRNext.getSelectionModel().select(index);
@@ -124,6 +149,7 @@ public class EditQRCodeController implements Initializable {
         QRName.textProperty().addListener((observable, oldValue, newValue) -> {
             paintQR(newValue);
         });
+
 
     }
 
@@ -146,7 +172,86 @@ public class EditQRCodeController implements Initializable {
     }
 
     public void save(ActionEvent actionEvent) {
+        if (!QRName.getText().equals("") &&
+                !QRLat.getText().equals("") &&
+                !QRLong.getText().equals("") &&
+                !QRHint.getText().equals("")) {
 
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+
+                    QRCode code = QRCodeDAO.createQRCode();
+
+                    code.setName(QRName.getText());
+                    code.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(QRLat.getText()).floatValue());
+                    code.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(QRLong.getText()).floatValue());
+                    code.setHinweis(QRHint.getText());
+
+
+                    try {
+                        Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
+                        for (Frage frage : fragen) {
+                            if (frage.getFrage().equals(QRQuestion.getValue())) {
+                                code.setAufgabe(frage);
+                            }
+                        }
+                    } catch (PersistentException e) {
+                        editQRStatus.setText("Es gab ein Problem mit der Frage.");
+                        editQRStatus.setTextFill(javafx.scene.paint.Color.RED);
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
+                        for (QRCode c : codes) {
+                            if (c.getName().equals(QRNext.getValue().toString().substring(9))) {
+                                code.setNextQRCode(c);
+                            }
+                        }
+                        Platform.runLater(() -> {
+                            QRNext.getSelectionModel().select(0);
+                        });
+                    } catch (PersistentException e) {
+                        editQRStatus.setText("Es gab ein Problem mit dem nächsten QRCode.");
+                        editQRStatus.setTextFill(javafx.scene.paint.Color.RED);
+                        e.printStackTrace();
+                    }
+
+                    QRCodeDAO.refresh(code);
+                    Platform.runLater(() -> {
+                        editQRStatus.setText("Erfolgreich gespeichert.");
+                        editQRStatus.setTextFill(javafx.scene.paint.Color.GREEN);
+                        reset();
+                    });
+
+                    return null;
+
+                }
+            };
+
+            Thread th = new Thread(task);
+
+            th.setDaemon(true);
+
+            th.start();
+        } else {
+            editQRStatus.setText("Bitte alle Felder ausfüllen.");
+            editQRStatus.setTextFill(javafx.scene.paint.Color.RED);
+        }
+    }
+
+    public void delete(ActionEvent event) {
+
+    }
+
+    private void reset() {
+        QRName.setText("");
+        QRLat.setText("");
+        QRLong.setText("");
+        QRHint.setText("");
+        QRNext.getSelectionModel().selectFirst();
+        QRQuestion.getSelectionModel().selectFirst();
     }
 
     private void paintQR(String value) {

@@ -109,7 +109,7 @@
                                 </GridPane>
                             </children>
                         </AnchorPane>
-                        <HBox layoutX="14.0" layoutY="396.0" prefHeight="89.0" prefWidth="600.0">
+                        <HBox layoutX="14.0" layoutY="458.0" prefHeight="89.0" prefWidth="600.0">
                             <children>
                                 <Button fx:id="QRReset" mnemonicParsing="false" onAction="#getCode" prefHeight="44.0" prefWidth="200.0" text="QR-Code drucken">
                                     <font>
@@ -121,7 +121,7 @@
                                         <Font size="20.0" />
                                     </font>
                                 </Button>
-                        <Button mnemonicParsing="false" prefWidth="200.0" text="Löschen" textFill="RED">
+                        <Button mnemonicParsing="false" onAction="#delete" prefWidth="200.0" text="Löschen" textFill="RED">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -136,6 +136,11 @@
                                 <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
                             </image>
                         </ImageView>
+                  <Label fx:id="editQRStatus" layoutX="14.0" layoutY="405.0" prefHeight="44.0" prefWidth="588.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                     </children>
                 </AnchorPane>
             </children>
