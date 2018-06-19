@@ -4,6 +4,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import javafx.admin.java.modules.MaintenanceMethods;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
@@ -43,7 +44,7 @@ public class EditKletterwandController implements Initializable {
 
     private BufferedImage bufferedImageStart;
     private BufferedImage bufferedImageEnd;
-    private String aktuelleKletterwand;
+    private Kletterwand aktuelleKletterwand;
 
     public EditKletterwandController() {
     }
@@ -73,7 +74,11 @@ public class EditKletterwandController implements Initializable {
     }
 
     private void updateKletterwand(String kletterwand) {
-        aktuelleKletterwand = kletterwand;
+        try {
+            aktuelleKletterwand = KletterwandDAO.getKletterwandByORMID(kletterwand);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
         KletterwandName.setText(kletterwand);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
@@ -125,8 +130,7 @@ public class EditKletterwandController implements Initializable {
     public void deleteKletterwand(ActionEvent actionEvent) {
 
         try {
-            Kletterwand kletterwand = KletterwandDAO.getKletterwandByORMID(aktuelleKletterwand);
-            KletterwandDAO.delete(kletterwand);
+            KletterwandDAO.delete(aktuelleKletterwand);
             reset();
             KletterwandE.setText("Erfolgreich gelöscht.");
 
@@ -155,6 +159,13 @@ public class EditKletterwandController implements Initializable {
     }
 
     public void save(ActionEvent actionEvent) {
+        Kletterwand kletterwand = new Kletterwand();
+        kletterwand.setName(KletterwandName.getText());
+        kletterwand.setStartTag(KletterwandName.getText() + "_start");
+        kletterwand.setEndTag(KletterwandName.getText() + "_end");
+
+        MaintenanceMethods maintenance = new MaintenanceMethods();
+        maintenance.updateKletterwand(aktuelleKletterwand, kletterwand);
 
     }
 

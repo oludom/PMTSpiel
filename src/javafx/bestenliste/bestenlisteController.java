@@ -58,7 +58,7 @@ public class bestenlisteController implements Initializable {
             Zeit[] zeiten = ZeitDAO.listZeitByQuery("KletterwandName = '" + cboxKletterwand.getValue().toString() + "'", "GemesseneZeit");
             int platz = 1;
             for (Zeit zeit: zeiten) {
-                data.add(new Rekord(platz, zeit.getGemesseneZeit().toString(), zeit.getBugaBesucher().username.toString(), zeit.getDatum().toString()));
+                data.add(new Rekord(platz,String.valueOf(zeit.getGemesseneZeit()), zeit.getBugaBesucher().username.toString(), zeit.getDatum().toString()));
                 platz++;
             }
 
@@ -94,7 +94,7 @@ public class bestenlisteController implements Initializable {
             int platz = 1;
             for (Zeit zeit: zeiten) {
             //    listHighscores.getItems().add(zeit.getGemesseneZeit().toString() + " : " + zeit.getBugaBesucher().username + " am " + zeit.getDatum().toString());
-                data.add(new Rekord(platz, zeit.getGemesseneZeit().toString(), zeit.getBugaBesucher().username.toString(), zeit.getDatum().toString()));
+                data.add(new Rekord(platz, String.valueOf(zeit.getGemesseneZeit()), zeit.getBugaBesucher().username, zeit.getDatum().toString()));
                 platz++;
             }
 
