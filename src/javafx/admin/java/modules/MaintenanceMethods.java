@@ -17,35 +17,58 @@ public class MaintenanceMethods {
     public MaintenanceMethods() {
     }
 
-    public void deleteQRCode(QRCode qrCode) {
+    public String deleteQRCode(QRCode qrCode) {
+
+        try {
+            connect();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement("UPDATE bugaspiel.benutzer SET letzterQRCode=null WHERE name=?");
+            preparedStatement.setString(1, qrCode.getName());
+            preparedStatement.execute();
+            connection.commit();
+
+            QRCodeDAO.delete(qrCode);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return null;
+
         /*
          * Vorgänger des QRCodes kriegt dessen Nachfolger als Nachfolger reingeschrieben
          */
 
-        try {
-            QRCode nachfolger = qrCode.getNextQRCode();
-            QRCode[] vorgaenger = QRCodeDAO.listQRCodeByQuery(null, null);
-
-            for (QRCode code : vorgaenger) {
-                if (code.getNextQRCode() != null && code.getNextQRCode().equals(qrCode)) {
-                    code.setNextQRCode(nachfolger);
-                    QRCodeDAO.save(code);
-                }
-            }
-
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-        /*
-         * QRCode wird gelöscht
-         */
-
-        try {
-            QRCodeDAO.delete(qrCode);
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            QRCode nachfolger = qrCode.getNextQRCode();
+//            QRCode[] vorgaenger = QRCodeDAO.listQRCodeByQuery(null, null);
+//
+//            for (QRCode code : vorgaenger) {
+//                if (code.getNextQRCode() != null && code.getNextQRCode().equals(qrCode)) {
+//                    code.setNextQRCode(nachfolger);
+//                    QRCodeDAO.save(code);
+//                }
+//            }
+//
+//        } catch (PersistentException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//
+//        /*
+//         * QRCode wird gelöscht
+//         */
+//
+//        try {
+//            QRCodeDAO.delete(qrCode);
+//        } catch (PersistentException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -56,36 +79,56 @@ public class MaintenanceMethods {
 
         if (!oldQRCode.getName().equals(updatedQRCode.getName())) {
             try {
+                QRCodeDAO.save(updatedQRCode);
+                QRCode[] vorgaenger = QRCodeDAO.listQRCodeByQuery(null, null);
+
+                for (QRCode code : vorgaenger) {
+                    if (code.getNextQRCode() != null && code.getNextQRCode().equals(oldQRCode)) {
+                        code.setNextQRCode(updatedQRCode);
+                        QRCodeDAO.save(code);
+                    }
+                }
+
+
+            } catch (PersistentException e) {
+                e.printStackTrace();
+            }
+
+
+            try {
                 connect();
-                preparedStatement = connection.prepareStatement("UPDATE bugaspiel.qrcode SET name=? WHERE name=?");
+                connection.setAutoCommit(false);
+                preparedStatement = connection.prepareStatement("UPDATE bugaspiel.benutzer SET letzterQRCode=? WHERE letzerQRCode=?");
                 preparedStatement.setString(1, updatedQRCode.getName());
                 preparedStatement.setString(2, oldQRCode.getName());
-                resultSet = preparedStatement.executeQuery();
+                preparedStatement.execute();
 
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 close();
             }
+
+
+
+            try {
+                QRCodeDAO.delete(oldQRCode);
+            } catch (PersistentException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            try {
+                QRCode code = QRCodeDAO.getQRCodeByORMID(oldQRCode.getName());
+                code.setNextQRCode(updatedQRCode.getNextQRCode());
+                code.setAufgabe(updatedQRCode.getAufgabe());
+                code.setHinweis(updatedQRCode.getHinweis());
+
+                QRCodeDAO.save(code);
+            } catch (PersistentException e) {
+                e.printStackTrace();
+            }
         }
-
-        /*
-         * Was sonst geändert wurde
-         */
-
-        try {
-            QRCode code = QRCodeDAO.getQRCodeByORMID(updatedQRCode.getName());
-            code.setNextQRCode(updatedQRCode.getNextQRCode());
-            code.setAufgabe(updatedQRCode.getAufgabe());
-            code.setHinweis(updatedQRCode.getHinweis());
-            code.setLat(updatedQRCode.getLat());
-            code.setLon(updatedQRCode.getLon());
-            QRCodeDAO.save(code);
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     public void deleteKletterwand(Kletterwand kletterwand) {
@@ -98,16 +141,24 @@ public class MaintenanceMethods {
          */
         try {
             KletterwandDAO.save(updatedKletterwand);
-            Zeit[] alleZeiten = ZeitDAO.listZeitByQuery(null, null);
-            for (int i = 0; i < alleZeiten.length; i++) {
-                if (alleZeiten[i].getKletterwand().equals(oldKletterwand)){
-                    alleZeiten[i].setKletterwand(updatedKletterwand);
-                    ZeitDAO.save(alleZeiten[i]);
-                }
-            }
+            preparedStatement = connection.prepareStatement("UPDATE bugaspiel.zeit SET KletterwandName=? WHERE KletterwandName=?");
+            preparedStatement.setString(1, updatedKletterwand.getName());
+            preparedStatement.setString(2, oldKletterwand.getName());
+            preparedStatement.execute();
+
+            PreparedStatement anotherStatement =
+                    connection.prepareStatement("UPDATE bugaspiel.kletterwand_route SET kletterwand=? WHERE kletterwand=?");
+            anotherStatement.setString(1, updatedKletterwand.getName());
+            anotherStatement.setString(2, oldKletterwand.getName());
+            anotherStatement.execute();
+
             KletterwandDAO.delete(oldKletterwand);
         } catch (PersistentException e) {
             e.printStackTrace();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            close();
         }
         /*
          * Der ganze Rest
@@ -127,7 +178,7 @@ public class MaintenanceMethods {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager
-                    .getConnection("jdbc:mysql://www.se.hs-heilbronn.de/bugaspiel?"
+                    .getConnection("jdbc:mysql://www.se.hs-heilbronn.de:3306/BuGaSpiel?"
                             + "user=BuGaSpielUser&password=SpielPw");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

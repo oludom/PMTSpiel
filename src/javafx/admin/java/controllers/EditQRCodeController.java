@@ -110,8 +110,8 @@ public class EditQRCodeController implements Initializable {
 
         QRName.setText(selectedQRCode.getName());
         QRHint.setText(selectedQRCode.getHinweis());
-        QRLat.setText("" + selectedQRCode.getLat());
-        QRLong.setText("" + selectedQRCode.getLon());
+//        QRLat.setText("" + selectedQRCode.getLat());
+//        QRLong.setText("" + selectedQRCode.getLon());
         /*
          * get and insert all questions available
          */
@@ -187,8 +187,8 @@ public class EditQRCodeController implements Initializable {
                     QRCode code = QRCodeDAO.createQRCode();
 
                     code.setName(QRName.getText());
-                    code.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(QRLat.getText()).floatValue());
-                    code.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(QRLong.getText()).floatValue());
+//                    code.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(QRLat.getText()).floatValue());
+//                    code.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(QRLong.getText()).floatValue());
                     code.setHinweis(QRHint.getText());
 
 
@@ -248,7 +248,7 @@ public class EditQRCodeController implements Initializable {
 
     public void delete(ActionEvent event) {
         MaintenanceMethods maintenance = new MaintenanceMethods();
-        maintenance.deleteQRCode(currentQR);
+        String hinweis = maintenance.deleteQRCode(currentQR);
         reset();
     }
 

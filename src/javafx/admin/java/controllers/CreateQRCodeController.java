@@ -147,8 +147,8 @@ public class CreateQRCodeController implements Initializable {
           QRCode code = QRCodeDAO.createQRCode();
 
           code.setName(QRName.getText());
-          code.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(QRLat.getText()).floatValue());
-          code.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(QRLong.getText()).floatValue());
+//          code.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(QRLat.getText()).floatValue());
+//          code.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(QRLong.getText()).floatValue());
           code.setHinweis(QRHint.getText());
 
 
