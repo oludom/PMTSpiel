@@ -82,7 +82,6 @@ public class EditKletterwandController implements Initializable {
         KletterwandName.setText(kletterwand);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
-        System.out.println("test:" + kletterwand);
         String myWebStart = kletterwand == null || kletterwand.equals("") ? "example" : kletterwand + "_start";
         String myWebEnd = kletterwand == null || kletterwand.equals("") ? "example" : kletterwand + "_end";
         int width = 200;
@@ -167,6 +166,9 @@ public class EditKletterwandController implements Initializable {
         MaintenanceMethods maintenance = new MaintenanceMethods();
         maintenance.updateKletterwand(aktuelleKletterwand, kletterwand);
 
+        KletterwandE.setTextFill(javafx.scene.paint.Color.rgb(0,255,0));
+        KletterwandE.setText("Kletterwand wurde gespeichert.");
+        reset();
     }
 
     private void getCode(BufferedImage image, String name) {
