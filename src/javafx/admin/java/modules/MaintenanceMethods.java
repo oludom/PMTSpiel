@@ -110,7 +110,6 @@ public class MaintenanceMethods {
             }
 
 
-
             try {
                 QRCodeDAO.delete(oldQRCode);
             } catch (PersistentException e) {
@@ -155,23 +154,51 @@ public class MaintenanceMethods {
             KletterwandDAO.delete(oldKletterwand);
         } catch (PersistentException e) {
             e.printStackTrace();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             close();
         }
-        /*
-         * Der ganze Rest
-         */
 
     }
 
-    public void deleteQuestion(Frage frage) {
+    public void deleteQuestion(Frage frage) throws SQLException, PersistentException {
+
+        //Zufällige Frage wird als Ersatz für Frage in QRCode gewählt
+
+        Frage[] fragen = FrageDAO.listFrageByQuery("'Frage'!=" + frage.getFrage(), null);
+
 
     }
 
-    public void updateQuestion(Frage oldFrage, Frage updatedFrage) {
+    public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException, SQLException {
+        if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
+            //Frage wird als neue Instaanz gespeichert
+            FrageDAO.save(updatedFrage);
 
+            //Foreign Keys mit der Frage werden geändert auf die neue Version
+            try {
+                connect();
+                connection.setAutoCommit(false);
+                PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
+                statement1.setString(1, updatedFrage.getFrage());
+                statement1.setString(2, oldFrage.getFrage());
+                statement1.execute();
+                connection.commit();
+            } finally {
+                close();
+            }
+
+            //Alte Frage wird gelöscht
+            FrageDAO.delete(oldFrage);
+
+        } else {
+            Frage frage = FrageDAO.getFrageByORMID(oldFrage.getFrage());
+            frage.setAntwort1(updatedFrage.getAntwort1());
+            frage.setAntwort2(updatedFrage.getAntwort2());
+            frage.setAntwortrichtig(updatedFrage.getAntwortrichtig());
+            FrageDAO.save(frage);
+        }
     }
 
     private void connect() {
