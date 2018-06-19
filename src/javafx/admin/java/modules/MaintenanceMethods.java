@@ -110,7 +110,6 @@ public class MaintenanceMethods {
             }
 
 
-
             try {
                 QRCodeDAO.delete(oldQRCode);
             } catch (PersistentException e) {
@@ -156,23 +155,87 @@ public class MaintenanceMethods {
             KletterwandDAO.delete(oldKletterwand);
         } catch (PersistentException e) {
             e.printStackTrace();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             close();
         }
-        /*
-         * Der ganze Rest
-         */
 
     }
 
-    public void deleteQuestion(Frage frage) {
+    public void deleteQuestion(Frage frage) throws SQLException, PersistentException {
 
+
+
+        //Zufällige Frage wird als Ersatz für Frage in QRCode gewählt
+
+        Frage[] fragen = FrageDAO.listFrageByQuery("'Frage'!='" + frage.getFrage() + "'", null);
+        int randomIndex = (int) Math.random()*(fragen.length-1);
+        Frage randomFrage = fragen[randomIndex];
+
+        //Zufällige Frage wird eingesetzt
+        try {
+            connect();
+            PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
+            statement1.setString(1, "'" + randomFrage.getFrage() + "'");
+            statement1.setString(2, "'" + frage.getFrage() + "'");
+            statement1.execute();
+        } finally {
+            close();
+        }
+
+        //Alte Frage wird gelöscht
+        FrageDAO.delete(frage);
     }
 
-    public void updateQuestion(Frage oldFrage, Frage updatedFrage) {
+    public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
+        if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
 
+            try {
+                FrageDAO.save(updatedFrage);
+                connect();
+                PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
+                statement1.setString(1, "'" + updatedFrage.getFrage() + "'");
+                statement1.setString(2, "'" + oldFrage.getFrage() + "'");
+                statement1.execute();
+                PreparedStatement statement2 = connection.prepareStatement("DELETE FROM bugaspiel.frage WHERE Frage=?");
+                statement2.setString(1, "'"+oldFrage.getFrage()+"'");
+                statement2.execute();
+
+            } catch (PersistentException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                close();
+            }
+
+//            //Frage wird als neue Instaanz gespeichert
+//            FrageDAO.save(updatedFrage);
+//
+//            //Foreign Keys mit der Frage werden geändert auf die neue Version
+//            try {
+//                connect();
+//                PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
+//                statement1.setString(1, "'" + updatedFrage.getFrage() + "'");
+//                statement1.setString(2, "'" + oldFrage.getFrage() + "'");
+//                statement1.execute();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            } finally {
+//                close();
+//            }
+//
+//            //Alte Frage wird gelöscht
+//            FrageDAO.delete(oldFrage);
+
+        } else {
+            Frage frage = FrageDAO.getFrageByORMID(oldFrage.getFrage());
+            frage.setAntwort1(updatedFrage.getAntwort1());
+            frage.setAntwort2(updatedFrage.getAntwort2());
+            frage.setAntwortrichtig(updatedFrage.getAntwortrichtig());
+            FrageDAO.save(frage);
+        }
     }
 
     private void connect() {
