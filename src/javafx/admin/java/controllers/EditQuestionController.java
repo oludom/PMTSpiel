@@ -118,6 +118,9 @@ public class EditQuestionController implements Initializable {
         try {
             MaintenanceMethods maintenance = new MaintenanceMethods();
             maintenance.deleteQuestion(currentQuestion);
+            reset();
+            questionStatus.setTextFill(Color.GREEN);
+            questionStatus.setText("Frage erfolgreich gelöscht.");
         } catch (SQLException e) {
             questionStatus.setTextFill(Color.RED);
             questionStatus.setText("Es gab ein Problem mit der Datenbank: " + e.getMessage());
@@ -132,6 +135,7 @@ public class EditQuestionController implements Initializable {
         answer1.setText("");
         answer2.setText("");
         rightAnswer.setText("");
+        questionList.getSelectionModel().selectFirst();
     }
 
     private void refreshChoiceBox() {

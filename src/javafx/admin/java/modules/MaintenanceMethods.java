@@ -166,12 +166,26 @@ public class MaintenanceMethods {
 
         //Zufällige Frage wird als Ersatz für Frage in QRCode gewählt
 
-        Frage[] fragen = FrageDAO.listFrageByQuery("'Frage'!=" + frage.getFrage(), null);
+        Frage[] fragen = FrageDAO.listFrageByQuery("'Frage'!='" + frage.getFrage() + "'", null);
+        int randomIndex = (int) Math.random()*(fragen.length-1);
+        Frage randomFrage = fragen[randomIndex];
 
+        //Zufällige Frage wird eingesetzt
+        try {
+            connect();
+            PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
+            statement1.setString(1, "'" + randomFrage.getFrage() + "'");
+            statement1.setString(2, "'" + frage.getFrage() + "'");
+            statement1.execute();
+        } finally {
+            close();
+        }
 
+        //Alte Frage wird gelöscht
+        FrageDAO.delete(frage);
     }
 
-    public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException, SQLException {
+    public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
         if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
             //Frage wird als neue Instaanz gespeichert
             FrageDAO.save(updatedFrage);
@@ -179,12 +193,12 @@ public class MaintenanceMethods {
             //Foreign Keys mit der Frage werden geändert auf die neue Version
             try {
                 connect();
-                connection.setAutoCommit(false);
                 PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
-                statement1.setString(1, updatedFrage.getFrage());
-                statement1.setString(2, oldFrage.getFrage());
+                statement1.setString(1, "'" + updatedFrage.getFrage() + "'");
+                statement1.setString(2, "'" + oldFrage.getFrage() + "'");
                 statement1.execute();
-                connection.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
             } finally {
                 close();
             }
