@@ -78,7 +78,7 @@ public class RootController implements Initializable {
                 ueberschriftKategorie = "eine Frage";
                 break;
             case "Nutzer":
-                category = "User";
+                category = "Users";
                 ueberschriftKategorie = "die Nutzer";
                 break;
         }
