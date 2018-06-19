@@ -141,6 +141,7 @@ public class MaintenanceMethods {
          */
         try {
             KletterwandDAO.save(updatedKletterwand);
+            connect();
             preparedStatement = connection.prepareStatement("UPDATE bugaspiel.zeit SET KletterwandName=? WHERE KletterwandName=?");
             preparedStatement.setString(1, updatedKletterwand.getName());
             preparedStatement.setString(2, oldKletterwand.getName());
