@@ -40,6 +40,8 @@ public class EditQuestionController implements Initializable {
     public TextArea question;
     @FXML
     public ChoiceBox questionList;
+    @FXML
+    public Button refreshButton;
 
     private Frage currentQuestion;
 
@@ -52,7 +54,13 @@ public class EditQuestionController implements Initializable {
         questionList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                fillInputfields((String) questionList.getSelectionModel().getSelectedItem());
+                try {
+                    if (!questionList.getSelectionModel().getSelectedItem().equals("")) {
+                        fillInputfields((String) questionList.getSelectionModel().getSelectedItem());
+                    }
+                } catch (NullPointerException e) {
+//                    System.out.println("Message: " + e.getStackTrace());
+                }
             }
         });
     }
@@ -119,6 +127,7 @@ public class EditQuestionController implements Initializable {
             MaintenanceMethods maintenance = new MaintenanceMethods();
             maintenance.deleteQuestion(currentQuestion);
             reset();
+            refreshChoiceBox();
             questionStatus.setTextFill(Color.GREEN);
             questionStatus.setText("Frage erfolgreich gelöscht.");
         } catch (SQLException e) {
@@ -135,12 +144,14 @@ public class EditQuestionController implements Initializable {
         answer1.setText("");
         answer2.setText("");
         rightAnswer.setText("");
-        questionList.getSelectionModel().selectFirst();
+        questionList.getSelectionModel().clearSelection();
     }
 
+    @FXML
     private void refreshChoiceBox() {
         try {
             questionList.getItems().clear();
+            //TODO gucken warum der mir nich alle Fragen holt wenn auf refresh gedrückt
             Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
             for (int i = 0; i < fragen.length; i++) {
                 questionList.getItems().add(fragen[i].getFrage());

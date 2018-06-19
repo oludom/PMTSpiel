@@ -164,6 +164,8 @@ public class MaintenanceMethods {
 
     public void deleteQuestion(Frage frage) throws SQLException, PersistentException {
 
+
+
         //Zufällige Frage wird als Ersatz für Frage in QRCode gewählt
 
         Frage[] fragen = FrageDAO.listFrageByQuery("'Frage'!='" + frage.getFrage() + "'", null);
@@ -187,24 +189,44 @@ public class MaintenanceMethods {
 
     public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
         if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
-            //Frage wird als neue Instaanz gespeichert
-            FrageDAO.save(updatedFrage);
 
-            //Foreign Keys mit der Frage werden geändert auf die neue Version
             try {
+                FrageDAO.save(updatedFrage);
                 connect();
                 PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
                 statement1.setString(1, "'" + updatedFrage.getFrage() + "'");
                 statement1.setString(2, "'" + oldFrage.getFrage() + "'");
                 statement1.execute();
+                PreparedStatement statement2 = connection.prepareStatement("DELETE FROM bugaspiel.frage WHERE Frage=?");
+                statement2.setString(1, "'"+oldFrage.getFrage()+"'");
+                statement2.execute();
+
+            } catch (PersistentException e) {
+                e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 close();
             }
 
-            //Alte Frage wird gelöscht
-            FrageDAO.delete(oldFrage);
+//            //Frage wird als neue Instaanz gespeichert
+//            FrageDAO.save(updatedFrage);
+//
+//            //Foreign Keys mit der Frage werden geändert auf die neue Version
+//            try {
+//                connect();
+//                PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
+//                statement1.setString(1, "'" + updatedFrage.getFrage() + "'");
+//                statement1.setString(2, "'" + oldFrage.getFrage() + "'");
+//                statement1.execute();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            } finally {
+//                close();
+//            }
+//
+//            //Alte Frage wird gelöscht
+//            FrageDAO.delete(oldFrage);
 
         } else {
             Frage frage = FrageDAO.getFrageByORMID(oldFrage.getFrage());
