@@ -169,65 +169,44 @@ public class MaintenanceMethods {
 
         //Zufällige Frage wird als Ersatz für Frage in QRCode gewählt
 
-        Frage[] fragen = FrageDAO.listFrageByQuery("'Frage'!='" + frage.getFrage() + "'", null);
+        Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
         int randomIndex = (int) Math.random()*(fragen.length-1);
         Frage randomFrage = fragen[randomIndex];
+        if (randomFrage.getFrage().equals(frage.getFrage())){
+            randomFrage = fragen[randomIndex+1];
+        }
 
         //Zufällige Frage wird eingesetzt
-        try {
-            connect();
-            PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
-            statement1.setString(1, "'" + randomFrage.getFrage() + "'");
-            statement1.setString(2, "'" + frage.getFrage() + "'");
-            statement1.execute();
-        } finally {
-            close();
+        QRCode[] qrCodes = QRCodeDAO.listQRCodeByQuery("FrageFrage='"+frage.getFrage()+"'", null);
+        for (QRCode qrCode : qrCodes) {
+            qrCode.setAufgabe(randomFrage);
+            QRCodeDAO.save(qrCode);
         }
 
         //Alte Frage wird gelöscht
         FrageDAO.delete(frage);
     }
 
+    /** DONE **/
     public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
         if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
 
             try {
                 FrageDAO.save(updatedFrage);
-                connect();
-                PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
-                statement1.setString(1, "'" + updatedFrage.getFrage() + "'");
-                statement1.setString(2, "'" + oldFrage.getFrage() + "'");
-                statement1.execute();
-                PreparedStatement statement2 = connection.prepareStatement("DELETE FROM bugaspiel.frage WHERE Frage=?");
-                statement2.setString(1, "'"+oldFrage.getFrage()+"'");
-                statement2.execute();
+
+                QRCode[] qrCodes = QRCodeDAO.listQRCodeByQuery("FrageFrage='"+oldFrage.getFrage()+"'", null);
+                for (QRCode qrCode : qrCodes) {
+                    qrCode.setAufgabe(updatedFrage);
+                    QRCodeDAO.save(qrCode);
+                }
+
+                FrageDAO.delete(FrageDAO.getFrageByORMID(oldFrage.getFrage()));
 
             } catch (PersistentException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 close();
             }
-
-//            //Frage wird als neue Instaanz gespeichert
-//            FrageDAO.save(updatedFrage);
-//
-//            //Foreign Keys mit der Frage werden geändert auf die neue Version
-//            try {
-//                connect();
-//                PreparedStatement statement1 = connection.prepareStatement("UPDATE bugaspiel.qrcode SET FrageFrage=? WHERE FrageFrage=?");
-//                statement1.setString(1, "'" + updatedFrage.getFrage() + "'");
-//                statement1.setString(2, "'" + oldFrage.getFrage() + "'");
-//                statement1.execute();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            } finally {
-//                close();
-//            }
-//
-//            //Alte Frage wird gelöscht
-//            FrageDAO.delete(oldFrage);
 
         } else {
             Frage frage = FrageDAO.getFrageByORMID(oldFrage.getFrage());
