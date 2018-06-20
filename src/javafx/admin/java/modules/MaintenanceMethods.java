@@ -274,12 +274,12 @@ public class MaintenanceMethods {
         return result;
     }
 
-    public List<ManegedUsers> listManageableUsers() throws SQLException {
+    public List<ManagedUsers> listManageableUsers() throws SQLException {
         connect();
         preparedStatement = connection.prepareStatement("SELECT * FROM bugaspiel.benutzer");
         resultSet = preparedStatement.executeQuery();
 
-        List<ManegedUsers> result = new ArrayList<>();
+        List<ManagedUsers> result = new ArrayList<>();
         while (resultSet.next()) {
             String name = resultSet.getString("Username");
             String lastQR = resultSet.getString("letzterQRCode");
@@ -291,7 +291,7 @@ public class MaintenanceMethods {
                 letzteFrage = "Nein";
             }
             String profilePic = resultSet.getString("Profilbild");
-            result.add(new ManegedUsers(name, lastQR, letzteFrage, points, profilePic));
+            result.add(new ManagedUsers(name, lastQR, letzteFrage, points, profilePic));
         }
         close();
         return result;
@@ -324,5 +324,40 @@ public class MaintenanceMethods {
         } catch (Exception e) {
 
         }
+    }
+
+    public void deleteUser(ManagedUsers managedUser) throws SQLException {
+
+        String username = managedUser.getUsername();
+
+        connect();
+
+        /** Für alle Tabellen in denen der Nutzer vorkommt, kann langfristig durch DB Constraints ersetzt werden**/
+
+        PreparedStatement statement1 = connection.prepareStatement("DELETE FROM bugaspiel.benutzer_freunde WHERE Username=?");
+        PreparedStatement statement2 = connection.prepareStatement("DELETE FROM bugaspiel.benutzer_freunde WHERE Freunde=?");
+        PreparedStatement statement3 = connection.prepareStatement("DELETE FROM bugaspiel.benutzer_offeneanfragen WHERE Angefragter=?");
+        PreparedStatement statement4 = connection.prepareStatement("DELETE FROM bugaspiel.benutzer_offeneanfragen WHERE AnfragenVon=?");
+        PreparedStatement statement5 = connection.prepareStatement("DELETE FROM bugaspiel.zeit WHERE BenutzerUsername=?");
+        PreparedStatement statement6 = connection.prepareStatement("DELETE FROM bugaspiel.kletterwand_route_bewertung WHERE benutzer=?");
+
+        statement1.setString(1, username);
+        statement2.setString(1, username);
+        statement3.setString(1, username);
+        statement4.setString(1, username);
+        statement5.setString(1, username);
+        statement6.setString(1, username);
+
+        statement1.execute();
+        statement2.execute();
+        statement3.execute();
+        statement4.execute();
+        statement5.execute();
+        statement6.execute();
+
+        preparedStatement = connection.prepareStatement("DELETE FROM bugaspiel.benutzer WHERE Username=?");
+        preparedStatement.setString(1, username);
+        preparedStatement.execute();
+        close();
     }
 }

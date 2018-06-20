@@ -3,7 +3,7 @@ package javafx.admin.java.modules;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ManegedUsers {
+public class ManagedUsers {
 
     private StringProperty username;
     private StringProperty lastQRCode;
@@ -11,9 +11,9 @@ public class ManegedUsers {
     private StringProperty points;
     private StringProperty profilePicLink;
 
-    public ManegedUsers(){}
+    public ManagedUsers(){}
 
-    public ManegedUsers(String username, String lastQRCode, String lastQuestionAnswered, String points, String profilePicLink){
+    public ManagedUsers(String username, String lastQRCode, String lastQuestionAnswered, String points, String profilePicLink){
         this.username = new SimpleStringProperty(username);
         this.lastQRCode = new SimpleStringProperty(lastQRCode);
         this.lastQuestionAnswered = new SimpleStringProperty(lastQuestionAnswered);
