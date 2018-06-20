@@ -84,7 +84,7 @@ public class EditKletterwandController implements Initializable {
         KletterwandList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                updateKletterwand((String) KletterwandList.getSelectionModel().getSelectedItem());
+                    updateKletterwand((String) KletterwandList.getSelectionModel().getSelectedItem());
             }
         });
     }
@@ -92,9 +92,11 @@ public class EditKletterwandController implements Initializable {
     @FXML
     private void refreshButton() {
         KletterwandList.getItems().clear();
+        alleKletterwaende.clear();
         MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
         try {
             List<String> kletterwaende = maintenanceMethods.refreshKletterwand();
+            alleKletterwaende = maintenanceMethods.listKletterwaende();
             for (String kletterwand :
                     kletterwaende) {
                 KletterwandList.getItems().add(kletterwand);
@@ -106,10 +108,11 @@ public class EditKletterwandController implements Initializable {
     }
 
     private void updateKletterwand(String kletterwand) {
-        try {
-            aktuelleKletterwand = KletterwandDAO.getKletterwandByORMID(kletterwand);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        for (int i = 0; i < alleKletterwaende.size(); i++) {
+            if (alleKletterwaende.get(i).getName().equals(kletterwand)){
+                aktuelleKletterwand = alleKletterwaende.get(i);
+                break;
+            }
         }
         KletterwandName.setText(kletterwand);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
