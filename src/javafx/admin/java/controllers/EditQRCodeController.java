@@ -62,7 +62,10 @@ public class EditQRCodeController implements Initializable {
     public ImageView QRImage;
     @FXML
     public ChoiceBox alleQRCodes;
-    @FXML public Label editQRStatus;
+    @FXML
+    public Label editQRStatus;
+    @FXML
+    public Button refresh;
     @FXML
     private BufferedImage bufferedImage;
 
@@ -155,7 +158,8 @@ public class EditQRCodeController implements Initializable {
 
     }
 
-    private void refreshChoiceboxes(){}
+    private void refreshChoiceboxes() {
+    }
 
     public void getCode(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -298,7 +302,7 @@ public class EditQRCodeController implements Initializable {
     }
 
     @FXML
-    private void refreshButton(){
+    private void refreshButton() {
         MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
 
         //refresh für normale QRCode Choicebox

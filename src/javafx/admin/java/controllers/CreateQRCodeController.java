@@ -3,6 +3,7 @@ package javafx.admin.java.controllers;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import javafx.admin.java.modules.MaintenanceMethods;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
@@ -17,7 +18,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -42,6 +45,7 @@ import javax.imageio.ImageIO;
  */
 public class CreateQRCodeController implements Initializable {
 
+   @FXML public Button refresh;
   @FXML
   private ResourceBundle resources;
 
@@ -260,6 +264,35 @@ public class CreateQRCodeController implements Initializable {
       }
     } catch (IOException e) {
       e.printStackTrace();
+    }
+  }
+
+  @FXML
+  private void refreshButton(){
+    MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+    //refresh für Fragen Choicebox
+    QRQuestion.getItems().clear();
+    try {
+      List<String> qrFragen = maintenanceMethods.refreshQuestions();
+      for (String string : qrFragen) {
+        QRQuestion.getItems().add(string);
+      }
+    } catch (SQLException e) {
+      QRE.setTextFill(javafx.scene.paint.Color.RED);
+      QRE.setText("Es gab einen Fehler beim Laden der Fragen.");
+    }
+
+    //refresh für nächste QRCode Choicebox
+    QRNext.getItems().clear();
+    QRNext.getItems().add(null);
+    try {
+      List<String> qrNext = maintenanceMethods.refreshQrcodes();
+      for (String string : qrNext) {
+        QRNext.getItems().add(string);
+      }
+    } catch (SQLException e) {
+      QRE.setTextFill(javafx.scene.paint.Color.RED);
+      QRE.setText("Es gab einen Fehler beim Laden der nächsten QRCodes.");
     }
   }
 

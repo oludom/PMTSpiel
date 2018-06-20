@@ -24,7 +24,7 @@
                     <children>
                         <AnchorPane prefHeight="226.0" prefWidth="1280.0">
                             <children>
-                                <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
+                                <GridPane prefHeight="226.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="780.0" AnchorPane.topAnchor="0.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="173.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="227.0" />
@@ -141,6 +141,11 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <Button fx:id="refresh" layoutX="174.0" layoutY="374.0" mnemonicParsing="false" onAction="#refreshButton" text="Aktualisieren">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                     </children>
                 </AnchorPane>
             </children>

@@ -43,6 +43,7 @@ public class EditKletterwandController implements Initializable {
     @FXML public Label KletterwandE;
     @FXML public TextField KletterwandName;
     @FXML public ChoiceBox KletterwandList;
+    @FXML public Button refresh;
 
     private BufferedImage bufferedImageStart;
     private BufferedImage bufferedImageEnd;
@@ -118,6 +119,7 @@ public class EditKletterwandController implements Initializable {
             Graphics2D graphicsStart = (Graphics2D) bufferedImageStart.getGraphics();
             graphicsStart.setColor(Color.WHITE);
             graphicsStart.fillRect(0, 0, width, height);
+
             graphicsStart.setColor(Color.BLACK);
 
             Graphics2D graphicsEnd = (Graphics2D) bufferedImageEnd.getGraphics();

@@ -103,7 +103,7 @@
                         </GridPane>
                      </children>
                   </AnchorPane>
-                  <HBox layoutY="380.0" prefHeight="89.0" prefWidth="600.0">
+                  <HBox layoutY="436.0" prefHeight="89.0" prefWidth="600.0">
                      <children>
                         <Button fx:id="QRReset" mnemonicParsing="false" onAction="#getCode" prefWidth="300.0" text="QR-Code drucken">
                            <font>
@@ -125,6 +125,11 @@
                         <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
                      </image>
                   </ImageView>
+                  <Button fx:id="refresh" layoutX="172.0" layoutY="383.0" mnemonicParsing="false" onAction="#refreshButton" text="Aktualisieren">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>
