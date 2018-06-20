@@ -131,7 +131,19 @@ public class MaintenanceMethods {
         }
     }
 
-    public void deleteKletterwand(Kletterwand kletterwand) {
+    public void deleteKletterwand(Kletterwand kletterwand) throws SQLException {
+        connect();
+        PreparedStatement statement1 =
+                connection.prepareStatement("DELETE FROM bugaspiel.kletterwand_route WHERE kletterwand=?");
+        statement1.setString(1, kletterwand.getName());
+        statement1.execute();
+
+        PreparedStatement statement2 =
+                connection.prepareStatement("DELETE FROM bugaspiel.kletterwand WHERE Name=?");
+        statement2.setString(1, kletterwand.getName());
+        statement2.execute();
+
+        close();
 
     }
 
@@ -142,10 +154,10 @@ public class MaintenanceMethods {
         try {
             KletterwandDAO.save(updatedKletterwand);
             connect();
-            preparedStatement = connection.prepareStatement("UPDATE bugaspiel.zeit SET KletterwandName=? WHERE KletterwandName=?");
-            preparedStatement.setString(1, updatedKletterwand.getName());
-            preparedStatement.setString(2, oldKletterwand.getName());
-            preparedStatement.execute();
+//            preparedStatement = connection.prepareStatement("UPDATE bugaspiel.zeit SET KletterwandName=? WHERE KletterwandName=?");
+//            preparedStatement.setString(1, updatedKletterwand.getName());
+//            preparedStatement.setString(2, oldKletterwand.getName());
+//            preparedStatement.execute();
 
             PreparedStatement anotherStatement =
                     connection.prepareStatement("UPDATE bugaspiel.kletterwand_route SET kletterwand=? WHERE kletterwand=?");
@@ -164,22 +176,23 @@ public class MaintenanceMethods {
 
     }
 
-    /** DONE **/
+    /**
+     * DONE
+     **/
     public void deleteQuestion(Frage frage) throws SQLException, PersistentException {
-
 
 
         //Zufällige Frage wird als Ersatz für Frage in QRCode gewählt
 
         Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
-        int randomIndex = (int) Math.random()*(fragen.length-1);
+        int randomIndex = (int) Math.random() * (fragen.length - 1);
         Frage randomFrage = fragen[randomIndex];
-        if (randomFrage.getFrage().equals(frage.getFrage())){
-            randomFrage = fragen[randomIndex+1];
+        if (randomFrage.getFrage().equals(frage.getFrage())) {
+            randomFrage = fragen[randomIndex + 1];
         }
 
         //Zufällige Frage wird eingesetzt
-        QRCode[] qrCodes = QRCodeDAO.listQRCodeByQuery("FrageFrage='"+frage.getFrage()+"'", null);
+        QRCode[] qrCodes = QRCodeDAO.listQRCodeByQuery("FrageFrage='" + frage.getFrage() + "'", null);
         for (QRCode qrCode : qrCodes) {
             qrCode.setAufgabe(randomFrage);
             QRCodeDAO.save(qrCode);
@@ -189,14 +202,16 @@ public class MaintenanceMethods {
         FrageDAO.delete(frage);
     }
 
-    /** DONE **/
+    /**
+     * DONE
+     **/
     public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
         if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
 
             try {
                 FrageDAO.save(updatedFrage);
 
-                QRCode[] qrCodes = QRCodeDAO.listQRCodeByQuery("FrageFrage='"+oldFrage.getFrage()+"'", null);
+                QRCode[] qrCodes = QRCodeDAO.listQRCodeByQuery("FrageFrage='" + oldFrage.getFrage() + "'", null);
                 for (QRCode qrCode : qrCodes) {
                     qrCode.setAufgabe(updatedFrage);
                     QRCodeDAO.save(qrCode);
@@ -225,33 +240,33 @@ public class MaintenanceMethods {
         resultSet = preparedStatement.executeQuery();
 
         List<String> result = new ArrayList<>();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             String frage = resultSet.getString("Frage");
             result.add(frage);
         }
         return result;
     }
 
-    public List<String> refreshKletterwand() throws SQLException{
+    public List<String> refreshKletterwand() throws SQLException {
         connect();
         preparedStatement = connection.prepareStatement("SELECT Name FROM bugaspiel.kletterwand");
         resultSet = preparedStatement.executeQuery();
 
         List<String> result = new ArrayList<>();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             String frage = resultSet.getString("Name");
             result.add(frage);
         }
         return result;
     }
 
-    public List<String> refreshQrcodes() throws SQLException{
+    public List<String> refreshQrcodes() throws SQLException {
         connect();
         preparedStatement = connection.prepareStatement("SELECT Name FROM bugaspiel.qrcode");
         resultSet = preparedStatement.executeQuery();
 
         List<String> result = new ArrayList<>();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             String frage = resultSet.getString("Name");
             result.add(frage);
         }
