@@ -1,5 +1,6 @@
 package javafx.admin.java.modules;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ManegedUsers {
@@ -9,6 +10,16 @@ public class ManegedUsers {
     private StringProperty lastQuestionAnswered;
     private StringProperty points;
     private StringProperty profilePicLink;
+
+    public ManegedUsers(){}
+
+    public ManegedUsers(String username, String lastQRCode, String lastQuestionAnswered, String points, String profilePicLink){
+        this.username = new SimpleStringProperty(username);
+        this.lastQRCode = new SimpleStringProperty(lastQRCode);
+        this.lastQuestionAnswered = new SimpleStringProperty(lastQuestionAnswered);
+        this.points = new SimpleStringProperty(points);
+        this.profilePicLink = new SimpleStringProperty(profilePicLink);
+    }
 
     /** GETTER **/
     public String getUsername() {

@@ -176,9 +176,7 @@ public class MaintenanceMethods {
 
     }
 
-    /**
-     * DONE
-     **/
+    /** DONE**/
     public void deleteQuestion(Frage frage) throws SQLException, PersistentException {
 
 
@@ -202,9 +200,7 @@ public class MaintenanceMethods {
         FrageDAO.delete(frage);
     }
 
-    /**
-     * DONE
-     **/
+    /** DONE**/
     public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
         if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
 
@@ -244,6 +240,7 @@ public class MaintenanceMethods {
             String frage = resultSet.getString("Frage");
             result.add(frage);
         }
+        close();
         return result;
     }
 
@@ -252,11 +249,13 @@ public class MaintenanceMethods {
         preparedStatement = connection.prepareStatement("SELECT Name FROM bugaspiel.kletterwand");
         resultSet = preparedStatement.executeQuery();
 
+
         List<String> result = new ArrayList<>();
         while (resultSet.next()) {
             String frage = resultSet.getString("Name");
             result.add(frage);
         }
+        close();
         return result;
     }
 
@@ -265,11 +264,36 @@ public class MaintenanceMethods {
         preparedStatement = connection.prepareStatement("SELECT Name FROM bugaspiel.qrcode");
         resultSet = preparedStatement.executeQuery();
 
+
         List<String> result = new ArrayList<>();
         while (resultSet.next()) {
             String frage = resultSet.getString("Name");
             result.add(frage);
         }
+        close();
+        return result;
+    }
+
+    public List<ManegedUsers> listManageableUsers() throws SQLException {
+        connect();
+        preparedStatement = connection.prepareStatement("SELECT * FROM bugaspiel.benutzer");
+        resultSet = preparedStatement.executeQuery();
+
+        List<ManegedUsers> result = new ArrayList<>();
+        while (resultSet.next()) {
+            String name = resultSet.getString("Username");
+            String lastQR = resultSet.getString("letzterQRCode");
+            String points = resultSet.getString("Punktzahl");
+            String letzteFrage = resultSet.getString("letzteFrageBeantwortet");
+            if (letzteFrage.equals("1")){
+                letzteFrage = "Ja";
+            } else {
+                letzteFrage = "Nein";
+            }
+            String profilePic = resultSet.getString("Profilbild");
+            result.add(new ManegedUsers(name, lastQR, letzteFrage, points, profilePic));
+        }
+        close();
         return result;
     }
 
