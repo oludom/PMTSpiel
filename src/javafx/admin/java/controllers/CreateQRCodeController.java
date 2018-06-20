@@ -55,11 +55,11 @@ public class CreateQRCodeController implements Initializable {
   @FXML
   private TextField QRName;
 
-  @FXML
-  private TextField QRLat;
-
-  @FXML
-  private TextField QRLong;
+//  @FXML
+//  private TextField QRLat;
+//
+//  @FXML
+//  private TextField QRLong;
 
   @FXML
   private ImageView QRImage;
@@ -88,8 +88,8 @@ public class CreateQRCodeController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
 
     assert QRName != null : "fx:id=\"QRName\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRLat != null : "fx:id=\"QRLat\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRLong != null : "fx:id=\"QRLong\" was not injected: check your FXML file 'Run.fxml'.";
+//    assert QRLat != null : "fx:id=\"QRLat\" was not injected: check your FXML file 'Run.fxml'.";
+//    assert QRLong != null : "fx:id=\"QRLong\" was not injected: check your FXML file 'Run.fxml'.";
     assert QRImage != null : "fx:id=\"QRImage\" was not injected: check your FXML file 'Run.fxml'.";
     assert QRHint != null : "fx:id=\"QRHint\" was not injected: check your FXML file 'Run.fxml'.";
     assert QRQuestion != null : "fx:id=\"QRquestion\" was not injected: check your FXML file 'Run.fxml'.";
@@ -139,8 +139,8 @@ public class CreateQRCodeController implements Initializable {
 
     if (
         !QRName.getText().equals("") &&
-        !QRLat.getText().equals("") &&
-        !QRLong.getText().equals("") &&
+//        !QRLat.getText().equals("") &&
+//        !QRLong.getText().equals("") &&
         !QRHint.getText().equals("")
         ) {
 
@@ -209,8 +209,8 @@ public class CreateQRCodeController implements Initializable {
   private void reset() {
 
     QRName.setText("");
-    QRLat.setText("");
-    QRLong.setText("");
+//    QRLat.setText("");
+//    QRLong.setText("");
     QRHint.setText("");
 
   }

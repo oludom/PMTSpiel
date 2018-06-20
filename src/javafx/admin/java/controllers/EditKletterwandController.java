@@ -171,6 +171,8 @@ public class EditKletterwandController implements Initializable {
         } catch (SQLException e) {
             KletterwandE.setTextFill(javafx.scene.paint.Color.RED);
             KletterwandE.setText("Löschen hat nicht funktioniert; " + e.getMessage());
+        } catch (IllegalArgumentException e){
+            e.getMessage();
         }
     }
 

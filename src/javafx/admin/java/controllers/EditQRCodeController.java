@@ -42,10 +42,10 @@ import java.util.ResourceBundle;
 public class EditQRCodeController implements Initializable {
     @FXML
     public TextField QRName;
-    @FXML
-    public TextField QRLat;
-    @FXML
-    public TextField QRLong;
+//    @FXML
+//    public TextField QRLat;
+//    @FXML
+//    public TextField QRLong;
     @FXML
     public Label QRE;
     @FXML
@@ -90,7 +90,9 @@ public class EditQRCodeController implements Initializable {
         alleQRCodes.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                fillInputFields(findByQRCodeName(qrCodes, (String) alleQRCodes.getSelectionModel().getSelectedItem()));
+                if (!alleQRCodes.getSelectionModel().getSelectedItem().equals("")){
+                    fillInputFields(findByQRCodeName(qrCodes, (String) alleQRCodes.getSelectionModel().getSelectedItem()));
+                }
             }
         });
 
@@ -181,8 +183,8 @@ public class EditQRCodeController implements Initializable {
 
     public void save(ActionEvent actionEvent) {
         if (!QRName.getText().equals("") &&
-                !QRLat.getText().equals("") &&
-                !QRLong.getText().equals("") &&
+//                !QRLat.getText().equals("") &&
+//                !QRLong.getText().equals("") &&
                 !QRHint.getText().equals("")) {
 
             Task<Void> task = new Task<Void>() {
@@ -259,8 +261,8 @@ public class EditQRCodeController implements Initializable {
 
     private void reset() {
         QRName.setText("");
-        QRLat.setText("");
-        QRLong.setText("");
+//        QRLat.setText("");
+//        QRLong.setText("");
         QRHint.setText("");
         QRNext.getSelectionModel().selectFirst();
         QRQuestion.getSelectionModel().selectFirst();
@@ -308,7 +310,7 @@ public class EditQRCodeController implements Initializable {
         //refresh für normale QRCode Choicebox
         alleQRCodes.getItems().clear();
         try {
-            List<String> alleQRs = maintenanceMethods.refreshQuestions();
+            List<String> alleQRs = maintenanceMethods.refreshQrcodes();
             for (String string : alleQRs) {
                 alleQRCodes.getItems().add(string);
             }

@@ -53,7 +53,7 @@
                                         <Font size="20.0" />
                                     </font>
                                 </Label>
-                        <Button fx:id="refreshButton" layoutX="1126.0" layoutY="50.0" mnemonicParsing="false" onAction="#refreshButton" prefHeight="31.0" prefWidth="92.0" text="refresh" />
+                        <Button fx:id="refreshButton" layoutX="1126.0" layoutY="50.0" mnemonicParsing="false" onAction="#refreshButton" prefHeight="31.0" prefWidth="92.0" text="Aktualisieren" />
                             </children>
                         </AnchorPane>
 

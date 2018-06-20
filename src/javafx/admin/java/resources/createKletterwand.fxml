@@ -80,19 +80,19 @@
                                               <Font size="20.0" />
                                           </font>
                                       </Label>
-                                      <Label stylesheets="@createQRCode.css" text="Latitude" GridPane.rowIndex="2">
-                                          <font>
-                                              <Font size="20.0" />
-                                          </font>
-                                      </Label>
-                                      <Label stylesheets="@createQRCode.css" text="Longitude" GridPane.rowIndex="3">
-                                          <font>
-                                              <Font size="20.0" />
-                                          </font>
-                                      </Label>
+                                      <!--<Label stylesheets="@createQRCode.css" text="Latitude" GridPane.rowIndex="2">-->
+                                          <!--<font>-->
+                                              <!--<Font size="20.0" />-->
+                                          <!--</font>-->
+                                      <!--</Label>-->
+                                      <!--<Label stylesheets="@createQRCode.css" text="Longitude" GridPane.rowIndex="3">-->
+                                          <!--<font>-->
+                                              <!--<Font size="20.0" />-->
+                                          <!--</font>-->
+                                      <!--</Label>-->
                                       <TextField id="createQRTextField" fx:id="KletterwandName" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                      <TextField id="createQRTextField" fx:id="KletterwandLat" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                      <TextField id="createQRTextField" fx:id="KletterwandLong" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                      <!--<TextField id="createQRTextField" fx:id="KletterwandLat" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />-->
+                                      <!--<TextField id="createQRTextField" fx:id="KletterwandLong" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />-->
                                       <Label fx:id="KletterwandE" prefHeight="30.0" prefWidth="219.0" textFill="RED" GridPane.columnIndex="1" />
                                   </children>
                                   <opaqueInsets>

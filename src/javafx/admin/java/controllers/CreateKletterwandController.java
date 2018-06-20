@@ -46,10 +46,10 @@ public class CreateKletterwandController implements Initializable {
     public ImageView KletterwandImageStart;
     @FXML
     public TextField KletterwandName;
-    @FXML
-    public TextField KletterwandLat;
-    @FXML
-    public TextField KletterwandLong;
+//    @FXML
+//    public TextField KletterwandLat;
+//    @FXML
+//    public TextField KletterwandLong;
     @FXML
     public Label KletterwandE;
 
@@ -62,8 +62,8 @@ public class CreateKletterwandController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         assert KletterwandName != null : "fx:id=\"KletterwandName\" was not injected: check your FXML file 'Run.fxml'.";
-        assert KletterwandLat != null : "fx:id=\"KletterwandLat\" was not injected: check your FXML file 'Run.fxml'.";
-        assert KletterwandLong != null : "fx:id=\"KletterwandLong\" was not injected: check your FXML file 'Run.fxml'.";
+//        assert KletterwandLat != null : "fx:id=\"KletterwandLat\" was not injected: check your FXML file 'Run.fxml'.";
+//        assert KletterwandLong != null : "fx:id=\"KletterwandLong\" was not injected: check your FXML file 'Run.fxml'.";
         assert KletterwandImageStart != null : "fx:id=\"KletterwandImageStart\" was not injected: check your FXML file 'Run.fxml'.";
         assert KletterwandImageEnd != null : "fx:id=\"KletterwandImageEnd\" was not injected: check your FXML file 'Run.fxml'.";
 
@@ -120,9 +120,9 @@ public class CreateKletterwandController implements Initializable {
     }
 
     public void save(ActionEvent actionEvent) {
-        if (!KletterwandName.getText().equals("") &&
-                !KletterwandLat.getText().equals("") &&
-                !KletterwandLong.getText().equals("")
+        if (!KletterwandName.getText().equals("")
+//                !KletterwandLat.getText().equals("") &&
+//                !KletterwandLong.getText().equals("")
                 ) {
 
             Task<Void> task = new Task<Void>() {
@@ -132,8 +132,8 @@ public class CreateKletterwandController implements Initializable {
                     Kletterwand kletterwand = KletterwandDAO.createKletterwand();
 
                     kletterwand.setName(KletterwandName.getText());
-                    kletterwand.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(KletterwandLat.getText()).floatValue());
-                    kletterwand.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(KletterwandLong.getText()).floatValue());
+//                    kletterwand.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(KletterwandLat.getText()).floatValue());
+//                    kletterwand.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(KletterwandLong.getText()).floatValue());
                     kletterwand.setStartTag(KletterwandName.getText() + "_start");
                     kletterwand.setEndTag(KletterwandName.getText() + "_end");
 
@@ -162,8 +162,8 @@ public class CreateKletterwandController implements Initializable {
 
     private void reset() {
         KletterwandName.setText("");
-        KletterwandLat.setText("");
-        KletterwandLong.setText("");
+//        KletterwandLat.setText("");
+//        KletterwandLong.setText("");
     }
 
     public void printKletterwand(ActionEvent actionEvent) {
