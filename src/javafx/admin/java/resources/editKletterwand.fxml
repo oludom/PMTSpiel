@@ -48,7 +48,7 @@
                                       <TextField id="createQRTextField" fx:id="KletterwandName" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                       <!--<TextField id="createQRTextField" fx:id="KletterwandLat" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />-->
                                       <!--<TextField id="createQRTextField" fx:id="KletterwandLong" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />-->
-                                      <Label fx:id="KletterwandE" prefHeight="30.0" prefWidth="219.0" textFill="RED" GridPane.columnIndex="1" />
+                                      <Label text="HALT STOP DAS IS NOCH BUGGY" fx:id="KletterwandE" prefHeight="30.0" prefWidth="219.0" textFill="RED" GridPane.columnIndex="1" />
                                   </children>
                                   <opaqueInsets>
                                       <Insets />

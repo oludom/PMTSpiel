@@ -176,7 +176,33 @@ public class MaintenanceMethods {
 
     }
 
-    /** DONE**/
+    public List<Kletterwand> listKletterwaende() {
+        connect();
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT Name FROM bugaspiel.kletterwand");
+            resultSet = preparedStatement.executeQuery();
+            List<Kletterwand> result = new ArrayList<>();
+            while (resultSet.next()) {
+                String name = resultSet.getString("Name");
+                Kletterwand wand = new Kletterwand();
+                wand.setName(name);
+                wand.setStartTag(name + "_start");
+                wand.setEndTag(name + "_end");
+                result.add(wand);
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return null;
+    }
+
+    /**
+     * DONE
+     **/
     public void deleteQuestion(Frage frage) throws SQLException, PersistentException {
 
 
@@ -200,7 +226,9 @@ public class MaintenanceMethods {
         FrageDAO.delete(frage);
     }
 
-    /** DONE**/
+    /**
+     * DONE
+     **/
     public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
         if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
 
@@ -285,7 +313,7 @@ public class MaintenanceMethods {
             String lastQR = resultSet.getString("letzterQRCode");
             String points = resultSet.getString("Punktzahl");
             String letzteFrage = resultSet.getString("letzteFrageBeantwortet");
-            if (letzteFrage.equals("1")){
+            if (letzteFrage.equals("1")) {
                 letzteFrage = "Ja";
             } else {
                 letzteFrage = "Nein";
