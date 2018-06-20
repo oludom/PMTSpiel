@@ -32,6 +32,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -294,5 +295,48 @@ public class EditQRCodeController implements Initializable {
         } catch (WriterException ex) {
             System.out.println("qrcode fehler");
         }
+    }
+
+    @FXML
+    private void refreshButton(){
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+
+        //refresh für normale QRCode Choicebox
+        alleQRCodes.getItems().clear();
+        try {
+            List<String> alleQRs = maintenanceMethods.refreshQuestions();
+            for (String string : alleQRs) {
+                alleQRCodes.getItems().add(string);
+            }
+        } catch (SQLException e) {
+            QRE.setTextFill(javafx.scene.paint.Color.RED);
+            QRE.setText("Es gab einen Fehler beim Laden der QRCodes.");
+        }
+
+        //refresh für Fragen Choicebox
+        QRQuestion.getItems().clear();
+        try {
+            List<String> qrFragen = maintenanceMethods.refreshQuestions();
+            for (String string : qrFragen) {
+                QRQuestion.getItems().add(string);
+            }
+        } catch (SQLException e) {
+            QRE.setTextFill(javafx.scene.paint.Color.RED);
+            QRE.setText("Es gab einen Fehler beim Laden der Fragen.");
+        }
+
+        //refresh für nächste QRCode Choicebox
+        QRNext.getItems().clear();
+        QRNext.getItems().add(null);
+        try {
+            List<String> qrNext = maintenanceMethods.refreshQrcodes();
+            for (String string : qrNext) {
+                QRNext.getItems().add(string);
+            }
+        } catch (SQLException e) {
+            QRE.setTextFill(javafx.scene.paint.Color.RED);
+            QRE.setText("Es gab einen Fehler beim Laden der nächsten QRCodes.");
+        }
+
     }
 }

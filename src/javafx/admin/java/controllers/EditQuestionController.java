@@ -161,4 +161,20 @@ public class EditQuestionController implements Initializable {
             questionStatus.setText("Es ist ein Fehler aufgetreten: " + e.getMessage());
         }
     }
+
+    @FXML
+    private void refreshButton(){
+
+        questionList.getItems().clear();
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+        try {
+            List<String> fragen = maintenanceMethods.refreshQuestions();
+            for (int i = 0; i < fragen.size(); i++) {
+                questionList.getItems().add(fragen.get(i));
+            }
+        } catch (SQLException e) {
+            questionStatus.setText("Es gab einen Fehler bei der Datenbankabfrage.");
+            questionStatus.setTextFill(Color.RED);
+        }
+    }
 }

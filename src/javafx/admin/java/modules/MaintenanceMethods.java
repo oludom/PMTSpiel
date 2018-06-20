@@ -5,6 +5,7 @@ import pmt.spielspaß.codegenerierung.*;
 
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MaintenanceMethods {
@@ -163,6 +164,7 @@ public class MaintenanceMethods {
 
     }
 
+    /** DONE **/
     public void deleteQuestion(Frage frage) throws SQLException, PersistentException {
 
 
@@ -217,6 +219,45 @@ public class MaintenanceMethods {
         }
     }
 
+    public List<String> refreshQuestions() throws SQLException {
+        connect();
+        preparedStatement = connection.prepareStatement("SELECT Frage FROM bugaspiel.frage");
+        resultSet = preparedStatement.executeQuery();
+
+        List<String> result = new ArrayList<>();
+        while(resultSet.next()){
+            String frage = resultSet.getString("Frage");
+            result.add(frage);
+        }
+        return result;
+    }
+
+    public List<String> refreshKletterwand() throws SQLException{
+        connect();
+        preparedStatement = connection.prepareStatement("SELECT Name FROM bugaspiel.kletterwand");
+        resultSet = preparedStatement.executeQuery();
+
+        List<String> result = new ArrayList<>();
+        while(resultSet.next()){
+            String frage = resultSet.getString("Name");
+            result.add(frage);
+        }
+        return result;
+    }
+
+    public List<String> refreshQrcodes() throws SQLException{
+        connect();
+        preparedStatement = connection.prepareStatement("SELECT Name FROM bugaspiel.qrcode");
+        resultSet = preparedStatement.executeQuery();
+
+        List<String> result = new ArrayList<>();
+        while(resultSet.next()){
+            String frage = resultSet.getString("Name");
+            result.add(frage);
+        }
+        return result;
+    }
+
     private void connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -229,8 +270,8 @@ public class MaintenanceMethods {
             e.printStackTrace();
         }
     }
-
     // You need to close the resultSet
+
     private void close() {
         try {
 
@@ -245,5 +286,4 @@ public class MaintenanceMethods {
 
         }
     }
-
 }

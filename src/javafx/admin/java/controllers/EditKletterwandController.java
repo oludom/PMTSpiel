@@ -24,11 +24,13 @@ import pmt.spielspaß.codegenerierung.Kletterwand;
 import pmt.spielspaß.codegenerierung.KletterwandDAO;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditKletterwandController implements Initializable {
@@ -71,6 +73,22 @@ public class EditKletterwandController implements Initializable {
                 updateKletterwand((String) KletterwandList.getSelectionModel().getSelectedItem());
             }
         });
+    }
+
+    @FXML
+    private void refreshButton() {
+        KletterwandList.getItems().clear();
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+        try {
+            List<String> kletterwaende = maintenanceMethods.refreshKletterwand();
+            for (String kletterwand :
+                    kletterwaende) {
+                KletterwandList.getItems().add(kletterwand);
+            }
+        } catch (SQLException e) {
+            KletterwandE.setTextFill(javafx.scene.paint.Color.RED);
+            KletterwandE.setText("Es gab einen Fehler bei der Datenbankabfrage.");
+        }
     }
 
     private void updateKletterwand(String kletterwand) {
