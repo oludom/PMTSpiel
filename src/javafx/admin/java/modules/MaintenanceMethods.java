@@ -165,7 +165,11 @@ public class MaintenanceMethods {
             anotherStatement.setString(2, oldKletterwand.getName());
             anotherStatement.execute();
 
-            KletterwandDAO.delete(oldKletterwand);
+            PreparedStatement statement2 = connection.prepareStatement("DELETE FROM bugaspiel.kletterwand WHERE Name=?");
+            statement2.setString(1, oldKletterwand.getName());
+            statement2.execute();
+
+//            KletterwandDAO.delete(oldKletterwand);
         } catch (PersistentException e) {
             e.printStackTrace();
         } catch (SQLException e) {

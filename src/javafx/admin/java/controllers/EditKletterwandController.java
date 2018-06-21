@@ -89,6 +89,15 @@ public class EditKletterwandController implements Initializable {
                 }
             }
         });
+
+        KletterwandName.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.equals("")){
+                    updateKletterwand(KletterwandName.getText());
+                }
+            }
+        });
     }
 
     @FXML
