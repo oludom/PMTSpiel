@@ -93,8 +93,11 @@ public class EditKletterwandController implements Initializable {
 
     @FXML
     private void refreshButton() {
+        String aktuelleWand = (String) KletterwandList.getSelectionModel().getSelectedItem();
+
         KletterwandList.getItems().clear();
         alleKletterwaende.clear();
+
         MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
         try {
             List<String> kletterwaende = maintenanceMethods.refreshKletterwand();
@@ -102,6 +105,9 @@ public class EditKletterwandController implements Initializable {
             for (String kletterwand :
                     kletterwaende) {
                 KletterwandList.getItems().add(kletterwand);
+            }
+            if (aktuelleWand != null){
+                KletterwandList.getSelectionModel().select(aktuelleWand);
             }
         } catch (SQLException e) {
             KletterwandE.setTextFill(javafx.scene.paint.Color.RED);
@@ -193,7 +199,6 @@ public class EditKletterwandController implements Initializable {
         } catch (PersistentException e) {
             e.printStackTrace();
         }
-//        updateKletterwand((String) KletterwandList.getItems().get(0));
     }
 
     public void printKletterwand(ActionEvent actionEvent) {

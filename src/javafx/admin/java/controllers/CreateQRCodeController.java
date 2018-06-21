@@ -116,7 +116,7 @@ public class CreateQRCodeController implements Initializable {
 
       QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
       for (QRCode code : codes) {
-        QRNext.getItems().add("QR-Code: " + code.getName());
+        QRNext.getItems().add(code.getName());
       }
     } catch (PersistentException e){
       e.printStackTrace();
@@ -248,6 +248,10 @@ public class CreateQRCodeController implements Initializable {
 
   @FXML
   private void refreshButton(){
+
+    String selectedFrage = (String) QRQuestion.getSelectionModel().getSelectedItem();
+    String selectedNextQRCode = (String) QRNext.getSelectionModel().getSelectedItem();
+
     MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
     //refresh für Fragen Choicebox
     QRQuestion.getItems().clear();
@@ -255,6 +259,9 @@ public class CreateQRCodeController implements Initializable {
       List<String> qrFragen = maintenanceMethods.refreshQuestions();
       for (String string : qrFragen) {
         QRQuestion.getItems().add(string);
+      }
+      if (selectedFrage != null){
+        QRQuestion.getSelectionModel().select(selectedFrage);
       }
     } catch (SQLException e) {
       QRE.setTextFill(javafx.scene.paint.Color.RED);
@@ -268,6 +275,9 @@ public class CreateQRCodeController implements Initializable {
       List<String> qrNext = maintenanceMethods.refreshQrcodes();
       for (String string : qrNext) {
         QRNext.getItems().add(string);
+      }
+      if (selectedNextQRCode != null){
+        QRNext.getSelectionModel().select(selectedNextQRCode);
       }
     } catch (SQLException e) {
       QRE.setTextFill(javafx.scene.paint.Color.RED);

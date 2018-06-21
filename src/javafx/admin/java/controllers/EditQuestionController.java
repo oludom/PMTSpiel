@@ -161,12 +161,17 @@ public class EditQuestionController implements Initializable {
     @FXML
     private void refreshButton(){
 
+        String aktuelleFrage = (String) questionList.getSelectionModel().getSelectedItem();
+
         questionList.getItems().clear();
         MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
         try {
             List<String> fragen = maintenanceMethods.refreshQuestions();
             for (int i = 0; i < fragen.size(); i++) {
                 questionList.getItems().add(fragen.get(i));
+            }
+            if (aktuelleFrage != null){
+                questionList.getSelectionModel().select(aktuelleFrage);
             }
         } catch (SQLException e) {
             questionStatus.setText("Es gab einen Fehler bei der Datenbankabfrage.");

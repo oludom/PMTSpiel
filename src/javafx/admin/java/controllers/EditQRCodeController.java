@@ -337,7 +337,7 @@ public class EditQRCodeController implements Initializable {
 
         //refresh für nächste QRCode Choicebox
         QRNext.getItems().clear();
-//        QRNext.getItems().add(null);
+        QRNext.getItems().add(null);
         try {
             List<String> qrNext = maintenanceMethods.refreshQrcodes();
             for (String string : qrNext) {
