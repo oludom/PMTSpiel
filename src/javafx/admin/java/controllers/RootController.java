@@ -89,21 +89,31 @@ public class RootController implements Initializable {
         } else if (item.getText().contains("Bearbeiten")) {
             action = "edit";
             ueberschriftAktion = "Bearbeite ";
+        } else if (item.getText().contains("Routen anlegen")) {
+            action = "create";
+            category = "Route";
+            ueberschriftAktion = "Erstelle";
+            ueberschriftKategorie = "Kletterwand Routen";
         } else {
             action = "manage";
             ueberschriftAktion = "Verwalte ";
         }
 
-        if (moduleMap.get(action + category) != null) {
-            main_pane.getChildren().clear();
-            main_pane.getChildren().add(moduleMap.get(action + category));
-            ueberschrift.setText(ueberschriftAktion + ueberschriftKategorie);
-            ueberschrift.setTextFill(new Color(0,0,0,1));
-        } else {
-            item.setDisable(true);
-            ueberschrift.setText("Diese Funktion ist leider noch nicht implementiert.");
-            ueberschrift.setTextFill(new Color(1, 0, 0, 1));
-        }
 
+        if(moduleMap.get(action +category)!=null)
+
+    {
+        main_pane.getChildren().clear();
+        main_pane.getChildren().add(moduleMap.get(action + category));
+        ueberschrift.setText(ueberschriftAktion + ueberschriftKategorie);
+        ueberschrift.setTextFill(new Color(0, 0, 0, 1));
+    } else
+
+    {
+        item.setDisable(true);
+        ueberschrift.setText("Diese Funktion ist leider noch nicht implementiert.");
+        ueberschrift.setTextFill(new Color(1, 0, 0, 1));
     }
+
+}
 }

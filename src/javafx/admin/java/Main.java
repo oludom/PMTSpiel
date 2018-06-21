@@ -46,6 +46,7 @@ public class Main extends Application {
     addModule("editKletterwand");
     addModule("createQuestion");
     addModule("editQuestion");
+    addModule("createRoute");
     addModule("manageUsers");
 
   }

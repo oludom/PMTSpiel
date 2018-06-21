@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<VBox maxHeight="600.0" maxWidth="1280.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.admin.java.controllers.CreateRouteController">
+    <children>
+        <VBox prefHeight="454.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+            <children>
+                <AnchorPane prefHeight="603.0" prefWidth="1280.0">
+                    <children>
+                        <AnchorPane layoutX="570.0" layoutY="25.0" prefHeight="271.0" prefWidth="650.0">
+                            <children>
+                                <Label layoutX="171.0" layoutY="5.0" prefHeight="47.0" prefWidth="100.0" text="Start Code:">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="498.0" layoutY="7.0" prefHeight="44.0" prefWidth="90.0" text="End Code:">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fx:id="Route1StartImage" fitHeight="200.0" fitWidth="200.0" layoutX="140.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fx:id="Route1EndImage" fitHeight="200.0" fitWidth="200.0" layoutX="462.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
+                                    </image>
+                                </ImageView>
+                        <Label layoutX="14.0" layoutY="76.0" text="Route 1:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                            </children>
+                        </AnchorPane>
+                        <HBox layoutX="15.0" layoutY="398.0" prefHeight="92.0" prefWidth="517.0">
+                            <children>
+                                <Button fx:id="printRoute" mnemonicParsing="false" onAction="#printKletterwand" prefWidth="300.0" text="Routen drucken">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Button>
+                                <Button fx:id="saveRoutes" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Speichern">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                            <padding>
+                                <Insets top="40.0" />
+                            </padding>
+                        </HBox>
+                        <AnchorPane layoutX="14.0" layoutY="100.0" prefHeight="200.0" prefWidth="602.0">
+                            <children>
+                                <Button fx:id="refresh" layoutX="14.0" layoutY="187.0" mnemonicParsing="false" onAction="#refreshButton" text="Aktualisieren">
+                                <font>
+                                    <Font size="18.0" />
+                                </font>
+                                </Button>
+                                <GridPane layoutY="-15.0" prefHeight="169.0" prefWidth="405.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="195.0" AnchorPane.topAnchor="-15.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="173.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="227.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label stylesheets="@createQRCode.css" text="Name " GridPane.rowIndex="1">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <ChoiceBox fx:id="KletterwandList" prefHeight="31.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label fx:id="KletterwandE" prefHeight="30.0" prefWidth="219.0" textFill="RED" GridPane.columnIndex="1" />
+                              <Label text="Route 1:" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Route 2:" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <TextField id="createQRTextField" fx:id="Route1Name" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField id="createQRTextField" fx:id="Route2Name" stylesheets="@createKletterwand.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    </children>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                    <padding>
+                                        <Insets bottom="30.0" left="10.0" right="10.0" top="30.0" />
+                                    </padding>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                  <AnchorPane layoutX="570.0" layoutY="311.0" prefHeight="263.0" prefWidth="650.0">
+                     <children>
+                        <Label layoutX="176.0" layoutY="-2.0" prefHeight="47.0" prefWidth="100.0" text="Start Code:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="502.0" layoutY="-1.0" prefHeight="44.0" prefWidth="90.0" text="End Code:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="Route2StartImage" fitHeight="200.0" fitWidth="200.0" layoutX="145.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="Route2EndImage" fitHeight="200.0" fitWidth="200.0" layoutX="466.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../Users/micha/Desktop/qr0.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="14.0" layoutY="72.0" text="Route 2:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </children>
+</VBox>

@@ -30,6 +30,7 @@
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Erstellen" />
                         <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Bearbeiten" />
+                        <MenuItem mnemonicParsing="false" onAction="#changeContent" text="Routen anlegen" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Frage">

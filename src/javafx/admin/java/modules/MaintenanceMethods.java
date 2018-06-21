@@ -392,4 +392,19 @@ public class MaintenanceMethods {
         preparedStatement.execute();
         close();
     }
+
+    public void createRoute(Kletterwand aktuelleKletterwand, String route) {
+        try{
+            connect();
+            PreparedStatement statement1 =
+                    connection.prepareStatement("INSERT INTO bugaspiel.kletterwand_route ('id', 'kletterwand') VALUES (?, ?)");
+            statement1.setString(1, route);
+            statement1.setString(2, aktuelleKletterwand.getName());
+            statement1.execute();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+    }
 }
