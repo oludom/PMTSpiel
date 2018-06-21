@@ -448,4 +448,33 @@ public class MaintenanceMethods {
             close();
         }
     }
+
+    public Frage pullFrage(String selectedQuestion) {
+
+        connect();
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM bugaspiel.frage WHERE Frage=?");
+            preparedStatement.setString(1, selectedQuestion);
+            resultSet = preparedStatement.executeQuery();
+
+            Frage result = new Frage();
+            while (resultSet.next()) {
+                String question = resultSet.getString("Frage");
+                String antwort1 = resultSet.getString("Antwort1");
+                String antwort2 = resultSet.getString("Antwort2");
+                String antwortrichtig = resultSet.getString("Antwortrichtig");
+                result.setFrage(question);
+                result.setAntwort1(antwort1);
+                result.setAntwort2(antwort2);
+                result.setAntwortrichtig(antwortrichtig);
+            }
+
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+    return null;
+    }
 }

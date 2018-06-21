@@ -62,17 +62,15 @@ public class EditQuestionController implements Initializable {
     }
 
     private void fillInputfields(String selectedQuestion) {
-        try {
-            Frage frage = FrageDAO.getFrageByORMID(selectedQuestion);
+            MaintenanceMethods maintenance = new MaintenanceMethods();
+            Frage frage = maintenance.pullFrage(selectedQuestion);
+            //Frage frage = FrageDAO.getFrageByORMID(selectedQuestion);
             currentQuestion = frage;
             question.setText(frage.getFrage());
             answer1.setText(frage.getAntwort1());
             answer2.setText(frage.getAntwort2());
             rightAnswer.setText(frage.getAntwortrichtig());
-        } catch (PersistentException e) {
-            questionStatus.setTextFill(Color.RED);
-            questionStatus.setText("Es gab ein Problem mit der Frage: " + e.getMessage());
-        }
+
 
     }
 
