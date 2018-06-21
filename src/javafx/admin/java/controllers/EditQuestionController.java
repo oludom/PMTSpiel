@@ -54,12 +54,8 @@ public class EditQuestionController implements Initializable {
         questionList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                try {
-                    if (!questionList.getSelectionModel().getSelectedItem().equals("")) {
-                        fillInputfields((String) questionList.getSelectionModel().getSelectedItem());
-                    }
-                } catch (NullPointerException e) {
-//                    System.out.println("Message: " + e.getStackTrace());
+                if (newValue != null) {
+                    fillInputfields((String) questionList.getSelectionModel().getSelectedItem());
                 }
             }
         });

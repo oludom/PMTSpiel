@@ -90,7 +90,7 @@ public class EditQRCodeController implements Initializable {
         alleQRCodes.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if (!alleQRCodes.getSelectionModel().getSelectedItem().equals("")){
+                if (newValue != null){
                     fillInputFields(findByQRCodeName(qrCodes, (String) alleQRCodes.getSelectionModel().getSelectedItem()));
                 }
             }
@@ -116,8 +116,6 @@ public class EditQRCodeController implements Initializable {
 
         QRName.setText(selectedQRCode.getName());
         QRHint.setText(selectedQRCode.getHinweis());
-//        QRLat.setText("" + selectedQRCode.getLat());
-//        QRLong.setText("" + selectedQRCode.getLon());
         /*
          * get and insert all questions available
          */
@@ -143,7 +141,7 @@ public class EditQRCodeController implements Initializable {
             int index = 0;
             QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
             for (QRCode code : codes) {
-                QRNext.getItems().add("QR-Code: " + code.getName());
+                QRNext.getItems().add(code.getName());
                 if (code.equals(selectedQRCode.getNextQRCode())) {
                     index = QRNext.getItems().size() - 1;
                 }
@@ -158,9 +156,6 @@ public class EditQRCodeController implements Initializable {
         });
 
 
-    }
-
-    private void refreshChoiceboxes() {
     }
 
     public void getCode(ActionEvent actionEvent) {
@@ -230,7 +225,6 @@ public class EditQRCodeController implements Initializable {
 
                     MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
                     maintenanceMethods.updateQRCode(currentQR, code);
-                    refreshChoiceboxes();
                     Platform.runLater(() -> {
                         editQRStatus.setText("Erfolgreich gespeichert.");
                         editQRStatus.setTextFill(javafx.scene.paint.Color.GREEN);
@@ -307,12 +301,19 @@ public class EditQRCodeController implements Initializable {
     private void refreshButton() {
         MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
 
+        String selectedQRCode = (String) alleQRCodes.getSelectionModel().getSelectedItem();
+        String selectedFrage = (String) QRQuestion.getSelectionModel().getSelectedItem();
+        String selectedNextQRCode = (String) QRNext.getSelectionModel().getSelectedItem();
+
         //refresh für normale QRCode Choicebox
         alleQRCodes.getItems().clear();
         try {
             List<String> alleQRs = maintenanceMethods.refreshQrcodes();
             for (String string : alleQRs) {
                 alleQRCodes.getItems().add(string);
+            }
+            if (selectedQRCode != null){
+                alleQRCodes.getSelectionModel().select(selectedQRCode);
             }
         } catch (SQLException e) {
             QRE.setTextFill(javafx.scene.paint.Color.RED);
@@ -326,6 +327,9 @@ public class EditQRCodeController implements Initializable {
             for (String string : qrFragen) {
                 QRQuestion.getItems().add(string);
             }
+            if (selectedFrage != null){
+                QRQuestion.getSelectionModel().select(selectedFrage);
+            }
         } catch (SQLException e) {
             QRE.setTextFill(javafx.scene.paint.Color.RED);
             QRE.setText("Es gab einen Fehler beim Laden der Fragen.");
@@ -333,11 +337,14 @@ public class EditQRCodeController implements Initializable {
 
         //refresh für nächste QRCode Choicebox
         QRNext.getItems().clear();
-        QRNext.getItems().add(null);
+//        QRNext.getItems().add(null);
         try {
             List<String> qrNext = maintenanceMethods.refreshQrcodes();
             for (String string : qrNext) {
                 QRNext.getItems().add(string);
+            }
+            if (selectedNextQRCode != null){
+                QRNext.getSelectionModel().select(selectedNextQRCode);
             }
         } catch (SQLException e) {
             QRE.setTextFill(javafx.scene.paint.Color.RED);

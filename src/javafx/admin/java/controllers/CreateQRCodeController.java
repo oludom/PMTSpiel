@@ -55,12 +55,6 @@ public class CreateQRCodeController implements Initializable {
   @FXML
   private TextField QRName;
 
-//  @FXML
-//  private TextField QRLat;
-//
-//  @FXML
-//  private TextField QRLong;
-
   @FXML
   private ImageView QRImage;
 
@@ -123,13 +117,11 @@ public class CreateQRCodeController implements Initializable {
       for (Frage frage : fragen) {
         QRQuestion.getItems().add(frage.getFrage());
       }
-      QRQuestion.getSelectionModel().select(0);
 
       QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
       for (QRCode code : codes) {
         QRNext.getItems().add("QR-Code: " + code.getName());
       }
-      QRNext.getSelectionModel().select(0);
     } catch (PersistentException e){
       e.printStackTrace();
     }
@@ -139,8 +131,6 @@ public class CreateQRCodeController implements Initializable {
 
     if (
         !QRName.getText().equals("") &&
-//        !QRLat.getText().equals("") &&
-//        !QRLong.getText().equals("") &&
         !QRHint.getText().equals("")
         ) {
 
@@ -151,8 +141,6 @@ public class CreateQRCodeController implements Initializable {
           QRCode code = QRCodeDAO.createQRCode();
 
           code.setName(QRName.getText());
-//          code.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(QRLat.getText()).floatValue());
-//          code.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(QRLong.getText()).floatValue());
           code.setHinweis(QRHint.getText());
 
 
@@ -184,8 +172,7 @@ public class CreateQRCodeController implements Initializable {
             QRE.setText("Erfolgreich gespeichert.");
             QRE.setTextFill(javafx.scene.paint.Color.GREEN);
             reset();
-            //refreshQuestionsAndQRCodes();
-            QRNext.getItems().add("QR-Code: " + code.getName());
+            QRNext.getItems().add(code.getName());
           });
 
           return null;
@@ -209,8 +196,6 @@ public class CreateQRCodeController implements Initializable {
   private void reset() {
 
     QRName.setText("");
-//    QRLat.setText("");
-//    QRLong.setText("");
     QRHint.setText("");
 
   }

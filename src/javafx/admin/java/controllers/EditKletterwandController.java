@@ -84,7 +84,9 @@ public class EditKletterwandController implements Initializable {
         KletterwandList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if (newValue != null) {
                     updateKletterwand((String) KletterwandList.getSelectionModel().getSelectedItem());
+                }
             }
         });
     }
