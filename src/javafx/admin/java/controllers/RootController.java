@@ -92,7 +92,7 @@ public class RootController implements Initializable {
         } else if (item.getText().contains("Routen anlegen")) {
             action = "create";
             category = "Route";
-            ueberschriftAktion = "Erstelle";
+            ueberschriftAktion = "Erstelle ";
             ueberschriftKategorie = "Kletterwand Routen";
         } else {
             action = "manage";

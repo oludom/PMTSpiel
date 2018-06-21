@@ -89,7 +89,7 @@
                                                 <Font size="20.0" />
                                             </font>
                                         </Label>
-                                        <TextArea fx:id="QRHint" prefHeight="200.0" prefWidth="200.0" promptText="Hier steht ein Hinweis auf die Position des nächsten QRCodes." GridPane.columnIndex="1" />
+                                        <TextArea fx:id="QRHint" prefHeight="200.0" prefWidth="200.0" promptText="Hier steht ein Hinweis auf die Position dieses QRCodes." GridPane.columnIndex="1" />
                                         <Label id="createQRLabel" stylesheets="@createQRCode.css" text="Frage:" GridPane.rowIndex="1">
                                             <font>
                                                 <Font size="20.0" />

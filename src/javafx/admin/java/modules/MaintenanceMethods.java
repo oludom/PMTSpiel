@@ -394,14 +394,55 @@ public class MaintenanceMethods {
     }
 
     public void createRoute(Kletterwand aktuelleKletterwand, String route) {
-        try{
+        try {
             connect();
             PreparedStatement statement1 =
-                    connection.prepareStatement("INSERT INTO bugaspiel.kletterwand_route ('id', 'kletterwand') VALUES (?, ?)");
+                    connection.prepareStatement("INSERT INTO bugaspiel.kletterwand_route (id, kletterwand) VALUES (?, ?)");
             statement1.setString(1, route);
             statement1.setString(2, aktuelleKletterwand.getName());
             statement1.execute();
-        } catch (SQLException e){
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+    }
+
+    public void updateRoute(Kletterwand aktuelleKletterwand, String alteRoute, String neueRoute) {
+
+        createRoute(aktuelleKletterwand, neueRoute);
+
+        try {
+            connect();
+            PreparedStatement statement1 =
+                    connection.prepareStatement("UPDATE bugaspiel.kletterwand_routen_bewertung SET kletterwand_route=? WHERE kletterwand_route=?");
+            statement1.setString(1, neueRoute);
+            statement1.setString(2, alteRoute);
+            statement1.execute();
+
+            PreparedStatement statement2 =
+                    connection.prepareStatement("UPDATE bugaspiel.zeit SET KletterwandRoute=? WHERE KletterwandRoute=?");
+            statement2.setString(1, neueRoute);
+            statement2.setString(2, alteRoute);
+            statement2.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        deleteRoute(alteRoute);
+    }
+
+    public void deleteRoute(String route) {
+        try {
+            connect();
+            PreparedStatement statement1 =
+                    connection.prepareStatement("DELETE FROM bugaspiel.kletterwand_route WHERE id=?");
+            statement1.setString(1, route);
+            statement1.execute();
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             close();

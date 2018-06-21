@@ -187,7 +187,6 @@ public class CreateRouteController implements Initializable {
     }
 
     public void save(ActionEvent actionEvent) {
-        if (!Route1Name.getText().equals("") || !Route2Name.getText().equals("")) {
 
             Task<Void> task = new Task<Void>() {
                 @Override
@@ -200,7 +199,7 @@ public class CreateRouteController implements Initializable {
                     }
 
                     if (!Route2Name.getText().equals("")){
-
+                        maintenance.createRoute(aktuelleKletterwand, Route2Name.getText());
                     }
 
                     Platform.runLater(() -> {
@@ -218,10 +217,7 @@ public class CreateRouteController implements Initializable {
             th.setDaemon(true);
 
             th.start();
-        } else {
-            KletterwandE.setTextFill(javafx.scene.paint.Color.RED);
-            KletterwandE.setText("");
-        }
+
     }
 
     private void reset() {
