@@ -82,8 +82,6 @@ public class CreateQRCodeController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
 
     assert QRName != null : "fx:id=\"QRName\" was not injected: check your FXML file 'Run.fxml'.";
-//    assert QRLat != null : "fx:id=\"QRLat\" was not injected: check your FXML file 'Run.fxml'.";
-//    assert QRLong != null : "fx:id=\"QRLong\" was not injected: check your FXML file 'Run.fxml'.";
     assert QRImage != null : "fx:id=\"QRImage\" was not injected: check your FXML file 'Run.fxml'.";
     assert QRHint != null : "fx:id=\"QRHint\" was not injected: check your FXML file 'Run.fxml'.";
     assert QRQuestion != null : "fx:id=\"QRquestion\" was not injected: check your FXML file 'Run.fxml'.";
@@ -98,8 +96,6 @@ public class CreateQRCodeController implements Initializable {
      */
 
     refreshQuestionsAndQRCodes();
-
-    QRHint.setText("Hier steht ein Hinweis auf die Position des nächsten QR-Codes.");
 
     QRName.textProperty().addListener((observable, oldValue, newValue) -> {
       updateQR(newValue);
@@ -191,8 +187,7 @@ public class CreateQRCodeController implements Initializable {
       QRE.setText("Bitte alle Felder ausfüllen.");
     }
   }
-
-
+  
   private void reset() {
 
     QRName.setText("");
@@ -233,7 +228,6 @@ public class CreateQRCodeController implements Initializable {
       System.out.println("qrcode fehler");
     }
   }
-
 
   public void getCode() {
     FileChooser fileChooser = new FileChooser();
