@@ -71,10 +71,6 @@ public class QRCode {
 	
 	private String Hinweis;
 	
-	private float lat;
-	
-	private float lon;
-	
 	private java.util.Set ORM_superuser = new java.util.HashSet();
 	
 	public void setName(String value) {
@@ -96,23 +92,7 @@ public class QRCode {
 	public String getHinweis() {
 		return Hinweis;
 	}
-	
-	public void setLat(float value) {
-		this.lat = value;
-	}
-	
-	public float getLat() {
-		return lat;
-	}
-	
-	public void setLon(float value) {
-		this.lon = value;
-	}
-	
-	public float getLon() {
-		return lon;
-	}
-	
+
 	private void setORM_Superuser(java.util.Set value) {
 		this.ORM_superuser = value;
 	}

@@ -54,14 +54,6 @@ public class Kletterwand {
 	
 	private String name;
 	
-	private String startTag;
-	
-	private String endTag;
-	
-	private float lat;
-	
-	private float lon;
-	
 	private java.util.Set ORM_zeits = new java.util.HashSet();
 	
 	private java.util.Set ORM_superuser = new java.util.HashSet();
@@ -77,39 +69,7 @@ public class Kletterwand {
 	public String getORMID() {
 		return getName();
 	}
-	
-	public void setStartTag(String value) {
-		this.startTag = value;
-	}
-	
-	public String getStartTag() {
-		return startTag;
-	}
-	
-	public void setEndTag(String value) {
-		this.endTag = value;
-	}
-	
-	public String getEndTag() {
-		return endTag;
-	}
-	
-	public void setLat(float value) {
-		this.lat = value;
-	}
-	
-	public float getLat() {
-		return lat;
-	}
-	
-	public void setLon(float value) {
-		this.lon = value;
-	}
-	
-	public float getLon() {
-		return lon;
-	}
-	
+
 	public pmt.spielspaß.codegenerierung.BugaBesucher[] getBugaBesuchers() {
 		java.util.ArrayList lValues = new java.util.ArrayList(5);
 		for(java.util.Iterator lIter = zeits.getIterator();lIter.hasNext();) {

@@ -191,8 +191,6 @@ public class MaintenanceMethods {
                 String name = resultSet.getString("Name");
                 Kletterwand wand = new Kletterwand();
                 wand.setName(name);
-                wand.setStartTag(name + "_start");
-                wand.setEndTag(name + "_end");
                 result.add(wand);
             }
             return result;

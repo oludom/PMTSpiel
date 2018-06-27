@@ -132,11 +132,6 @@ public class CreateKletterwandController implements Initializable {
                     Kletterwand kletterwand = KletterwandDAO.createKletterwand();
 
                     kletterwand.setName(KletterwandName.getText());
-//                    kletterwand.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(KletterwandLat.getText()).floatValue());
-//                    kletterwand.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(KletterwandLong.getText()).floatValue());
-                    kletterwand.setStartTag(KletterwandName.getText() + "_start");
-                    kletterwand.setEndTag(KletterwandName.getText() + "_end");
-
 
                     KletterwandDAO.save(kletterwand);
                     Platform.runLater(() -> {

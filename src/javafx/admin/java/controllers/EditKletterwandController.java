@@ -215,8 +215,6 @@ public class EditKletterwandController implements Initializable {
     public void save(ActionEvent actionEvent) {
         Kletterwand kletterwand = new Kletterwand();
         kletterwand.setName(KletterwandName.getText());
-        kletterwand.setStartTag(KletterwandName.getText() + "_start");
-        kletterwand.setEndTag(KletterwandName.getText() + "_end");
 
         MaintenanceMethods maintenance = new MaintenanceMethods();
         maintenance.updateKletterwand(aktuelleKletterwand, kletterwand);
