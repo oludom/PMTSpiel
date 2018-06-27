@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 import com.google.zxing.WriterException;
 
 import java.awt.Color;
+
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
 
@@ -45,245 +46,232 @@ import javax.imageio.ImageIO;
  */
 public class CreateQRCodeController implements Initializable {
 
-   @FXML public Button refresh;
-  @FXML
-  private ResourceBundle resources;
+    @FXML
+    public Button refresh;
+    @FXML
+    private ResourceBundle resources;
 
-  @FXML
-  private URL location;
+    @FXML
+    private URL location;
 
-  @FXML
-  private TextField QRName;
+    @FXML
+    private TextField QRName;
 
-  @FXML
-  private ImageView QRImage;
+    @FXML
+    private ImageView QRImage;
 
-  @FXML
-  private TextArea QRHint;
+    @FXML
+    private TextArea QRHint;
 
-  @FXML
-  private ChoiceBox<String> QRQuestion;
+    @FXML
+    private ChoiceBox<String> QRQuestion;
 
-  @FXML
-  private ChoiceBox<String> QRNext;
+    @FXML
+    private ChoiceBox<String> QRNext;
 
-  @FXML
-  private Button QRReset;
+    @FXML
+    private Button QRReset;
 
-  @FXML
-  private Button QRSave;
+    @FXML
+    private Button QRSave;
 
-  @FXML
-  private Label QRE;
+    @FXML
+    private Label QRE;
 
-  private BufferedImage bufferedImage = null;
+    private BufferedImage bufferedImage = null;
 
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-    assert QRName != null : "fx:id=\"QRName\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRImage != null : "fx:id=\"QRImage\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRHint != null : "fx:id=\"QRHint\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRQuestion != null : "fx:id=\"QRquestion\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRNext != null : "fx:id=\"QRNext\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRReset != null : "fx:id=\"QRReset\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRSave != null : "fx:id=\"QRSave\" was not injected: check your FXML file 'Run.fxml'.";
-    assert QRE != null : "fx:id=\"QRError\" was not injected: check your FXML file 'Run.fxml'.";
+        assert QRName != null : "fx:id=\"QRName\" was not injected: check your FXML file 'Run.fxml'.";
+        assert QRImage != null : "fx:id=\"QRImage\" was not injected: check your FXML file 'Run.fxml'.";
+        assert QRHint != null : "fx:id=\"QRHint\" was not injected: check your FXML file 'Run.fxml'.";
+        assert QRQuestion != null : "fx:id=\"QRquestion\" was not injected: check your FXML file 'Run.fxml'.";
+        assert QRNext != null : "fx:id=\"QRNext\" was not injected: check your FXML file 'Run.fxml'.";
+        assert QRReset != null : "fx:id=\"QRReset\" was not injected: check your FXML file 'Run.fxml'.";
+        assert QRSave != null : "fx:id=\"QRSave\" was not injected: check your FXML file 'Run.fxml'.";
+        assert QRE != null : "fx:id=\"QRError\" was not injected: check your FXML file 'Run.fxml'.";
 
 
-    /*
-     * get and insert all questions and qrcodes available
-     */
+        /*
+         * get and insert all questions and qrcodes available
+         */
 
-    refreshQuestionsAndQRCodes();
+        refreshQuestionsAndQRCodes();
 
-    QRName.textProperty().addListener((observable, oldValue, newValue) -> {
-      updateQR(newValue);
-    });
+        QRName.textProperty().addListener((observable, oldValue, newValue) -> {
+            updateQR(newValue);
+        });
 
-  }
-
-  private void refreshQuestionsAndQRCodes(){
-    MaintenanceMethods maintenance = new MaintenanceMethods();
-    try{
-
-      QRQuestion.getItems().clear();
-      QRNext.getItems().clear();
-
-      List<Frage> fragen = maintenance.pullQuestions();
-      for (Frage frage : fragen) {
-        QRQuestion.getItems().add(frage.getFrage());
-      }
-
-      List<QRCode> codes = maintenance.pullCodes();
-      for (QRCode code : codes) {
-        QRNext.getItems().add(code.getName());
-      }
-    } catch (Exception e){
-      e.printStackTrace();
     }
-  }
 
-  public void save() {
+    private void refreshQuestionsAndQRCodes() {
+        MaintenanceMethods maintenance = new MaintenanceMethods();
+        try {
 
-    if (
-        !QRName.getText().equals("") &&
-        !QRHint.getText().equals("")
-        ) {
+            QRQuestion.getItems().clear();
+            QRNext.getItems().clear();
 
-      Task<Void> task = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-
-          QRCode code = QRCodeDAO.createQRCode();
-
-          code.setName(QRName.getText());
-          code.setHinweis(QRHint.getText());
-
-
-          try {
-            Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
+            List<Frage> fragen = maintenance.pullQuestions();
             for (Frage frage : fragen) {
-              if (frage.getFrage().equals(QRQuestion.getValue())) {
-                code.setAufgabe(frage);
-              }
+                QRQuestion.getItems().add(frage.getFrage());
             }
-          } catch (PersistentException e) {
-            e.printStackTrace();
-          }
 
-          try {
-            QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
-            for (QRCode c : codes) {
-              if (c.getName().equals(QRNext.getValue().substring(9))) {
-                code.setNextQRCode(c);
-              }
+            List<QRCode> codes = maintenance.pullCodes();
+            for (QRCode code : codes) {
+                QRNext.getItems().add(code.getName());
             }
-            Platform.runLater(() -> {QRNext.getSelectionModel().select(0);});
-          } catch (PersistentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-          }
-
-          QRCodeDAO.save(code);
-          Platform.runLater(() -> {
-            QRE.setText("Erfolgreich gespeichert.");
-            QRE.setTextFill(javafx.scene.paint.Color.GREEN);
-            reset();
-            QRNext.getItems().add(code.getName());
-          });
-
-          return null;
         }
-      };
-
-      Thread th = new Thread(task);
-
-      th.setDaemon(true);
-
-      th.start();
-
-
-    }else {
-      QRE.setTextFill(javafx.scene.paint.Color.RED);
-      QRE.setText("Bitte alle Felder ausfüllen.");
     }
-  }
-  
-  private void reset() {
 
-    QRName.setText("");
-    QRHint.setText("");
+    public void save() {
 
-  }
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+        if (!QRName.getText().equals("") && !QRHint.getText().equals("")) {
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    QRCode code = new QRCode();
 
-  private void updateQR(String value) {
+                    code.setName(QRName.getText());
+                    code.setHinweis(QRHint.getText());
 
-    QRCodeWriter qrCodeWriter = new QRCodeWriter();
-    String myWeb = value.equals("") ? "example" : value;
-    int width = 200;
-    int height = 200;
-    String fileType = "png";
+                    List<Frage> fragen = maintenanceMethods.pullQuestions();
+                    for (Frage frage : fragen) {
+                        if (frage.getFrage().equals(QRQuestion.getValue())) {
+                            code.setAufgabe(frage);
+                        }
+                    }
+
+                    List<QRCode> codes = maintenanceMethods.pullCodes();
+                    for (QRCode c : codes) {
+                        if (c.getName().equals(QRNext.getValue())) {
+                            code.setNextQRCode(c);
+                        }
+                    }
+
+                    maintenanceMethods.createQRCode(code);
+                    Platform.runLater(() -> {
+                        QRE.setText("Erfolgreich gespeichert.");
+                        QRE.setTextFill(javafx.scene.paint.Color.GREEN);
+                        reset();
+                        QRNext.getItems().add(code.getName());
+                    });
+
+                    return null;
+                }
+            };
+
+            Thread th = new Thread(task);
+
+            th.setDaemon(true);
+
+            th.start();
+
+
+        } else {
+            QRE.setTextFill(javafx.scene.paint.Color.RED);
+            QRE.setText("Bitte alle Felder ausfüllen.");
+        }
+    }
+
+    private void reset() {
+
+        QRName.setText("");
+        QRHint.setText("");
+
+    }
+
+    private void updateQR(String value) {
+
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        String myWeb = value.equals("") ? "example" : value;
+        int width = 200;
+        int height = 200;
+        String fileType = "png";
 
 //    bufferedImage = null;
-    try {
-      BitMatrix byteMatrix = qrCodeWriter.encode(myWeb, BarcodeFormat.QR_CODE, width, height);
-      bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-      bufferedImage.createGraphics();
+        try {
+            BitMatrix byteMatrix = qrCodeWriter.encode(myWeb, BarcodeFormat.QR_CODE, width, height);
+            bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            bufferedImage.createGraphics();
 
-      Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
-      graphics.setColor(Color.WHITE);
-      graphics.fillRect(0, 0, width, height);
-      graphics.setColor(Color.BLACK);
+            Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
+            graphics.setColor(Color.WHITE);
+            graphics.fillRect(0, 0, width, height);
+            graphics.setColor(Color.BLACK);
 
-      for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-          if (byteMatrix.get(i, j)) {
-            graphics.fillRect(i, j, 1, 1);
-          }
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    if (byteMatrix.get(i, j)) {
+                        graphics.fillRect(i, j, 1, 1);
+                    }
+                }
+            }
+
+            QRImage.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+
+        } catch (WriterException ex) {
+            System.out.println("qrcode fehler");
         }
-      }
-
-      QRImage.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
-
-    } catch (WriterException ex) {
-      System.out.println("qrcode fehler");
-    }
-  }
-
-  public void getCode() {
-    FileChooser fileChooser = new FileChooser();
-    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
-    fileChooser.getExtensionFilters().add(extFilter);
-    File file = fileChooser.showSaveDialog(QRReset.getScene().getWindow());
-
-    try {
-      if (bufferedImage != null && file != null) {
-        ImageIO.write(bufferedImage, "png", file);
-      } else {
-
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @FXML
-  private void refreshButton(){
-
-    String selectedFrage = (String) QRQuestion.getSelectionModel().getSelectedItem();
-    String selectedNextQRCode = (String) QRNext.getSelectionModel().getSelectedItem();
-
-    MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
-    //refresh für Fragen Choicebox
-    QRQuestion.getItems().clear();
-    try {
-      List<String> qrFragen = maintenanceMethods.refreshQuestions();
-      for (String string : qrFragen) {
-        QRQuestion.getItems().add(string);
-      }
-      if (selectedFrage != null){
-        QRQuestion.getSelectionModel().select(selectedFrage);
-      }
-    } catch (SQLException e) {
-      QRE.setTextFill(javafx.scene.paint.Color.RED);
-      QRE.setText("Es gab einen Fehler beim Laden der Fragen.");
     }
 
-    //refresh für nächste QRCode Choicebox
-    QRNext.getItems().clear();
-    QRNext.getItems().add(null);
-    try {
-      List<String> qrNext = maintenanceMethods.refreshQrcodes();
-      for (String string : qrNext) {
-        QRNext.getItems().add(string);
-      }
-      if (selectedNextQRCode != null){
-        QRNext.getSelectionModel().select(selectedNextQRCode);
-      }
-    } catch (SQLException e) {
-      QRE.setTextFill(javafx.scene.paint.Color.RED);
-      QRE.setText("Es gab einen Fehler beim Laden der nächsten QRCodes.");
+    public void getCode() {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(QRReset.getScene().getWindow());
+
+        try {
+            if (bufferedImage != null && file != null) {
+                ImageIO.write(bufferedImage, "png", file);
+            } else {
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-  }
+
+    @FXML
+    private void refreshButton() {
+
+        String selectedFrage = (String) QRQuestion.getSelectionModel().getSelectedItem();
+        String selectedNextQRCode = (String) QRNext.getSelectionModel().getSelectedItem();
+
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+        //refresh für Fragen Choicebox
+        QRQuestion.getItems().clear();
+        try {
+            List<String> qrFragen = maintenanceMethods.refreshQuestions();
+            for (String string : qrFragen) {
+                QRQuestion.getItems().add(string);
+            }
+            if (selectedFrage != null) {
+                QRQuestion.getSelectionModel().select(selectedFrage);
+            }
+        } catch (SQLException e) {
+            QRE.setTextFill(javafx.scene.paint.Color.RED);
+            QRE.setText("Es gab einen Fehler beim Laden der Fragen.");
+        }
+
+        //refresh für nächste QRCode Choicebox
+        QRNext.getItems().clear();
+        QRNext.getItems().add(null);
+        try {
+            List<String> qrNext = maintenanceMethods.refreshQrcodes();
+            for (String string : qrNext) {
+                QRNext.getItems().add(string);
+            }
+            if (selectedNextQRCode != null) {
+                QRNext.getSelectionModel().select(selectedNextQRCode);
+            }
+        } catch (SQLException e) {
+            QRE.setTextFill(javafx.scene.paint.Color.RED);
+            QRE.setText("Es gab einen Fehler beim Laden der nächsten QRCodes.");
+        }
+    }
 
 }

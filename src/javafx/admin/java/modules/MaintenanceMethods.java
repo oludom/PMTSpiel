@@ -105,7 +105,7 @@ public class MaintenanceMethods {
                         = connection.prepareStatement("UPDATE bugaspiel.qrcode SET Hinweis=?, FrageFrage=?, QRCodeName=? WHERE Name=?");
                 statement.setString(1, updatedQRCode.getHinweis());
                 statement.setString(2, updatedQRCode.getAufgabe().getFrage());
-                if (updatedQRCode.getNextQRCode() != null){
+                if (updatedQRCode.getNextQRCode() != null) {
                     statement.setString(3, updatedQRCode.getNextQRCode().getName());
                 } else {
                     statement.setString(3, null);
@@ -131,7 +131,7 @@ public class MaintenanceMethods {
                         " VALUES (?,?,?,?,null)");
                 statement1.setString(1, updatedQRCode.getName());
                 statement1.setString(2, null);
-                if (updatedQRCode.getNextQRCode() != null){
+                if (updatedQRCode.getNextQRCode() != null) {
                     statement1.setString(2, updatedQRCode.getNextQRCode().getName());
                 }
                 statement1.setString(3, updatedQRCode.getAufgabe().getFrage());
@@ -581,13 +581,13 @@ public class MaintenanceMethods {
 
     public void createKletterwand(Kletterwand kletterwand) {
         connect();
-        try{
+        try {
             PreparedStatement statement1 =
                     connection.prepareStatement("INSERT INTO bugaspiel.kletterwand (Name) VALUES (?)");
             statement1.setString(1, kletterwand.getName());
             statement1.execute();
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
 
         } finally {
             close();
@@ -596,24 +596,46 @@ public class MaintenanceMethods {
 
     public Kletterwand pullKletterwand(String selectedItem) {
         connect();
-        try{
+        try {
             PreparedStatement statement1 =
                     connection.prepareStatement("SELECT * FROM bugaspiel.kletterwand WHERE Name=?");
             statement1.setString(1, selectedItem);
             ResultSet resultSet = statement1.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Kletterwand kletterwand = new Kletterwand();
                 kletterwand.setName(resultSet.getString("Name"));
                 return kletterwand;
             }
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
 
         } finally {
             close();
         }
 
         return null;
+    }
+
+    public void createQRCode(QRCode code) {
+        connect();
+        try {
+            PreparedStatement statement1
+                    = connection.prepareStatement("INSERT INTO bugaspiel.qrcode (Name, QRCodeName, FrageFrage, Hinweis, AktuelleInfos)" +
+                    " VALUES (?,?,?,?,null)");
+            statement1.setString(1, code.getName());
+            statement1.setString(2, null);
+            if (code.getNextQRCode() != null) {
+                statement1.setString(2, code.getNextQRCode().getName());
+            }
+            statement1.setString(3, code.getAufgabe().getFrage());
+            statement1.setString(4, code.getHinweis());
+
+            statement1.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
     }
 }
