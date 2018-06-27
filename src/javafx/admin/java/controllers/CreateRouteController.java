@@ -82,7 +82,7 @@ public class CreateRouteController implements Initializable {
         KletterwandList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if (newValue != null){
+                if (newValue != null) {
                     setAktuelleKletterwand((String) KletterwandList.getSelectionModel().getSelectedItem());
                 }
             }
@@ -91,11 +91,8 @@ public class CreateRouteController implements Initializable {
     }
 
     private void setAktuelleKletterwand(String selectedItem) {
-        try {
-            aktuelleKletterwand = KletterwandDAO.getKletterwandByORMID(selectedItem);
-        } catch (PersistentException e) {
-
-        }
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+        aktuelleKletterwand = maintenanceMethods.pullKletterwand(selectedItem);
     }
 
     private void updateRoute1(String newValue) {
@@ -188,35 +185,35 @@ public class CreateRouteController implements Initializable {
 
     public void save(ActionEvent actionEvent) {
 
-            Task<Void> task = new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
 
-                    MaintenanceMethods maintenance = new MaintenanceMethods();
+                MaintenanceMethods maintenance = new MaintenanceMethods();
 
-                    if (!Route1Name.getText().equals("")){
-                        maintenance.createRoute(aktuelleKletterwand, Route1Name.getText());
-                    }
-
-                    if (!Route2Name.getText().equals("")){
-                        maintenance.createRoute(aktuelleKletterwand, Route2Name.getText());
-                    }
-
-                    Platform.runLater(() -> {
-                        KletterwandE.setText("Erfolgreich gespeichert.");
-                        KletterwandE.setTextFill(javafx.scene.paint.Color.GREEN);
-                        reset();
-                    });
-
-                    return null;
+                if (!Route1Name.getText().equals("")) {
+                    maintenance.createRoute(aktuelleKletterwand, Route1Name.getText());
                 }
-            };
 
-            Thread th = new Thread(task);
+                if (!Route2Name.getText().equals("")) {
+                    maintenance.createRoute(aktuelleKletterwand, Route2Name.getText());
+                }
 
-            th.setDaemon(true);
+                Platform.runLater(() -> {
+                    KletterwandE.setText("Erfolgreich gespeichert.");
+                    KletterwandE.setTextFill(javafx.scene.paint.Color.GREEN);
+                    reset();
+                });
 
-            th.start();
+                return null;
+            }
+        };
+
+        Thread th = new Thread(task);
+
+        th.setDaemon(true);
+
+        th.start();
 
     }
 

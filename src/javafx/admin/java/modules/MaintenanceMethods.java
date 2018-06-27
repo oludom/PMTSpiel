@@ -567,4 +567,27 @@ public class MaintenanceMethods {
             close();
         }
     }
+
+    public Kletterwand pullKletterwand(String selectedItem) {
+        connect();
+        try{
+            PreparedStatement statement1 =
+                    connection.prepareStatement("SELECT * FROM bugaspiel.kletterwand WHERE Name=?");
+            statement1.setString(1, selectedItem);
+            ResultSet resultSet = statement1.executeQuery();
+
+            while (resultSet.next()){
+                Kletterwand kletterwand = new Kletterwand();
+                kletterwand.setName(resultSet.getString("Name"));
+                return kletterwand;
+            }
+
+        } catch (SQLException e){
+
+        } finally {
+            close();
+        }
+
+        return null;
+    }
 }
