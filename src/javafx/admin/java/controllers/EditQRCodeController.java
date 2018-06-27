@@ -71,12 +71,14 @@ public class EditQRCodeController implements Initializable {
 
     private QRCode currentQR;
 
+    private List<QRCode> qrCodes;
+
     public EditQRCodeController() {
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<QRCode> qrCodes = new ArrayList<>();
+        qrCodes = new ArrayList<>();
         try {
             QRCode[] qrQuerry = QRCodeDAO.listQRCodeByQuery(null, null);
             for (QRCode qrCode : qrQuerry) {
@@ -304,6 +306,9 @@ public class EditQRCodeController implements Initializable {
         String selectedQRCode = (String) alleQRCodes.getSelectionModel().getSelectedItem();
         String selectedFrage = (String) QRQuestion.getSelectionModel().getSelectedItem();
         String selectedNextQRCode = (String) QRNext.getSelectionModel().getSelectedItem();
+
+        //refresh der qrcode List
+        qrCodes = maintenanceMethods.pullCodes();
 
         //refresh für normale QRCode Choicebox
         alleQRCodes.getItems().clear();

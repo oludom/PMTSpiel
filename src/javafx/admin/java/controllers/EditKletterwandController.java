@@ -70,16 +70,13 @@ public class EditKletterwandController implements Initializable {
         assert KletterwandImageStart != null : "fx:id=\"KletterwandImageStart\" was not injected: check your FXML file 'Run.fxml'.";
         assert KletterwandImageEnd != null : "fx:id=\"KletterwandImageEnd\" was not injected: check your FXML file 'Run.fxml'.";
 
-        try {
-            Kletterwand[] kletterwaende = KletterwandDAO.listKletterwandByQuery(null, null);
-            for (Kletterwand kletterwand : kletterwaende) {
-                alleKletterwaende.add(kletterwand);
-                KletterwandList.getItems().add(kletterwand.getName());
-            }
-            //KletterwandList.getSelectionModel().select(0);
-        } catch (PersistentException e) {
-            e.printStackTrace();
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+        List<Kletterwand> kletterwaende = maintenanceMethods.listKletterwaende();
+        for (Kletterwand kletterwand : kletterwaende) {
+            alleKletterwaende.add(kletterwand);
+            KletterwandList.getItems().add(kletterwand.getName());
         }
+        //KletterwandList.getSelectionModel().select(0);
 
         KletterwandList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
@@ -93,7 +90,7 @@ public class EditKletterwandController implements Initializable {
         KletterwandName.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.equals("")){
+                if (!newValue.equals("")) {
                     updateKletterwand(KletterwandName.getText());
                 }
             }
@@ -115,7 +112,7 @@ public class EditKletterwandController implements Initializable {
                     kletterwaende) {
                 KletterwandList.getItems().add(kletterwand);
             }
-            if (aktuelleWand != null){
+            if (aktuelleWand != null) {
                 KletterwandList.getSelectionModel().select(aktuelleWand);
             }
         } catch (SQLException e) {
@@ -126,7 +123,7 @@ public class EditKletterwandController implements Initializable {
 
     private void updateKletterwand(String kletterwand) {
         for (int i = 0; i < alleKletterwaende.size(); i++) {
-            if (alleKletterwaende.get(i).getName().equals(kletterwand)){
+            if (alleKletterwaende.get(i).getName().equals(kletterwand)) {
                 aktuelleKletterwand = alleKletterwaende.get(i);
                 break;
             }
@@ -191,7 +188,7 @@ public class EditKletterwandController implements Initializable {
         } catch (SQLException e) {
             KletterwandE.setTextFill(javafx.scene.paint.Color.RED);
             KletterwandE.setText("Löschen hat nicht funktioniert; " + e.getMessage());
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             e.getMessage();
         }
     }

@@ -82,7 +82,7 @@ public class MaintenanceMethods {
             try {
                 QRCodeDAO.save(updatedQRCode);
                 QRCode[] vorgaenger = QRCodeDAO.listQRCodeByQuery(null, null);
-
+                //Alle Rallye Einträge auf den neuen mappen
                 for (QRCode code : vorgaenger) {
                     if (code.getNextQRCode() != null && code.getNextQRCode().equals(oldQRCode)) {
                         code.setNextQRCode(updatedQRCode);
@@ -236,18 +236,19 @@ public class MaintenanceMethods {
     public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
         if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
 
+            connect();
             try {
-                FrageDAO.save(updatedFrage);
+//                FrageDAO.save(updatedFrage);
+                preparedStatement = connection.prepareStatement("UPDATE bugaspiel.frage SET Frage=? WHERE Frage=?");
+                preparedStatement.setString(1, updatedFrage.getFrage());
+                preparedStatement.setString(2, oldFrage.getFrage());
+//                PreparedStatement statement2 = connection.prepareStatement("DELETE FROM bugaspiel.frage WHERE Frage=?");
+//                statement2.setString(1, oldFrage.getFrage());
+                preparedStatement.execute();
+//                statement2.execute();
 
-                QRCode[] qrCodes = QRCodeDAO.listQRCodeByQuery("FrageFrage='" + oldFrage.getFrage() + "'", null);
-                for (QRCode qrCode : qrCodes) {
-                    qrCode.setAufgabe(updatedFrage);
-                    QRCodeDAO.save(qrCode);
-                }
 
-                FrageDAO.delete(FrageDAO.getFrageByORMID(oldFrage.getFrage()));
-
-            } catch (PersistentException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 close();
@@ -455,7 +456,7 @@ public class MaintenanceMethods {
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM bugaspiel.frage WHERE Frage=?");
             preparedStatement.setString(1, selectedQuestion);
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             Frage result = new Frage();
             while (resultSet.next()) {
@@ -475,6 +476,40 @@ public class MaintenanceMethods {
         } finally {
             close();
         }
-    return null;
+        return null;
+    }
+
+    public List<QRCode> pullCodes() {
+
+        connect();
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM bugaspiel.qrcode");
+            resultSet = preparedStatement.executeQuery();
+
+            List<QRCode> result = new ArrayList<>();
+            while (resultSet.next()) {
+                QRCode code = new QRCode();
+                code.setName(resultSet.getString("Name"));
+                code.setAufgabe(FrageDAO.getFrageByORMID(resultSet.getString("FrageFrage")));
+
+                if (resultSet.getString("QRCodeName") != null){
+                    code.setNextQRCode(QRCodeDAO.getQRCodeByORMID(resultSet.getString("QRCodeName")));
+                } else {
+                    code.setNextQRCode(null);
+                }
+                code.setHinweis(resultSet.getString("Hinweis"));
+                result.add(code);
+            }
+
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch(PersistentException e){
+            e.printStackTrace();
+        } finally{
+            close();
+        }
+
+        return null;
     }
 }
