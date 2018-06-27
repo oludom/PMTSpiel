@@ -157,13 +157,12 @@ public class MaintenanceMethods {
         /*
          * Wenn Name geändert wurde
          */
+        connect();
         try {
-            KletterwandDAO.save(updatedKletterwand);
-            connect();
-//            preparedStatement = connection.prepareStatement("UPDATE bugaspiel.zeit SET KletterwandName=? WHERE KletterwandName=?");
-//            preparedStatement.setString(1, updatedKletterwand.getName());
-//            preparedStatement.setString(2, oldKletterwand.getName());
-//            preparedStatement.execute();
+            PreparedStatement statement1 =
+                    connection.prepareStatement("INSERT INTO bugaspiel.kletterwand (Name) VALUES (?)");
+            statement1.setString(1, updatedKletterwand.getName());
+            statement1.execute();
 
             PreparedStatement anotherStatement =
                     connection.prepareStatement("UPDATE bugaspiel.kletterwand_route SET kletterwand=? WHERE kletterwand=?");
@@ -175,11 +174,7 @@ public class MaintenanceMethods {
             statement2.setString(1, oldKletterwand.getName());
             statement2.execute();
 
-//            KletterwandDAO.delete(oldKletterwand);
-        } catch (PersistentException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
             close();
         }
@@ -556,5 +551,20 @@ public class MaintenanceMethods {
             close();
         }
         return null;
+    }
+
+    public void createKletterwand(Kletterwand kletterwand) {
+        connect();
+        try{
+            PreparedStatement statement1 =
+                    connection.prepareStatement("INSERT INTO bugaspiel.kletterwand (Name) VALUES (?)");
+            statement1.setString(1, kletterwand.getName());
+            statement1.execute();
+
+        } catch (SQLException e){
+
+        } finally {
+            close();
+        }
     }
 }

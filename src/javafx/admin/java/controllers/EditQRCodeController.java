@@ -202,7 +202,7 @@ public class EditQRCodeController implements Initializable {
                             }
                         }
                     } catch (Exception e) {
-                        
+
                     }
                     Platform.runLater(() -> {
                         QRNext.getSelectionModel().select(0);

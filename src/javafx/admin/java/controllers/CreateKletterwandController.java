@@ -8,6 +8,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import javafx.admin.java.modules.MaintenanceMethods;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
@@ -121,8 +122,6 @@ public class CreateKletterwandController implements Initializable {
 
     public void save(ActionEvent actionEvent) {
         if (!KletterwandName.getText().equals("")
-//                !KletterwandLat.getText().equals("") &&
-//                !KletterwandLong.getText().equals("")
                 ) {
 
             Task<Void> task = new Task<Void>() {
@@ -132,13 +131,11 @@ public class CreateKletterwandController implements Initializable {
                     Kletterwand kletterwand = KletterwandDAO.createKletterwand();
 
                     kletterwand.setName(KletterwandName.getText());
-//                    kletterwand.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(KletterwandLat.getText()).floatValue());
-//                    kletterwand.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(KletterwandLong.getText()).floatValue());
                     kletterwand.setStartTag(KletterwandName.getText() + "_start");
                     kletterwand.setEndTag(KletterwandName.getText() + "_end");
 
-
-                    KletterwandDAO.save(kletterwand);
+                    MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+                    maintenanceMethods.createKletterwand(kletterwand);
                     Platform.runLater(() -> {
                         KletterwandE.setText("Erfolgreich gespeichert.");
                         KletterwandE.setTextFill(javafx.scene.paint.Color.GREEN);
