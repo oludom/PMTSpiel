@@ -118,15 +118,21 @@ public class MaintenanceMethods {
             }
 
         } else {
+            connect();
             try {
-                QRCode code = QRCodeDAO.getQRCodeByORMID(oldQRCode.getName());
-                code.setNextQRCode(updatedQRCode.getNextQRCode());
-                code.setAufgabe(updatedQRCode.getAufgabe());
-                code.setHinweis(updatedQRCode.getHinweis());
 
-                QRCodeDAO.refresh(code);
-            } catch (PersistentException e) {
+                PreparedStatement statement
+                        = connection.prepareStatement("UPDATE bugaspiel.qrcode SET Hinweis=?, Frage=?, QRCodeName=? WHERE Name=?");
+                statement.setString(1, updatedQRCode.getHinweis());
+                statement.setString(2, updatedQRCode.getAufgabe().getFrage());
+                statement.setString(3, updatedQRCode.getNextQRCode().getName());
+                statement.setString(4, oldQRCode.getName());
+                statement.execute();
+
+            } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                close();
             }
         }
     }
@@ -480,7 +486,7 @@ public class MaintenanceMethods {
     }
 
     public List<QRCode> pullCodes() {
-
+        List<Frage> alleFragen = pullQuestions();
         connect();
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM bugaspiel.qrcode");
@@ -490,10 +496,18 @@ public class MaintenanceMethods {
             while (resultSet.next()) {
                 QRCode code = new QRCode();
                 code.setName(resultSet.getString("Name"));
-                code.setAufgabe(FrageDAO.getFrageByORMID(resultSet.getString("FrageFrage")));
 
-                if (resultSet.getString("QRCodeName") != null){
-                    code.setNextQRCode(QRCodeDAO.getQRCodeByORMID(resultSet.getString("QRCodeName")));
+                String key = resultSet.getString("FrageFrage");
+                for (Frage frage : alleFragen) {
+                    if (frage.getFrage().equals(key)) {
+                        code.setAufgabe(frage);
+                    }
+                }
+
+                if (resultSet.getString("QRCodeName") != null) {
+                    QRCode nextCode = new QRCode();
+                    nextCode.setName(resultSet.getString("QRCodeName"));
+                    code.setNextQRCode(nextCode);
                 } else {
                     code.setNextQRCode(null);
                 }
@@ -504,12 +518,43 @@ public class MaintenanceMethods {
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch(PersistentException e){
-            e.printStackTrace();
-        } finally{
+        } finally {
             close();
         }
 
+        return null;
+    }
+
+    private Frage findQuestion(List<Frage> list, String key) {
+        for (Frage frage : list) {
+            if (frage.getFrage().equals(key)) {
+                return frage;
+            }
+        }
+        return null;
+    }
+
+    public List<Frage> pullQuestions() {
+        connect();
+        try {
+            PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM bugaspiel.frage");
+            ResultSet resultSet = statement.executeQuery();
+            List<Frage> result = new ArrayList<>();
+            while (resultSet.next()) {
+                Frage frage = new Frage();
+                frage.setFrage(resultSet.getString("Frage"));
+                frage.setAntwort1(resultSet.getString("Antwort1"));
+                frage.setAntwort2(resultSet.getString("Antwort2"));
+                frage.setAntwortrichtig(resultSet.getString("Antwortrichtig"));
+                result.add(frage);
+            }
+            return result;
+        } catch (SQLException e) {
+
+        } finally {
+            close();
+        }
         return null;
     }
 }

@@ -46,11 +46,11 @@
                       </AnchorPane>
                       <HBox layoutX="15.0" layoutY="398.0" prefHeight="92.0" prefWidth="600.0">
                           <children>
-                              <Button fx:id="KletterwandReset" mnemonicParsing="false" onAction="#printKletterwand" prefWidth="300.0" text="Kletterwand drucken">
-                                  <font>
-                                      <Font size="20.0" />
-                                  </font>
-                              </Button>
+                              <!--<Button fx:id="KletterwandReset" mnemonicParsing="false" onAction="#printKletterwand" prefWidth="300.0" text="Kletterwand drucken">-->
+                                  <!--<font>-->
+                                      <!--<Font size="20.0" />-->
+                                  <!--</font>-->
+                              <!--</Button>-->
                               <Button fx:id="KletterwandSave" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Speichern">
                                   <font>
                                       <Font size="20.0" />

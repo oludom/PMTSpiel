@@ -95,11 +95,11 @@
                                   <Font size="20.0" />
                               </font>
                           </Button>
-                              <Button fx:id="KletterwandReset" mnemonicParsing="false" onAction="#printKletterwand" prefWidth="300.0" text="Drucken">
-                                  <font>
-                                      <Font size="20.0" />
-                                  </font>
-                              </Button>
+                              <!--<Button fx:id="KletterwandReset" mnemonicParsing="false" onAction="#printKletterwand" prefWidth="300.0" text="Drucken">-->
+                                  <!--<font>-->
+                                      <!--<Font size="20.0" />-->
+                                  <!--</font>-->
+                              <!--</Button>-->
                               <Button fx:id="KletterwandSave" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Speichern">
                                   <font>
                                       <Font size="20.0" />

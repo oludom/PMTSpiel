@@ -146,11 +146,12 @@ public class EditQuestionController implements Initializable {
         try {
             questionList.getItems().clear();
             //TODO gucken warum der mir nich alle Fragen holt wenn auf refresh gedrückt
-            Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
-            for (int i = 0; i < fragen.length; i++) {
-                questionList.getItems().add(fragen[i].getFrage());
+            MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+            List<Frage> fragen = maintenanceMethods.pullQuestions();
+            for (int i = 0; i < fragen.size(); i++) {
+                questionList.getItems().add(fragen.get(i).getFrage());
             }
-        } catch (PersistentException e) {
+        } catch (Exception e) {
             questionStatus.setTextFill(Color.RED);
             questionStatus.setText("Es ist ein Fehler aufgetreten: " + e.getMessage());
         }

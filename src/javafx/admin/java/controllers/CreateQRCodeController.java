@@ -104,21 +104,22 @@ public class CreateQRCodeController implements Initializable {
   }
 
   private void refreshQuestionsAndQRCodes(){
+    MaintenanceMethods maintenance = new MaintenanceMethods();
     try{
 
       QRQuestion.getItems().clear();
       QRNext.getItems().clear();
 
-      Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
+      List<Frage> fragen = maintenance.pullQuestions();
       for (Frage frage : fragen) {
         QRQuestion.getItems().add(frage.getFrage());
       }
 
-      QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
+      List<QRCode> codes = maintenance.pullCodes();
       for (QRCode code : codes) {
         QRNext.getItems().add(code.getName());
       }
-    } catch (PersistentException e){
+    } catch (Exception e){
       e.printStackTrace();
     }
   }

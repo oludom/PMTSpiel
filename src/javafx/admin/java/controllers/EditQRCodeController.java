@@ -111,7 +111,7 @@ public class EditQRCodeController implements Initializable {
     }
 
     private void fillInputFields(QRCode selectedQRCode) {
-
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
         currentQR = selectedQRCode;
 
         QRName.setText(selectedQRCode.getName());
@@ -119,38 +119,31 @@ public class EditQRCodeController implements Initializable {
         /*
          * get and insert all questions available
          */
-        try {
-            int index = 0;
-            Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
-            for (Frage frage : fragen) {
-                QRQuestion.getItems().add(frage.getFrage());
-                if (frage.equals(selectedQRCode.getAufgabe())) {
-                    index = QRQuestion.getItems().size() - 1;
-                }
+        int index = 0;
+        List<Frage> fragen = maintenanceMethods.pullQuestions();
+        for (Frage frage : fragen) {
+            QRQuestion.getItems().add(frage.getFrage());
+            if (frage.equals(selectedQRCode.getAufgabe())) {
+                index = QRQuestion.getItems().size() - 1;
             }
-            QRQuestion.getSelectionModel().select(index);
-        } catch (PersistentException e) {
-            e.printStackTrace();
         }
+        QRQuestion.getSelectionModel().select(index);
 
         /*
          * get and insert all other qr-codes available
          */
 
-        try {
-            int index = 0;
-            QRNext.getItems().add(null);
-            QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
-            for (QRCode code : codes) {
-                QRNext.getItems().add(code.getName());
-                if (code.equals(selectedQRCode.getNextQRCode())) {
-                    index = QRNext.getItems().size() - 1;
-                }
+        index = 0;
+        QRNext.getItems().add(null);
+        List<QRCode> codes = maintenanceMethods.pullCodes();
+        for (QRCode code : codes) {
+            QRNext.getItems().add(code.getName());
+            if (code.equals(selectedQRCode.getNextQRCode())) {
+                index = QRNext.getItems().size() - 1;
             }
-            QRNext.getSelectionModel().select(index);
-        } catch (PersistentException e) {
-            e.printStackTrace();
         }
+        QRNext.getSelectionModel().select(index);
+
 
         QRName.textProperty().addListener((observable, oldValue, newValue) -> {
             paintQR(newValue);
@@ -178,12 +171,12 @@ public class EditQRCodeController implements Initializable {
     }
 
     public void save(ActionEvent actionEvent) {
-
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
 
         if (!QRName.getText().equals("") &&
                 !QRHint.getText().equals("")) {
 
-            System.out.println("BITCONNEEEEEEEEEEEEEEEEEEEEEEEEEEECT");
+
             Task<Void> task = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
@@ -193,37 +186,28 @@ public class EditQRCodeController implements Initializable {
                     code.setName(QRName.getText());
                     code.setHinweis(QRHint.getText());
 
-
                     try {
-                        Frage[] fragen = FrageDAO.listFrageByQuery(null, null);
+                        List<Frage> fragen = maintenanceMethods.pullQuestions();
                         for (Frage frage : fragen) {
                             if (frage.getFrage().equals(QRQuestion.getValue())) {
                                 code.setAufgabe(frage);
                             }
                         }
-                    } catch (PersistentException e) {
-                        editQRStatus.setText("Es gab ein Problem mit der Frage.");
-                        editQRStatus.setTextFill(javafx.scene.paint.Color.RED);
-                        e.printStackTrace();
-                    }
 
-                    try {
-                        QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
+
+                        List<QRCode> codes = maintenanceMethods.pullCodes();
                         for (QRCode c : codes) {
-                            if (c.getName().equals(QRNext.getValue().toString().substring(9))) {
+                            if (c.getName().equals(QRNext.getValue().toString())) {
                                 code.setNextQRCode(c);
                             }
                         }
-                        Platform.runLater(() -> {
-                            QRNext.getSelectionModel().select(0);
-                        });
-                    } catch (PersistentException e) {
-                        editQRStatus.setText("Es gab ein Problem mit dem nächsten QRCode.");
-                        editQRStatus.setTextFill(javafx.scene.paint.Color.RED);
-                        e.printStackTrace();
+                    } catch (Exception e) {
+                        
                     }
+                    Platform.runLater(() -> {
+                        QRNext.getSelectionModel().select(0);
+                    });
 
-                    MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
                     maintenanceMethods.updateQRCode(currentQR, code);
                     Platform.runLater(() -> {
                         editQRStatus.setText("Erfolgreich gespeichert.");
