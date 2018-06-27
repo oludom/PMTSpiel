@@ -124,7 +124,7 @@ public class MaintenanceMethods {
                 code.setAufgabe(updatedQRCode.getAufgabe());
                 code.setHinweis(updatedQRCode.getHinweis());
 
-                QRCodeDAO.save(code);
+                QRCodeDAO.refresh(code);
             } catch (PersistentException e) {
                 e.printStackTrace();
             }

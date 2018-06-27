@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
 public class EditQRCodeController implements Initializable {
     @FXML
     public TextField QRName;
-//    @FXML
+    //    @FXML
 //    public TextField QRLat;
 //    @FXML
 //    public TextField QRLong;
@@ -79,20 +79,18 @@ public class EditQRCodeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         qrCodes = new ArrayList<>();
-        try {
-            QRCode[] qrQuerry = QRCodeDAO.listQRCodeByQuery(null, null);
-            for (QRCode qrCode : qrQuerry) {
-                alleQRCodes.getItems().add(qrCode.getName());
-                qrCodes.add(qrCode);
-            }
-        } catch (PersistentException e) {
-            e.printStackTrace();
+        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
+        List<QRCode> qrQuerry = maintenanceMethods.pullCodes();
+        for (QRCode qrCode : qrQuerry) {
+            alleQRCodes.getItems().add(qrCode.getName());
+            qrCodes.add(qrCode);
         }
+
 
         alleQRCodes.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if (newValue != null){
+                if (newValue != null) {
                     fillInputFields(findByQRCodeName(qrCodes, (String) alleQRCodes.getSelectionModel().getSelectedItem()));
                 }
             }
@@ -141,6 +139,7 @@ public class EditQRCodeController implements Initializable {
 
         try {
             int index = 0;
+            QRNext.getItems().add(null);
             QRCode[] codes = QRCodeDAO.listQRCodeByQuery(null, null);
             for (QRCode code : codes) {
                 QRNext.getItems().add(code.getName());
@@ -179,11 +178,12 @@ public class EditQRCodeController implements Initializable {
     }
 
     public void save(ActionEvent actionEvent) {
+
+
         if (!QRName.getText().equals("") &&
-//                !QRLat.getText().equals("") &&
-//                !QRLong.getText().equals("") &&
                 !QRHint.getText().equals("")) {
 
+            System.out.println("BITCONNEEEEEEEEEEEEEEEEEEEEEEEEEEECT");
             Task<Void> task = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
@@ -191,8 +191,6 @@ public class EditQRCodeController implements Initializable {
                     QRCode code = QRCodeDAO.createQRCode();
 
                     code.setName(QRName.getText());
-//                    code.setLat(NumberFormat.getInstance(Locale.GERMAN).parse(QRLat.getText()).floatValue());
-//                    code.setLon(NumberFormat.getInstance(Locale.GERMAN).parse(QRLong.getText()).floatValue());
                     code.setHinweis(QRHint.getText());
 
 
@@ -317,7 +315,7 @@ public class EditQRCodeController implements Initializable {
             for (String string : alleQRs) {
                 alleQRCodes.getItems().add(string);
             }
-            if (selectedQRCode != null){
+            if (selectedQRCode != null) {
                 alleQRCodes.getSelectionModel().select(selectedQRCode);
             }
         } catch (SQLException e) {
@@ -332,7 +330,7 @@ public class EditQRCodeController implements Initializable {
             for (String string : qrFragen) {
                 QRQuestion.getItems().add(string);
             }
-            if (selectedFrage != null){
+            if (selectedFrage != null) {
                 QRQuestion.getSelectionModel().select(selectedFrage);
             }
         } catch (SQLException e) {
@@ -348,7 +346,7 @@ public class EditQRCodeController implements Initializable {
             for (String string : qrNext) {
                 QRNext.getItems().add(string);
             }
-            if (selectedNextQRCode != null){
+            if (selectedNextQRCode != null) {
                 QRNext.getSelectionModel().select(selectedNextQRCode);
             }
         } catch (SQLException e) {
