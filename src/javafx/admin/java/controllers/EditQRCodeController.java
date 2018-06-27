@@ -171,42 +171,35 @@ public class EditQRCodeController implements Initializable {
     }
 
     public void save(ActionEvent actionEvent) {
-        MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
 
-        if (!QRName.getText().equals("") &&
-                !QRHint.getText().equals("")) {
+        if (!QRName.getText().equals("") && !QRHint.getText().equals("")) {
 
 
             Task<Void> task = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
+                    MaintenanceMethods maintenanceMethods = new MaintenanceMethods();
 
-                    QRCode code = QRCodeDAO.createQRCode();
 
+                    QRCode code = new QRCode();
                     code.setName(QRName.getText());
                     code.setHinweis(QRHint.getText());
 
-                    try {
-                        List<Frage> fragen = maintenanceMethods.pullQuestions();
-                        for (Frage frage : fragen) {
-                            if (frage.getFrage().equals(QRQuestion.getValue())) {
-                                code.setAufgabe(frage);
-                            }
+                    List<Frage> fragen = maintenanceMethods.pullQuestions();
+                    for (Frage frage : fragen) {
+                        if (frage.getFrage().equals(QRQuestion.getValue())) {
+                            code.setAufgabe(frage);
+                            break;
                         }
-
-
-                        List<QRCode> codes = maintenanceMethods.pullCodes();
-                        for (QRCode c : codes) {
-                            if (c.getName().equals(QRNext.getValue().toString())) {
-                                code.setNextQRCode(c);
-                            }
-                        }
-                    } catch (Exception e) {
-
                     }
-                    Platform.runLater(() -> {
-                        QRNext.getSelectionModel().select(0);
-                    });
+
+                    List<QRCode> codes = maintenanceMethods.pullCodes();
+                    for (QRCode c : codes) {
+                        if (c.getName().equals(QRNext.getValue())) {
+                            code.setNextQRCode(c);
+                            break;
+                        }
+                    }
 
                     maintenanceMethods.updateQRCode(currentQR, code);
                     Platform.runLater(() -> {

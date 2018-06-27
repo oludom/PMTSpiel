@@ -78,55 +78,40 @@ public class MaintenanceMethods {
          * Check ob Name geändert wurde
          */
 
-        if (!oldQRCode.getName().equals(updatedQRCode.getName())) {
-            try {
-                QRCodeDAO.save(updatedQRCode);
-                QRCode[] vorgaenger = QRCodeDAO.listQRCodeByQuery(null, null);
-                //Alle Rallye Einträge auf den neuen mappen
-                for (QRCode code : vorgaenger) {
-                    if (code.getNextQRCode() != null && code.getNextQRCode().equals(oldQRCode)) {
-                        code.setNextQRCode(updatedQRCode);
-                        QRCodeDAO.save(code);
-                    }
-                }
+
+        if (oldQRCode.getName().equals(updatedQRCode.getName())) {
+            System.out.println(this.getClass());
+//            try {
+//                QRCodeDAO.save(updatedQRCode);
+//                QRCode[] vorgaenger = QRCodeDAO.listQRCodeByQuery(null, null);
+//                //Alle Rallye Einträge auf den neuen mappen
+//                for (QRCode code : vorgaenger) {
+//                    if (code.getNextQRCode() != null && code.getNextQRCode().equals(oldQRCode)) {
+//                        code.setNextQRCode(updatedQRCode);
+//                        QRCodeDAO.save(code);
+//                    }
+//                }
+//
+//
+//            } catch (PersistentException e) {
+//                e.printStackTrace();
+//            }
 
 
-            } catch (PersistentException e) {
-                e.printStackTrace();
-            }
-
-
-            try {
-                connect();
-                connection.setAutoCommit(false);
-                preparedStatement = connection.prepareStatement("UPDATE bugaspiel.benutzer SET letzterQRCode=? WHERE letzerQRCode=?");
-                preparedStatement.setString(1, updatedQRCode.getName());
-                preparedStatement.setString(2, oldQRCode.getName());
-                preparedStatement.execute();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                close();
-            }
-
-
-            try {
-                QRCodeDAO.delete(oldQRCode);
-            } catch (PersistentException e) {
-                e.printStackTrace();
-            }
-
-        } else {
             connect();
             try {
 
                 PreparedStatement statement
-                        = connection.prepareStatement("UPDATE bugaspiel.qrcode SET Hinweis=?, Frage=?, QRCodeName=? WHERE Name=?");
+                        = connection.prepareStatement("UPDATE bugaspiel.qrcode SET Hinweis=?, FrageFrage=?, QRCodeName=? WHERE Name=?");
                 statement.setString(1, updatedQRCode.getHinweis());
                 statement.setString(2, updatedQRCode.getAufgabe().getFrage());
-                statement.setString(3, updatedQRCode.getNextQRCode().getName());
+                if (updatedQRCode.getNextQRCode() != null){
+                    statement.setString(3, updatedQRCode.getNextQRCode().getName());
+                } else {
+                    statement.setString(3, null);
+                }
                 statement.setString(4, oldQRCode.getName());
+                System.out.println(statement.toString());
                 statement.execute();
 
             } catch (SQLException e) {
@@ -134,6 +119,47 @@ public class MaintenanceMethods {
             } finally {
                 close();
             }
+
+        } else {
+
+            connect();
+            try {
+                connection.setAutoCommit(false);
+
+                PreparedStatement statement1
+                        = connection.prepareStatement("INSERT INTO bugaspiel.qrcode (Name, QRCodeName, FrageFrage, Hinweis, AktuelleInfos)" +
+                        " VALUES (?,?,?,?,null)");
+                statement1.setString(1, updatedQRCode.getName());
+                statement1.setString(2, null);
+                if (updatedQRCode.getNextQRCode() != null){
+                    statement1.setString(2, updatedQRCode.getNextQRCode().getName());
+                }
+                statement1.setString(3, updatedQRCode.getAufgabe().getFrage());
+                statement1.setString(4, updatedQRCode.getHinweis());
+                statement1.execute();
+
+                PreparedStatement statement2
+                        = connection.prepareStatement("UPDATE bugaspiel.qrcode SET QRCodeName=? WHERE QRCodeName=?");
+                statement2.setString(1, updatedQRCode.getName());
+                statement2.setString(2, oldQRCode.getName());
+                statement2.execute();
+
+                preparedStatement = connection.prepareStatement("UPDATE bugaspiel.benutzer SET letzterQRCode=? WHERE letzerQRCode=?");
+                preparedStatement.setString(1, updatedQRCode.getName());
+                preparedStatement.setString(2, oldQRCode.getName());
+                preparedStatement.execute();
+
+                PreparedStatement statement3
+                        = connection.prepareStatement("DELETE FROM bugaspiel.qrcode WHERE Name=?");
+                statement3.setString(1, oldQRCode.getName());
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                close();
+            }
+
+
         }
     }
 
