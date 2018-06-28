@@ -231,9 +231,6 @@ public class MaintenanceMethods {
         return null;
     }
 
-    /**
-     * DONE
-     **/
     public void deleteQuestion(Frage frage) throws SQLException, PersistentException {
 
 
@@ -257,9 +254,6 @@ public class MaintenanceMethods {
         FrageDAO.delete(frage);
     }
 
-    /**
-     * DONE
-     **/
     public void updateQuestion(Frage oldFrage, Frage updatedFrage) throws PersistentException {
         if (!oldFrage.getFrage().equals(updatedFrage.getFrage())) {
 
@@ -355,35 +349,6 @@ public class MaintenanceMethods {
         }
         close();
         return result;
-    }
-
-    private void connect() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager
-                    .getConnection("jdbc:mysql://www.se.hs-heilbronn.de:3306/BuGaSpiel?"
-                            + "user=BuGaSpielUser&password=SpielPw");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    // You need to close the resultSet
-
-    private void close() {
-        try {
-
-            if (resultSet != null) {
-                resultSet.close();
-            }
-
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (Exception e) {
-
-        }
     }
 
     public void deleteUser(ManagedUsers managedUser) throws SQLException {
@@ -636,6 +601,35 @@ public class MaintenanceMethods {
             e.printStackTrace();
         } finally {
             close();
+        }
+    }
+
+    private void connect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager
+                    .getConnection("jdbc:mysql://www.se.hs-heilbronn.de:3306/BuGaSpiel?"
+                            + "user=BuGaSpielUser&password=SpielPw");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    // You need to close the resultSet
+
+    private void close() {
+        try {
+
+            if (resultSet != null) {
+                resultSet.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+
         }
     }
 }
