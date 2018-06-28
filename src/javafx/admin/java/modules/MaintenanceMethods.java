@@ -1,5 +1,6 @@
 package javafx.admin.java.modules;
 
+import org.hibernate.cfg.Configuration;
 import org.orm.PersistentException;
 import pmt.spielspaß.codegenerierung.*;
 
@@ -359,13 +360,17 @@ public class MaintenanceMethods {
 
     private void connect() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Configuration config = PMTBUGAPersistentManager.instance().getConfiguration();
+            Class.forName(config.getProperty("hibernate.connection.driver_class"));
             connection = DriverManager
-                    .getConnection("jdbc:mysql://www.se.hs-heilbronn.de:3306/BuGaSpiel?"
-                            + "user=BuGaSpielUser&password=SpielPw");
+                    .getConnection(config.getProperty("hibernate.connection.url")
+                            + "?user=" + config.getProperty("hibernate.connection.username")
+                        + "&password=" + config.getProperty("hibernate.connection.password"));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (PersistentException e) {
             e.printStackTrace();
         }
     }
